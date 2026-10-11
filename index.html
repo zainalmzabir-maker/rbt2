@@ -65,10 +65,10 @@
       animation: question-appear 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
-    /* Kecerunan larut lembut di puncak api */
+    /* Kecerunan larut lembut di puncak api 60vh */
     .raging-inferno-fade {
-      mask-image: linear-gradient(to top, rgba(0,0,0,1) 50%, rgba(0,0,0,0.7) 78%, transparent 100%);
-      -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 50%, rgba(0,0,0,0.7) 78%, transparent 100%);
+      mask-image: linear-gradient(to top, rgba(0,0,0,1) 60%, rgba(0,0,0,0.75) 82%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 60%, rgba(0,0,0,0.75) 82%, transparent 100%);
     }
   </style>
 </head>
@@ -127,7 +127,7 @@
   <main class="max-w-6xl w-full mx-auto p-3 sm:p-4 relative z-10">
 
     <!-- VIEW 1: HOME -->
-    <section id="view-home" class="view-panel space-y-6">
+    <section id="view-home" class="view-panel transition-opacity duration-300 space-y-6">
 
       <div class="bg-gradient-to-r from-gray-900 via-red-950/40 to-gray-900 border-2 border-orange-600/70 rounded-2xl p-5 sm:p-6 shadow-2xl backdrop-blur-md">
         <div class="flex items-center gap-3 mb-3">
@@ -161,9 +161,9 @@
           </div>
 
           <div class="bg-black/60 p-3 rounded-xl border border-red-500/30">
-            <div class="font-pixel text-red-400 mb-1 text-[11px]">4. API KANAN MARAK</div>
+            <div class="font-pixel text-red-400 mb-1 text-[11px]">4. API INFERNO 60%</div>
             <p class="text-gray-300 text-[11px] leading-relaxed">
-              Api marak membakar di sebelah kanan skrin. Bahagian kiri kekal lapang dan teks soalan sentiasa boleh dibaca dengan selesa!
+              Api marak menjulang setinggi 60% vertikal di sebelah kanan skrin. Bahagian tengah dan kiri skrin bebas api supaya teks sentiasa mudah dibaca!
             </p>
           </div>
         </div>
@@ -392,7 +392,7 @@
 
   </main>
 
-  <!-- MODAL ADMIN (DISEMBUNYIKAN SECARA BETUL DENGAN KELAS HIDDEN) -->
+  <!-- MODAL ADMIN -->
   <div id="admin-modal" class="hidden fixed inset-0 bg-black/90 z-[10000] items-center justify-center p-3 backdrop-blur-sm">
     <div class="bg-gray-900 border-2 border-red-500 rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
       <button type="button" onclick="closeAdminModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white font-pixel text-sm">
@@ -440,18 +440,19 @@
   </div>
 
   <!-- ========================================================================= -->
-  <!-- KAWASAN API INFERNO MENJULANG MARAK (TEPAT 50% HORIZONTAL & 50% VERTIKAL)  -->
-  <!-- Tepat di sebelah kanan (w-1/2), 0% api di kiri, dan lidah api terkawal     -->
+  <!-- KAWASAN API INFERNO MENJULANG MARAK (TEPAT 60% VERTIKAL & KANAN SAHAJA)   -->
+  <!-- Tepat 45vw lebar kanan (right-0), zon tengah (50%) & kiri 100% bebas api!   -->
   <!-- ========================================================================= -->
-  <div id="fire-overlay-wrapper" class="fixed bottom-9 right-0 w-1/2 h-[50vh] pointer-events-none z-[9990] overflow-hidden select-none raging-inferno-fade drop-shadow-[0_-12px_28px_rgba(255,69,0,0.75)]">
+  <div id="fire-overlay-wrapper" class="fixed bottom-9 right-0 w-[45vw] h-[60vh] pointer-events-none z-[9990] overflow-hidden select-none raging-inferno-fade drop-shadow-[0_-14px_30px_rgba(255,69,0,0.85)]">
     <canvas id="fireCanvas" class="w-full h-full block"></canvas>
   </div>
 
   <!-- KANVAS PANCUTAN AIR MERENTASI SKRIN DARI KIRI KE KANAN (z-[9992]) -->
-  <canvas id="waterCanvas" class="fixed bottom-9 left-0 w-full h-[50vh] pointer-events-none z-[9992]"></canvas>
+  <canvas id="waterCanvas" class="fixed bottom-9 left-0 w-full h-[60vh] pointer-events-none z-[9992]"></canvas>
 
   <!-- ========================================================================= -->
   <!-- BOMBA SEMEKAR: TERLETAK DI ATAS BAR LABEL (bottom-10) DI BAWAH KIRI        -->
+  <!-- Bebas frame kotak, jernih & kemas                                         -->
   <!-- ========================================================================= -->
   <div class="fixed bottom-10 left-2 sm:left-4 z-[9995] pointer-events-auto flex items-end gap-1.5 sm:gap-2.5 select-none drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)]">
     
@@ -852,307 +853,6 @@
         }
       }
       container.innerHTML = html;
-    }
-
-    /* ENJIN API MARAK & BERBAHAYA (KANAN SAHAJA, TIADA DI KIRI) */
-    const fireCanvas = document.getElementById("fireCanvas");
-    const fireCtx = fireCanvas.getContext("2d");
-
-    const fireWidth = 160;
-    const fireHeight = 90;
-    let firePixels = [];
-    let fireEmbers = [];
-    let fireBaseIntensity = 36;
-    let fireSpeedSetting = "slow";
-    let fireIntervalTime = 60;
-    let lastFireTick = 0;
-
-    const firePalette = [
-      [0, 0, 0],       [30, 4, 4],     [60, 7, 7],     [90, 10, 8],
-      [120, 15, 8],    [150, 22, 8],   [180, 30, 8],   [210, 40, 8],
-      [230, 52, 8],    [245, 68, 8],   [255, 85, 10],  [255, 105, 12],
-      [255, 125, 14],  [255, 145, 18], [255, 165, 22], [255, 180, 26],
-      [255, 195, 32],  [255, 210, 40], [255, 222, 48], [255, 232, 58],
-      [255, 240, 70],  [255, 246, 85], [255, 250, 105],[255, 252, 130],
-      [255, 253, 160], [255, 254, 190],[255, 255, 220],[255, 255, 245],
-      [255, 255, 255]
-    ];
-
-    function initFireMatrix() {
-      fireCanvas.width = fireWidth;
-      fireCanvas.height = fireHeight;
-      firePixels = new Array(fireWidth * fireHeight).fill(0);
-      fireEmbers = [];
-      for (let e = 0; e < 35; e++) {
-        fireEmbers.push({
-          x: (fireWidth * 0.1) + Math.random() * (fireWidth * 0.9),
-          y: Math.random() * fireHeight,
-          vy: 0.5 + Math.random() * 1.3,
-          vx: (Math.random() - 0.5) * 0.6,
-          life: Math.random() * 1.0
-        });
-      }
-      repopulateFireBase();
-    }
-
-    function repopulateFireBase() {
-      const maxCol = firePalette.length - 1;
-      const baseVal = Math.min(maxCol, Math.max(0, Math.floor((fireBaseIntensity / 36) * maxCol)));
-      
-      for (let x = 0; x < fireWidth; x++) {
-        // Taper lembut dari tepi kiri kanvas (0) sehingga penuh di sebelah kanan (1.0)
-        const taper = Math.min(1.0, Math.pow(x / (fireWidth * 0.75), 1.6));
-        const wave = Math.sin(x * 0.15 + Date.now() * 0.005) * 3;
-        const jitter = (Math.random() - 0.5) * 4;
-        let intensity = Math.floor((baseVal + wave + jitter) * taper);
-
-        firePixels[(fireHeight - 1) * fireWidth + x] = Math.max(0, Math.min(maxCol, intensity));
-      }
-    }
-
-    function updateFireSpread() {
-      const maxCol = firePalette.length - 1;
-      const decayBase = fireSpeedSetting === "slow" ? 2.1 : 2.6;
-
-      for (let x = 0; x < fireWidth; x++) {
-        for (let y = 1; y < fireHeight; y++) {
-          const fromIdx = y * fireWidth + x;
-          const pixelValue = firePixels[fromIdx];
-
-          if (pixelValue === 0) {
-            firePixels[fromIdx - fireWidth] = 0;
-          } else {
-            const wind = Math.floor(Math.random() * 3) - 1;
-            const decay = Math.floor(Math.random() * decayBase);
-            const toIdx = (fromIdx - fireWidth + wind);
-
-            if (toIdx >= 0 && toIdx < firePixels.length) {
-              firePixels[toIdx] = Math.max(0, pixelValue - decay);
-            }
-          }
-        }
-      }
-
-      fireEmbers.forEach(emb => {
-        emb.y -= emb.vy;
-        emb.x += emb.vx + (Math.random() - 0.5) * 0.3;
-        emb.life -= 0.018;
-
-        if (emb.y <= 0 || emb.life <= 0) {
-          emb.y = fireHeight - 5 - Math.random() * 10;
-          emb.x = (fireWidth * 0.15) + Math.random() * (fireWidth * 0.85);
-          emb.vy = 0.5 + Math.random() * 1.3;
-          emb.life = 0.8 + Math.random() * 0.4;
-        }
-      });
-    }
-
-    function renderFireCanvas() {
-      const imgData = fireCtx.createImageData(fireWidth, fireHeight);
-      const data = imgData.data;
-      const maxCol = firePalette.length - 1;
-
-      for (let i = 0; i < firePixels.length; i++) {
-        const intensity = Math.min(maxCol, firePixels[i]);
-        const color = firePalette[intensity] || [0, 0, 0];
-        const offset = i * 4;
-
-        data[offset] = color[0];
-        data[offset + 1] = color[1];
-        data[offset + 2] = color[2];
-        data[offset + 3] = intensity === 0 ? 0 : Math.min(220, 30 + intensity * 7);
-      }
-
-      fireEmbers.forEach(emb => {
-        const ex = Math.floor(emb.x);
-        const ey = Math.floor(emb.y);
-        if (ex >= 0 && ex < fireWidth && ey >= 0 && ey < fireHeight) {
-          const off = (ey * fireWidth + ex) * 4;
-          data[off] = 255;
-          data[off + 1] = 230;
-          data[off + 2] = 120;
-          data[off + 3] = Math.floor(emb.life * 230);
-        }
-      });
-
-      fireCtx.putImageData(imgData, 0, 0);
-    }
-
-    function fireAnimationLoop(timestamp) {
-      if (timestamp - lastFireTick > fireIntervalTime) {
-        lastFireTick = timestamp;
-        repopulateFireBase();
-        updateFireSpread();
-        renderFireCanvas();
-      }
-      requestAnimationFrame(fireAnimationLoop);
-    }
-
-    function setFireSpeed(spd) {
-      fireSpeedSetting = spd;
-      fireIntervalTime = spd === "slow" ? 60 : 38;
-    }
-
-    function adjustFireVisualIntensity(globalRemainingPercent) {
-      const isCompletelyExtinguished = (globalRemainingPercent <= 0 && uniqueParticipants.size >= 15 && answeredGlobalQuestions.size >= 110);
-      
-      if (isCompletelyExtinguished) {
-        fireBaseIntensity = 0;
-        firePixels.fill(0);
-      } else {
-        fireBaseIntensity = Math.max(20, Math.floor((globalRemainingPercent / 100) * 36));
-      }
-    }
-
-    /* PANCUTAN AIR */
-    const waterCanvas = document.getElementById("waterCanvas");
-    const waterCtx = waterCanvas.getContext("2d");
-    let waterParticles = [];
-
-    function resizeWaterCanvas() {
-      waterCanvas.width = window.innerWidth;
-      waterCanvas.height = window.innerHeight * 0.5;
-    }
-    window.addEventListener("resize", resizeWaterCanvas);
-
-    function triggerWaterSpray(targetScreenPercent = 75) {
-      playWaterSound();
-      const nozzleEl = document.getElementById("nozzle-tip");
-      const rect = nozzleEl ? nozzleEl.getBoundingClientRect() : null;
-      const startX = rect ? rect.right : 120;
-      const startY = waterCanvas.height - 35;
-
-      for (let i = 0; i < 95; i++) {
-        setTimeout(() => {
-          for (let p = 0; p < 4; p++) {
-            const angle = -0.38 + (Math.random() * 0.14);
-            const speed = 17 + Math.random() * 11;
-            waterParticles.push({
-              x: startX,
-              y: startY,
-              vx: Math.cos(angle) * speed,
-              vy: Math.sin(angle) * speed,
-              gravity: 0.42,
-              life: 1.0,
-              size: 3 + Math.random() * 3.5,
-              color: Math.random() > 0.4 ? '#38d9a9' : '#4dabf7'
-            });
-          }
-        }, i * 13);
-      }
-    }
-
-    function updateWaterParticles() {
-      waterCtx.clearRect(0, 0, waterCanvas.width, waterCanvas.height);
-      for (let i = waterParticles.length - 1; i >= 0; i--) {
-        const p = waterParticles[i];
-        p.x += p.vx;
-        p.y += p.vy;
-        p.vy += p.gravity;
-        p.life -= 0.018;
-
-        if (p.life <= 0 || p.y >= waterCanvas.height) {
-          waterCtx.fillStyle = 'rgba(255, 255, 255, 0.45)';
-          waterCtx.fillRect(p.x, waterCanvas.height - 14, p.size * 2, p.size);
-          waterParticles.splice(i, 1);
-        } else {
-          waterCtx.fillStyle = p.color;
-          waterCtx.fillRect(p.x, p.y, p.size, p.size);
-        }
-      }
-      requestAnimationFrame(updateWaterParticles);
-    }
-
-    function navigateView(viewName) {
-      document.querySelectorAll(".view-panel").forEach(p => {
-        p.classList.add("hidden");
-      });
-      const target = document.getElementById("view-" + viewName);
-      if (target) {
-        target.classList.remove("hidden");
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }
-      if (viewName === "leaderboard") renderLeaderboardTable();
-      if (viewName === "home" && currentStudent) updateStudentAttemptStatusDisplay(currentStudent);
-    }
-
-    function selectClass(className) {
-      currentClass = className;
-      document.querySelectorAll(".class-btn").forEach(btn => {
-        btn.classList.remove("border-yellow-400", "bg-orange-950/80");
-        btn.classList.add("border-gray-700", "bg-gray-800");
-      });
-      const activeBtn = document.getElementById("btn-class-" + className.toLowerCase());
-      if (activeBtn) {
-        activeBtn.classList.remove("border-gray-700", "bg-gray-800");
-        activeBtn.classList.add("border-yellow-400", "bg-orange-950/80");
-      }
-
-      const dropdown = document.getElementById("student-name-dropdown");
-      dropdown.innerHTML = '<option value="">-- Sila Pilih Nama Anda --</option>';
-      const names = STUDENTS_DATA[className] || [];
-      names.forEach(name => {
-        const count = getStudentAttemptCount(name);
-        const currentScore = getStudentScore(name);
-        const opt = document.createElement("option");
-        opt.value = name;
-        opt.textContent = `${name} [Percubaan: ${count}/4 | Markah: ${currentScore}/40]`;
-        dropdown.appendChild(opt);
-      });
-
-      const container = document.getElementById("student-select-container");
-      container.classList.remove("opacity-50", "pointer-events-none");
-      
-      document.getElementById("student-attempt-status-card").classList.add("hidden");
-      document.getElementById("btn-start-quiz").disabled = true;
-    }
-
-    document.getElementById("student-name-dropdown").addEventListener("change", function(e) {
-      currentStudent = e.target.value;
-      if (currentStudent) {
-        updateStudentAttemptStatusDisplay(currentStudent);
-      } else {
-        document.getElementById("student-attempt-status-card").classList.add("hidden");
-        document.getElementById("btn-start-quiz").disabled = true;
-      }
-    });
-
-    function updateStudentAttemptStatusDisplay(studentName) {
-      const card = document.getElementById("student-attempt-status-card");
-      const badge = document.getElementById("student-attempt-badge");
-      const bar = document.getElementById("student-attempt-bar");
-      const msg = document.getElementById("student-attempt-message");
-      const btn = document.getElementById("btn-start-quiz");
-
-      const attempts = getStudentAttemptCount(studentName);
-      const score = getStudentScore(studentName);
-      const sContribution = getStudentUniqueExtinguishedPct(studentName);
-      const remaining = MAX_ALLOWED_ATTEMPTS - attempts;
-
-      card.classList.remove("hidden", "bg-green-950/30", "border-green-600/60", "bg-red-950/40", "border-red-600/80", "bg-yellow-950/30", "border-yellow-600/60");
-
-      const pct = Math.min(100, (attempts / MAX_ALLOWED_ATTEMPTS) * 100);
-      bar.style.width = pct + "%";
-
-      if (attempts >= MAX_ALLOWED_ATTEMPTS) {
-        card.classList.add("bg-red-950/40", "border-red-600/80");
-        badge.textContent = `${attempts} / ${MAX_ALLOWED_ATTEMPTS} KALI (PENUH)`;
-        badge.className = "px-2 py-0.5 rounded font-pixel text-[10px] bg-red-800 text-white";
-        bar.className = "h-full bg-red-500 rounded-full";
-        msg.innerHTML = `
-          <strong class="text-red-400">⚠️ HAD PERCUBAAN DICAPAI:</strong> Anda telah menggunakan kesemua 4 peluang. Markah akhir: <strong class="text-green-400">${score}/40</strong> | Sumbangan unik: <strong class="text-cyan-300">${sContribution}%</strong>. Terima kasih atas usaha anda memadamkan kebakaran!
-        `;
-        btn.disabled = true;
-      } else {
-        card.classList.add("bg-yellow-950/30", "border-yellow-600/60");
-        badge.textContent = `${attempts} / ${MAX_ALLOWED_ATTEMPTS} KALI`;
-        badge.className = "px-2 py-0.5 rounded font-pixel text-[10px] bg-yellow-800 text-yellow-200";
-        bar.className = "h-full bg-yellow-500 rounded-full";
-        msg.innerHTML = `
-          Markah anda: <strong class="text-green-400">${score}/40</strong> | Sumbangan unik anda: <strong class="text-cyan-300">${sContribution}%</strong>. Anda masih ada <strong>${remaining} peluang lagi</strong> untuk menambah markah dan peratus sumbangan pemadaman anda!
-        `;
-        btn.disabled = false;
-      }
     }
 
     let sessionCorrectQuestionIds = [];
@@ -1607,7 +1307,7 @@
       });
     }
 
-    /* PENGURUSAN MODAL ADMIN MENGGUNAKAN KELAS HIDDEN SECARA BERSIH */
+    /* PENGURUSAN MODAL ADMIN */
     function openAdminModal() {
       const m = document.getElementById("admin-modal");
       m.classList.remove("hidden");
