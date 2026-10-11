@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bomba RBT Tingkatan 2 - Misi Pemadaman Kebakaran</title>
+  <title>Bomba SEMEKAR RBT Tingkatan 2 - Misi Pemadaman Kebakaran</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Google Fonts: Retro Pixel Style -->
@@ -61,22 +61,22 @@
 <body class="min-h-screen flex flex-col justify-between relative selection:bg-orange-600 selection:text-white pb-72">
 
   <!-- Lapisan Scanlines CRT -->
-  <div class="fixed inset-0 crt-overlay z-40 pointer-events-none opacity-30"></div>
+  <div class="fixed inset-0 crt-overlay z-50 pointer-events-none opacity-25"></div>
 
   <!-- HEADER UTAMA & STATUS MISI GLOBAL -->
   <header class="bg-gray-900/95 backdrop-blur border-b-2 border-orange-600/80 sticky top-0 z-30 px-3 sm:px-4 py-2.5 shadow-2xl">
     <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-3">
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-lg bg-orange-600 flex items-center justify-center text-2xl shadow-lg shadow-orange-600/40 border border-yellow-400">
+        <div class="w-10 h-10 rounded-lg bg-red-600 flex items-center justify-center text-2xl shadow-lg shadow-red-600/40 border border-yellow-400">
           🚒
         </div>
         <div>
-          <h1 class="text-xs sm:text-sm font-pixel text-yellow-400 tracking-wider">MISI BOMBA RBT TINGKATAN 2</h1>
+          <h1 class="text-xs sm:text-sm font-pixel text-yellow-400 tracking-wider">MISI BOMBA SEMEKAR (RBT T2)</h1>
           <p class="text-[11px] text-orange-300 font-retro tracking-wider">OPERASI PEMADAMAN KEBAKARAN BENGKEL RBT (2S1 & 2S2)</p>
         </div>
       </div>
 
-      <!-- STATUS GLOBAL: PERATUS API & SYARAT 15 MURID -->
+      <!-- STATUS GLOBAL: PERATUS API & SYARAT 15 ANGGOTA UNIK -->
       <div class="flex items-center gap-3 bg-black/70 border border-orange-500/50 rounded-xl px-3 py-1.5 shadow-inner">
         <div class="text-right">
           <div class="text-[9px] text-gray-400 font-pixel">BAKI API GLOBAL</div>
@@ -108,10 +108,24 @@
     </div>
   </header>
 
+  <!-- RUANGAN TETAP DI ATAS: 3 HERO BOMBA SEMEKAR SEMASA (STICKY & SELALU KELIHATAN) -->
+  <section class="bg-gradient-to-r from-red-950/95 via-gray-900/95 to-red-950/95 border-b-2 border-yellow-500/70 sticky top-[57px] z-25 backdrop-blur-md shadow-xl px-3 py-2">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-2">
+      <div class="flex items-center gap-2 shrink-0">
+        <span class="text-lg animate-bounce">🎖️</span>
+        <span class="font-pixel text-[10px] sm:text-xs text-yellow-400 tracking-wider">3 HERO BOMBA SEMEKAR (SEMASA):</span>
+      </div>
+      <!-- Grid 3 Slot Hero Semasa -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 w-full md:w-auto flex-1 max-w-3xl" id="top-3-heroes-container">
+        <!-- Dimuatkan secara langsung oleh JS -->
+      </div>
+    </div>
+  </section>
+
   <!-- KANDUNGAN UTAMA (VIEW CONTAINER) -->
   <main class="max-w-6xl w-full mx-auto p-3 sm:p-4 relative z-20">
 
-    <!-- VIEW 1: HOME (ARAHAN, 4 PERINGKAT KEMUSNAHAN & DAFTAR MURID) -->
+    <!-- VIEW 1: HOME (ARAHAN, 4 SYARAT, 4 PERINGKAT KEMUSNAHAN & DAFTAR MURID) -->
     <section id="view-home" class="view-panel transition-opacity duration-300 space-y-6">
 
       <!-- PANDUAN LENGKAP & LANGKAH MEMADAMKAN KEBAKARAN -->
@@ -119,37 +133,55 @@
         <div class="flex items-center gap-3 mb-3">
           <span class="text-2xl sm:text-3xl">📜</span>
           <div>
-            <h2 class="text-sm sm:text-base font-pixel text-yellow-400">ARAHAN & LANGKAH PEMADAMAN SEPENUHNYA</h2>
+            <h2 class="text-sm sm:text-base font-pixel text-yellow-400">ARAHAN & LANGKAH OPERASI BOMBA SEMEKAR</h2>
             <p class="text-xs text-gray-300">Waktu Operasi Rasmi: Bermula jam <strong>9.00 Pagi sehingga 12.00 Tengah Malam</strong></p>
           </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 my-4 text-xs">
-          <div class="bg-black/60 p-3.5 rounded-xl border border-orange-500/30">
-            <div class="font-pixel text-orange-400 mb-1 flex items-center gap-1.5">
-              <span>1️⃣</span> 110 SOALAN RBT
+        <!-- 4 KAD SYARAT UTAMA -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 my-4 text-xs">
+          <div class="bg-black/60 p-3.5 rounded-xl border border-orange-500/30 flex flex-col justify-between">
+            <div>
+              <div class="font-pixel text-orange-400 mb-1 flex items-center gap-1.5">
+                <span>1️⃣</span> 110 SOALAN RBT
+              </div>
+              <p class="text-gray-300 leading-relaxed text-[11px]">
+                Untuk memadamkan kebakaran sepenuhnya (0% baki api), <strong>kesemua 110 soalan mestilah pernah dijawab tepat</strong> oleh mana-mana murid. Setiap sesi mengeluarkan 10 soalan rawak.
+              </p>
             </div>
-            <p class="text-gray-300 leading-relaxed">
-              Terdapat sejumlah 110 soalan RBT Tingkatan 2. Untuk memadamkan api sepenuhnya (0%), <strong>kesemua 110 soalan mestilah pernah dijawab tepat</strong> oleh mana-mana murid. Setiap sesi mengeluarkan 10 soalan rawak.
-            </p>
           </div>
 
-          <div class="bg-black/60 p-3.5 rounded-xl border border-yellow-500/30">
-            <div class="font-pixel text-yellow-400 mb-1 flex items-center gap-1.5">
-              <span>2️⃣</span> SYARAT 15 ANGGOTA UNIK
+          <div class="bg-black/60 p-3.5 rounded-xl border border-yellow-500/30 flex flex-col justify-between">
+            <div>
+              <div class="font-pixel text-yellow-400 mb-1 flex items-center gap-1.5">
+                <span>2️⃣</span> SYARAT 15 ANGGOTA
+              </div>
+              <p class="text-gray-300 leading-relaxed text-[11px]">
+                Operasi memerlukan gandingan pasukan! Api <strong>tidak akan mencecah 0%</strong> melainkan sekurang-kurangnya <strong>15 orang murid berbeza</strong> telah menyertai operasi pemadaman.
+              </p>
             </div>
-            <p class="text-gray-300 leading-relaxed">
-              Tekanan air pili bomba memerlukan kerjasama berpasukan! Kebakaran <strong>tidak boleh terpadam sepenuhnya</strong> melainkan sekurang-kurangnya <strong>15 orang murid berbeza</strong> telah selesai menyertai operasi.
-            </p>
           </div>
 
-          <div class="bg-black/60 p-3.5 rounded-xl border border-cyan-500/30">
-            <div class="font-pixel text-cyan-400 mb-1 flex items-center gap-1.5">
-              <span>3️⃣</span> RAKAMAN & SIRAMAN
+          <div class="bg-black/60 p-3.5 rounded-xl border border-green-500/30 flex flex-col justify-between">
+            <div>
+              <div class="font-pixel text-green-400 mb-1 flex items-center gap-1.5">
+                <span>3️⃣</span> MAKSIMUM 4 KALI CUBA
+              </div>
+              <p class="text-gray-300 leading-relaxed text-[11px]">
+                Setiap murid <strong>dibenarkan menjawab semula sehingga 4 kali</strong> untuk membantu pasukan BOMBA SEMEKAR memadamkan kebakaran dan menyelesaikan baki soalan.
+              </p>
             </div>
-            <p class="text-gray-300 leading-relaxed">
-              Setiap jawapan tepat membolehkan bomba menyiram air ke atas bangunan. Setiap usaha direkodkan dan boleh ditonton semula pada bila-bila masa melalui paparan <strong>Dual-Window Play Replay</strong>!
-            </p>
+          </div>
+
+          <div class="bg-black/60 p-3.5 rounded-xl border border-cyan-500/30 flex flex-col justify-between">
+            <div>
+              <div class="font-pixel text-cyan-400 mb-1 flex items-center gap-1.5">
+                <span>4️⃣</span> DUAL-WINDOW REPLAY
+              </div>
+              <p class="text-gray-300 leading-relaxed text-[11px]">
+                Setiap jawapan tepat melancarkan pancutan air bertekanan tinggi. Seluruh usaha direkodkan dan boleh ditonton semula pada bila-bila masa melalui butang <strong>▶ PLAY</strong>!
+              </p>
+            </div>
           </div>
         </div>
 
@@ -169,28 +201,24 @@
 
           <!-- Kad 4 Peringkat Masa -->
           <div class="grid grid-cols-2 lg:grid-cols-4 gap-2.5 mb-4">
-            <!-- Peringkat 1 -->
             <button type="button" onclick="previewStage(1)" class="stage-card p-3 rounded-xl border-2 border-green-600/60 bg-green-950/20 hover:bg-green-900/30 text-left transition">
               <div class="text-[10px] font-pixel text-green-400 mb-1">TAHAP 1: KECIL</div>
               <div class="text-xs text-white font-bold">Hingga 12.00 Tgh Hari</div>
               <div class="text-[11px] text-gray-400 mt-1 font-mono">Asap kecil di bumbung bengkel. Struktur 90% selamat.</div>
             </button>
 
-            <!-- Peringkat 2 -->
             <button type="button" onclick="previewStage(2)" class="stage-card p-3 rounded-xl border-2 border-yellow-600/60 bg-yellow-950/20 hover:bg-yellow-900/30 text-left transition">
               <div class="text-[10px] font-pixel text-yellow-400 mb-1">TAHAP 2: SEDERHANA</div>
               <div class="text-xs text-white font-bold">Hingga 3.00 Petang</div>
               <div class="text-[11px] text-gray-400 mt-1 font-mono">Api menjilat tingkat atas & retakan dinding bermula.</div>
             </button>
 
-            <!-- Peringkat 3 -->
             <button type="button" onclick="previewStage(3)" class="stage-card p-3 rounded-xl border-2 border-orange-600/60 bg-orange-950/20 hover:bg-orange-900/30 text-left transition">
               <div class="text-[10px] font-pixel text-orange-400 mb-1">TAHAP 3: TERBAKAR</div>
               <div class="text-xs text-white font-bold">Hingga 6.00 Petang</div>
               <div class="text-[11px] text-gray-400 mt-1 font-mono">Seluruh bengkel dimamah api, bumbung runtuh.</div>
             </button>
 
-            <!-- Peringkat 4 -->
             <button type="button" onclick="previewStage(4)" class="stage-card p-3 rounded-xl border-2 border-red-600/60 bg-red-950/20 hover:bg-red-900/30 text-left transition">
               <div class="text-[10px] font-pixel text-red-400 mb-1">TAHAP 4: RENTUNG</div>
               <div class="text-xs text-white font-bold">Hingga 9.00 Mlm - 12.00 Tgh Mlm</div>
@@ -198,39 +226,41 @@
             </button>
           </div>
 
-          <!-- KOTAK SIMULASI PREVIEW BANGUNAN -->
+          <!-- KOTAK SIMULASI PREVIEW BANGUNAN & DEMO SYARAT -->
           <div class="bg-black/80 rounded-xl p-4 border border-gray-700 flex flex-col md:flex-row items-center justify-between gap-4">
             <div class="w-full md:w-1/2 flex flex-col items-center justify-center p-3 bg-gray-950 rounded-lg border border-gray-800">
-              <div id="building-demo-container" class="w-48 h-32 flex items-center justify-center">
-                <!-- SVG Bangunan Mengikut Tahap Dimasukkan Oleh JS -->
-              </div>
-              <span id="demo-stage-label" class="mt-2 text-xs font-pixel text-yellow-400">DEMO TAHAP 1: KEMUSNAHAN KECIL</span>
+              <div id="building-demo-container" class="w-48 h-32 flex items-center justify-center"></div>
+              <span id="demo-stage-label" class="mt-2 text-xs font-pixel text-yellow-400 text-center">DEMO TAHAP 1: KEMUSNAHAN KECIL</span>
             </div>
             <div class="w-full md:w-1/2 text-xs text-gray-300 space-y-2">
-              <div class="font-pixel text-[11px] text-cyan-300">STATUS SIMULASI KEMUSNAHAN BANGUNAN:</div>
+              <div class="font-pixel text-[11px] text-cyan-300">DEMO INTERAKTIF SYARAT PEMADAMAN:</div>
               <p id="demo-stage-desc" class="leading-relaxed font-mono">
-                Peringkat awal kebakaran bengkel RBT. Semburan air bomba mampu menyelamatkan peralatan teknologi pembuatan dan komponen elektrik sebelum api marak ke sistem pendawaian!
+                Peringkat awal kebakaran bengkel RBT. Setiap anggota BOMBA SEMEKAR boleh menyertai sehingga 4 kali untuk menyiram air secara berulang!
               </p>
-              <div class="flex gap-2 pt-1">
+              
+              <div class="flex flex-wrap gap-2 pt-1">
                 <button type="button" onclick="triggerWaterSpray(70)" class="px-3 py-1.5 bg-cyan-700 hover:bg-cyan-600 text-white rounded font-pixel text-[10px] transition">
                   💦 TEST SEMBURAN AIR BOMBA
                 </button>
+                <button type="button" onclick="simulateMultiAttemptDemo()" class="px-3 py-1.5 bg-green-700 hover:bg-green-600 text-white rounded font-pixel text-[10px] transition">
+                  🔄 DEMO BANTUAN 4 KALI PERCUBAAN
+                </button>
               </div>
+              <div id="demo-attempt-feedback" class="text-[10px] text-yellow-400 font-mono hidden pt-1"></div>
             </div>
           </div>
         </div>
 
       </div>
 
-      <!-- BORANG PILIH KELAS & NAMA MURID -->
+      <!-- BORANG PENDAFTARAN JENTERA BOMBA SEMEKAR -->
       <div class="max-w-2xl mx-auto bg-gray-900/90 border-2 border-yellow-500/80 rounded-2xl p-6 sm:p-8 shadow-2xl backdrop-blur-md">
         <div class="text-center mb-6">
-          <h2 class="text-lg sm:text-xl font-pixel text-yellow-400 mb-1">DAFTAR KELUAR JENTERA BOMBA</h2>
-          <p class="text-xs text-gray-300 font-mono">Pilih kelas dan nama anda untuk mengemudi jentera pemadam api</p>
+          <h2 class="text-lg sm:text-xl font-pixel text-yellow-400 mb-1">DAFTAR KELUAR JENTERA BOMBA SEMEKAR</h2>
+          <p class="text-xs text-gray-300 font-mono">Pilih kelas dan nama anda untuk memulakan misi pemadaman api</p>
         </div>
 
         <div class="space-y-4">
-          <!-- Pilih Kelas -->
           <div>
             <label class="block text-xs font-pixel text-orange-300 mb-2">1. PILIH KELAS</label>
             <div class="grid grid-cols-2 gap-3">
@@ -243,7 +273,6 @@
             </div>
           </div>
 
-          <!-- Pilih Murid -->
           <div id="student-select-container" class="opacity-50 pointer-events-none transition">
             <label class="block text-xs font-pixel text-orange-300 mb-2">2. PILIH NAMA ANGGOTA (MURID)</label>
             <select id="student-name-dropdown" class="w-full bg-gray-800 border-2 border-gray-600 focus:border-yellow-400 text-white rounded-xl p-3 text-sm font-mono outline-none">
@@ -251,7 +280,18 @@
             </select>
           </div>
 
-          <!-- Butang Mula -->
+          <!-- KOTAK STATUS PERCUBAAN MURID (MAKSIMUM 4 KALI) -->
+          <div id="student-attempt-status-card" class="hidden p-3.5 rounded-xl border text-xs font-mono transition">
+            <div class="flex items-center justify-between mb-1">
+              <span class="font-pixel text-[10px] text-gray-300">STATUS REKOD MISI ANDA:</span>
+              <span id="student-attempt-badge" class="px-2 py-0.5 rounded font-pixel text-[10px]">0 / 4 KALI</span>
+            </div>
+            <div class="w-full bg-gray-800 h-2.5 rounded-full overflow-hidden border border-gray-700 my-1.5">
+              <div id="student-attempt-bar" class="h-full bg-green-500 rounded-full transition-all duration-500" style="width: 0%;"></div>
+            </div>
+            <p id="student-attempt-message" class="text-gray-300 text-[11px] leading-relaxed mt-1">-</p>
+          </div>
+
           <button id="btn-start-quiz" onclick="startQuizSession()" disabled class="w-full mt-3 py-4 bg-gradient-to-r from-red-600 via-orange-600 to-yellow-600 hover:from-red-500 hover:to-yellow-500 disabled:opacity-40 disabled:cursor-not-allowed text-black font-pixel font-bold text-xs sm:text-sm rounded-xl shadow-lg shadow-orange-700/50 transform active:scale-95 transition border-2 border-yellow-300">
             🔥 MASUKKAN JENTERA KE ZON KEBAKARAN!
           </button>
@@ -260,11 +300,10 @@
 
     </section>
 
-    <!-- VIEW 2: SESI KUIZ PEMADAMAN (10 SOALAN RAWAK DARI 110) -->
+    <!-- VIEW 2: SESI KUIZ PEMADAMAN -->
     <section id="view-quiz" class="view-panel hidden transition-opacity duration-300">
       <div class="max-w-3xl mx-auto bg-gray-900/95 border-2 border-orange-500/80 rounded-2xl p-5 sm:p-7 shadow-2xl backdrop-blur-md">
         
-        <!-- Status Bar Sesi -->
         <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-gray-700/80 mb-5">
           <div class="flex items-center gap-2">
             <div class="px-2.5 py-1 bg-yellow-500/20 border border-yellow-400 text-yellow-300 rounded font-pixel text-xs" id="quiz-student-badge">
@@ -273,6 +312,9 @@
             <div class="px-2 py-1 bg-gray-800 border border-gray-600 text-gray-300 rounded font-pixel text-xs" id="quiz-class-badge">
               2S1
             </div>
+            <div class="px-2 py-1 bg-blue-900/60 border border-blue-500 text-blue-300 rounded font-pixel text-[10px]" id="quiz-attempt-round-badge">
+              CUBAAN: 1/4
+            </div>
           </div>
           <div class="flex items-center gap-3">
             <span class="text-xs font-pixel text-gray-400">SOALAN: <span class="text-yellow-400" id="quiz-progress-text">1/10</span></span>
@@ -280,7 +322,6 @@
           </div>
         </div>
 
-        <!-- Tolok Baki Kebakaran Sesi Ini -->
         <div class="mb-5 bg-black/60 p-3 rounded-xl border border-red-900/60">
           <div class="flex justify-between items-center text-xs font-pixel mb-1.5">
             <span class="text-red-400 flex items-center gap-1.5">
@@ -293,7 +334,6 @@
           </div>
         </div>
 
-        <!-- Kotak Soalan -->
         <div class="mb-6">
           <div class="inline-block px-3 py-1 bg-orange-950/70 border border-orange-500/50 rounded-full text-[11px] font-pixel text-orange-300 mb-3" id="quiz-chapter-tag">
             BAB 2.2 REKA BENTUK MEKANIKAL
@@ -303,18 +343,13 @@
           </h3>
         </div>
 
-        <!-- Pilihan Jawapan -->
-        <div class="grid grid-cols-1 gap-3 mb-6" id="quiz-options-container">
-          <!-- Pilihan dimasukkan melalui JS -->
-        </div>
+        <div class="grid grid-cols-1 gap-3 mb-6" id="quiz-options-container"></div>
 
-        <!-- Ruang Maklum Balas (TIADA JAWAPAN TEPAT DIBOCORKAN JIKA SALAH) -->
         <div id="quiz-explanation-box" class="hidden p-4 rounded-xl border mb-6 text-sm transition">
           <div class="font-pixel text-xs mb-1" id="quiz-feedback-title">TEPAT! AIR DISIRAMKAN!</div>
           <p class="text-gray-200" id="quiz-feedback-desc"></p>
         </div>
 
-        <!-- Butang Seterusnya -->
         <div class="flex justify-end">
           <button id="btn-next-question" onclick="nextQuestion()" disabled class="px-6 py-3 bg-gray-800 text-gray-500 font-pixel text-xs rounded-xl border border-gray-700 disabled:opacity-40 disabled:cursor-not-allowed transition hover:bg-orange-600 hover:text-white hover:border-yellow-400">
             SOALAN SETERUSNYA ➔
@@ -329,7 +364,8 @@
       <div class="max-w-2xl mx-auto bg-gray-900/95 border-2 border-yellow-500/80 rounded-2xl p-6 sm:p-8 text-center shadow-2xl backdrop-blur-md">
         <div class="text-4xl mb-2">🎉</div>
         <h2 class="text-xl sm:text-2xl font-pixel text-yellow-400 mb-1">OPERASI SELESAI!</h2>
-        <p class="text-sm text-gray-300 mb-6 font-mono" id="result-summary-name">Anggota: -</p>
+        <p class="text-sm text-gray-300 mb-2 font-mono" id="result-summary-name">Anggota: -</p>
+        <p class="text-xs text-yellow-400 font-pixel mb-6" id="result-attempt-round-info">PERCUBAAN KE-1 / 4</p>
 
         <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-6">
           <div class="bg-black/60 p-4 rounded-xl border border-gray-800">
@@ -346,8 +382,8 @@
           </div>
         </div>
 
-        <p class="text-xs sm:text-sm text-gray-300 mb-6 leading-relaxed">
-          Tahniah! Setiap semburan air dan jawapan tepat anda telah disimpan secara berpusat ke Google Sheets. Teruskan usaha bersama rakan sekelas untuk mencapai sasaran minimum 15 orang murid bagi memadamkan api sepenuhnya!
+        <p class="text-xs sm:text-sm text-gray-300 mb-6 leading-relaxed" id="result-next-attempt-hint">
+          Sumbangan anda telah disimpan ke Google Sheets! Anda masih mempunyai peluang untuk mencuba lagi bagi membantu BOMBA SEMEKAR.
         </p>
 
         <div class="flex flex-wrap justify-center gap-3">
@@ -368,9 +404,9 @@
         <div class="flex flex-wrap items-center justify-between gap-3 mb-6 pb-4 border-b border-gray-800">
           <div>
             <h2 class="text-base sm:text-lg font-pixel text-yellow-400 flex items-center gap-2">
-              🏆 PAPAN KECEMERLANGAN OPERASI BOMBA
+              🏆 PAPAN KECEMERLANGAN OPERASI BOMBA SEMEKAR
             </h2>
-            <p class="text-xs text-gray-400 font-mono mt-1">Ranking semasa murid beserta rakaman usaha pemadaman kebakaran</p>
+            <p class="text-xs text-gray-400 font-mono mt-1">Ranking murid beserta status bilangan percubaan & rakaman pemadaman</p>
           </div>
           <div class="flex items-center gap-2">
             <select id="leaderboard-filter-class" onchange="renderLeaderboardTable()" class="bg-gray-800 border border-gray-600 text-yellow-300 rounded px-3 py-1.5 text-xs font-pixel outline-none">
@@ -391,6 +427,7 @@
                 <th class="p-3">KED</th>
                 <th class="p-3">NAMA MURID</th>
                 <th class="p-3">KELAS</th>
+                <th class="p-3 text-center">PERCUBAAN</th>
                 <th class="p-3 text-center">SKOR</th>
                 <th class="p-3 text-center">API PADAM</th>
                 <th class="p-3 text-center">MASA</th>
@@ -410,11 +447,10 @@
 
   </main>
 
-  <!-- MODAL DUAL-WINDOW TAYANGAN RAKAMAN PEMADAMAN (2 TETINGKAP BERSEBELAHAN) -->
+  <!-- MODAL DUAL-WINDOW TAYANGAN RAKAMAN PEMADAMAN -->
   <div id="replay-modal" class="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-2 sm:p-4 hidden backdrop-blur-md">
     <div class="bg-gray-900 border-2 border-yellow-400 rounded-2xl max-w-5xl w-full p-4 sm:p-6 shadow-2xl relative max-h-[92vh] flex flex-col justify-between overflow-y-auto">
       
-      <!-- Tajuk & Butang Tutup -->
       <div class="flex items-center justify-between pb-3 border-b border-gray-800 mb-4">
         <div class="flex items-center gap-2">
           <span class="text-xl sm:text-2xl">🎬</span>
@@ -428,10 +464,8 @@
         </button>
       </div>
 
-      <!-- KAWASAN 2 TETINGKAP BERSEBELAHAN (DUAL WINDOW) -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-        
-        <!-- TETINGKAP 1: KANDUNGAN SOALAN & PILIHAN JAWAPAN MURID -->
+        <!-- Tetingkap 1: Soalan & Jawapan Murid -->
         <div class="bg-black/90 border border-gray-700 rounded-xl p-4 flex flex-col justify-between shadow-inner">
           <div>
             <div class="flex items-center justify-between text-xs font-pixel mb-2">
@@ -454,33 +488,27 @@
           </div>
         </div>
 
-        <!-- TETINGKAP 2: SIMULASI ANIMASI PEMADAMAN LANGSUNG & BANGUNAN -->
+        <!-- Tetingkap 2: Simulasi Tapak & Animasi Semburan -->
         <div class="bg-gradient-to-b from-gray-950 to-black border border-gray-700 rounded-xl p-4 flex flex-col justify-between relative overflow-hidden shadow-inner">
           <div class="flex items-center justify-between text-xs font-pixel mb-2 z-10">
             <span class="text-yellow-400">SIMULASI TAPAK KEBAKARAN</span>
             <span class="text-red-400" id="replay-fire-rem">Baki Api Sesi: 100%</span>
           </div>
 
-          <!-- Panggung Simulasi Visual: Bangunan + Bomba + Pancutan Air -->
           <div class="relative w-full h-48 bg-gray-900/90 rounded-lg border border-gray-800 overflow-hidden flex items-end justify-between px-3 pb-2">
-            <!-- Bangunan Terbakar dalam Replay -->
-            <div id="replay-building-visual" class="w-32 h-28 flex items-end justify-center">
-              <!-- Dimuatkan secara dinamik -->
-            </div>
+            <div id="replay-building-visual" class="w-32 h-28 flex items-end justify-center"></div>
 
-            <!-- Anggota & Jentera Bomba Menyiram -->
             <div class="flex items-end gap-1 relative">
               <svg width="70" height="40" viewBox="0 0 140 70">
                 <rect x="5" y="20" width="130" height="35" fill="#c92a2a" />
                 <rect x="5" y="10" width="60" height="15" fill="#e03131" />
-                <rect x="65" y="15" width="70" height="8" fill="#adb5bd" />
+                <rect x="65" y="15" width="70" height="8" fill="#ced4da" />
                 <rect x="10" y="24" width="22" height="16" fill="#74c0fc" />
                 <rect x="5" y="42" width="130" height="6" fill="#ffd43b" />
                 <circle cx="30" cy="56" r="10" fill="#212529" stroke="#495057" stroke-width="3" />
                 <circle cx="105" cy="56" r="10" fill="#212529" stroke="#495057" stroke-width="3" />
               </svg>
 
-              <!-- Bomba -->
               <div class="relative">
                 <svg width="35" height="48" viewBox="0 0 45 60">
                   <rect x="16" y="6" width="16" height="8" fill="#fab005" />
@@ -496,19 +524,16 @@
               </div>
             </div>
 
-            <!-- Kanvas Semburan Air Khusus Replay -->
             <canvas id="replayWaterCanvas" class="absolute inset-0 w-full h-full pointer-events-none"></canvas>
           </div>
 
           <div class="mt-3 text-[11px] font-mono text-gray-400 flex items-center justify-between">
-            <span>Status Hos: <strong class="text-cyan-300" id="replay-hose-status">BERTEKANAN TINGGI</strong></span>
+            <span>Status Hos: <strong class="text-cyan-300">BERTEKANAN TINGGI</strong></span>
             <span>Kadar Aliran: <strong class="text-yellow-300">450 GPM</strong></span>
           </div>
         </div>
-
       </div>
 
-      <!-- KAWALAN REPLAY -->
       <div class="flex items-center justify-between gap-3 pt-2 border-t border-gray-800">
         <div class="text-xs font-pixel text-gray-400" id="replay-counter-text">1 / 10</div>
         <div class="flex items-center gap-2">
@@ -527,7 +552,7 @@
     </div>
   </div>
 
-  <!-- MODAL ADMIN / PORTAL KAWALAN GURU (PASSWORD: adminrbt2) -->
+  <!-- MODAL ADMIN (PASSWORD: adminrbt2) -->
   <div id="admin-modal" class="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-3 hidden backdrop-blur-sm">
     <div class="bg-gray-900 border-2 border-red-500 rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
       <button onclick="closeAdminModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white font-pixel text-sm">
@@ -542,7 +567,6 @@
         </div>
       </div>
 
-      <!-- Bahagian Log Masuk Kata Laluan -->
       <div id="admin-auth-box" class="space-y-4">
         <div>
           <label class="block text-xs font-pixel text-gray-300 mb-2">MASUKKAN KATA LALUAN ADMIN:</label>
@@ -553,118 +577,114 @@
         </button>
       </div>
 
-      <!-- Bahagian Kawalan Admin Selepas Pengesahan Berjaya -->
       <div id="admin-panel-box" class="hidden space-y-4 pt-2">
         <div class="p-3 bg-green-950/40 border border-green-500 rounded-xl text-xs text-green-300 font-mono">
-          ✅ Akses Admin Disahkan! Anda boleh menguruskan permainan di bawah.
+          ✅ Akses Admin Disahkan!
         </div>
 
         <div class="bg-black/60 p-3 rounded-xl border border-gray-800 text-xs space-y-1">
           <div class="font-pixel text-[10px] text-yellow-400">STATISTIK SEMASA:</div>
-          <div>Jumlah Murid Unik Mengambil Bahagian: <strong id="admin-unique-count" class="text-cyan-400">0</strong></div>
-          <div>Jumlah Soalan Global Pernah Terjawab: <strong id="admin-solved-count" class="text-green-400">0 / 110</strong></div>
+          <div>Jumlah Murid Unik: <strong id="admin-unique-count" class="text-cyan-400">0</strong></div>
+          <div>Soalan Terjawab Tepat: <strong id="admin-solved-count" class="text-green-400">0 / 110</strong></div>
+          <div>Purata Percubaan Setiap Murid: <strong id="admin-avg-attempts" class="text-yellow-400">0</strong></div>
         </div>
 
         <div class="pt-2 border-t border-gray-800">
-          <div class="font-pixel text-[10px] text-red-400 mb-2">TINDAKAN KECEMASAN / RESET:</div>
+          <div class="font-pixel text-[10px] text-red-400 mb-2">RESET KESELURUHAN PERMAINAN:</div>
           <button type="button" onclick="confirmResetGame()" class="w-full py-3 bg-red-950 border-2 border-red-600 hover:bg-red-800 text-red-200 font-pixel text-xs rounded-xl shadow transition">
             ⚠️ RESET KESELURUHAN PERMAINAN
           </button>
-          <p class="text-[10px] text-gray-500 mt-2 font-mono">
-            *Tindakan ini akan mengosongkan semua rekod murid dan menetapkan semula kebakaran kepada 100%.
-          </p>
         </div>
       </div>
 
     </div>
   </div>
 
-  <!-- PENTAS KEKAL BAWAH (PLATFORM OPERASI BOMBA, JENTERA & API HORIZONTAL) -->
-  <div class="fixed bottom-0 left-0 right-0 h-64 pointer-events-none z-30 overflow-hidden select-none">
-    
-    <!-- Horizon Gelap -->
+  <!-- PENTAS KEKAL BAWAH: API HORIZONTAL & DEK BOMBA SEMEKAR DI HADAPAN -->
+  <!-- KANVAS API: BERADA DI LAPISAN BELAKANG (z-10) -->
+  <div class="fixed bottom-0 left-0 right-0 h-48 pointer-events-none z-10 overflow-hidden select-none">
     <div class="absolute inset-0 bg-gradient-to-t from-transparent via-[#08090d]/30 to-transparent"></div>
+    <canvas id="fireCanvas" class="absolute bottom-0 left-0 w-full h-44 opacity-95"></canvas>
+  </div>
 
-    <!-- KANVAS 1: RETRO PIXEL ART FIRE (ACCESSIBLY SLOWER & HORIZONTALLY FULL) -->
-    <canvas id="fireCanvas" class="absolute bottom-0 left-0 w-full h-44 z-10 opacity-95"></canvas>
+  <!-- KANVAS PANCUTAN AIR: BERADA DI LAPISAN TENGAH (z-20) -->
+  <canvas id="waterCanvas" class="fixed bottom-0 left-0 w-full h-64 pointer-events-none z-20"></canvas>
 
-    <!-- KANVAS 2: PANCUTAN AIR BOMBA BERTEKANAN TINGGI -->
-    <canvas id="waterCanvas" class="absolute bottom-0 left-0 w-full h-64 z-20"></canvas>
+  <!-- DEK OPERASI BOMBA SEMEKAR BERBINGKAI: BERADA DI HADAPAN LAPISAN API (z-40) -->
+  <div class="fixed bottom-3 left-2 sm:left-6 z-40 pointer-events-auto flex items-end gap-2 sm:gap-4 bg-gray-950/95 border-2 border-yellow-400 p-2.5 sm:p-3 rounded-2xl shadow-[0_0_30px_rgba(255,165,0,0.4)] backdrop-blur-md">
+    
+    <!-- Jentera Bomba Pixel Art dengan Tulisan "BOMBA SEMEKAR" -->
+    <div class="relative drop-shadow-2xl">
+      <!-- Lampu Siren Kelip -->
+      <div class="absolute -top-3 left-9 w-3.5 h-2.5 bg-red-500 rounded-sm siren-active"></div>
+      <div class="absolute -top-3 left-14 w-3.5 h-2.5 bg-cyan-400 rounded-sm siren-active" style="animation-delay: 0.25s;"></div>
 
-    <!-- PLATFORM OPERASI BOMBA (DIALIH KEDUDUKAN & KELIHATAN DENGAN JELAS) -->
-    <div class="absolute bottom-4 left-2 sm:left-6 z-25 flex items-end gap-2 sm:gap-4 pointer-events-auto bg-black/75 px-3 py-2 rounded-2xl border-2 border-yellow-500/80 shadow-2xl backdrop-blur-sm">
-      
-      <!-- Jentera Bomba Pixel Art 8-bit -->
-      <div class="relative drop-shadow-2xl">
-        <!-- Lampu Siren Kelip -->
-        <div class="absolute -top-3 left-9 w-3.5 h-2.5 bg-red-500 rounded-sm siren-active"></div>
-        <div class="absolute -top-3 left-14 w-3.5 h-2.5 bg-cyan-400 rounded-sm siren-active" style="animation-delay: 0.25s;"></div>
-
-        <svg width="150" height="72" viewBox="0 0 140 70" class="w-32 sm:w-44 h-auto drop-shadow-md">
-          <rect x="5" y="20" width="130" height="35" fill="#c92a2a" />
-          <rect x="5" y="10" width="60" height="15" fill="#e03131" />
-          <rect x="65" y="15" width="70" height="8" fill="#ced4da" />
-          <rect x="10" y="24" width="22" height="16" fill="#74c0fc" />
-          <rect x="36" y="24" width="18" height="16" fill="#4dabf7" />
-          <rect x="5" y="42" width="130" height="6" fill="#ffd43b" />
-          <text x="65" y="40" fill="#ffffff" font-size="7" font-weight="bold" font-family="monospace">BOMBA 999</text>
-          <rect x="2" y="38" width="4" height="14" fill="#ced4da" />
-          <rect x="2" y="32" width="4" height="5" fill="#ffe066" />
-          <circle cx="30" cy="56" r="10" fill="#212529" stroke="#495057" stroke-width="3" />
-          <circle cx="30" cy="56" r="4" fill="#dee2e6" />
-          <circle cx="105" cy="56" r="10" fill="#212529" stroke="#495057" stroke-width="3" />
-          <circle cx="105" cy="56" r="4" fill="#dee2e6" />
-        </svg>
-      </div>
-
-      <!-- Anggota Bomba Memegang Nozel Hos -->
-      <div class="relative drop-shadow-xl mb-1">
-        <svg width="48" height="64" viewBox="0 0 45 60" class="w-10 sm:w-14 h-auto">
-          <rect x="16" y="6" width="16" height="8" fill="#fab005" />
-          <rect x="14" y="12" width="20" height="3" fill="#f59f00" />
-          <rect x="17" y="15" width="12" height="8" fill="#ffd8a8" />
-          <rect x="20" y="17" width="9" height="3" fill="#212529" />
-          <rect x="14" y="23" width="18" height="18" fill="#d9480f" />
-          <rect x="14" y="28" width="18" height="3" fill="#94d82d" />
-          <rect x="26" y="27" width="14" height="6" fill="#d9480f" />
-          <rect x="36" y="25" width="7" height="8" fill="#adb5bd" />
-          <rect x="15" y="41" width="7" height="12" fill="#212529" />
-          <rect x="24" y="41" width="7" height="12" fill="#212529" />
-          <rect x="14" y="52" width="9" height="5" fill="#000000" />
-          <rect x="24" y="52" width="9" height="5" fill="#000000" />
-          <path d="M 0 52 Q 15 54 36 29" fill="none" stroke="#ffe066" stroke-width="3" />
-        </svg>
-        <div id="nozzle-tip" class="absolute top-[26px] right-0 w-1 h-1"></div>
-      </div>
-
-      <!-- Dialog Status Pasukan Bomba -->
-      <div class="hidden md:flex flex-col border-l border-gray-700 pl-3">
-        <span class="text-[9px] font-pixel text-yellow-400">PASUKAN BOMBA SMK LABIS</span>
-        <span class="text-[11px] font-mono text-cyan-300" id="firefighter-speech">Sedia menerima jawapan tepat untuk menyiram!</span>
-      </div>
-
+      <svg width="165" height="78" viewBox="0 0 140 70" class="w-36 sm:w-48 h-auto drop-shadow-md">
+        <!-- Badan Jentera Merah -->
+        <rect x="5" y="20" width="130" height="35" fill="#c92a2a" />
+        <rect x="5" y="10" width="60" height="15" fill="#e03131" />
+        <rect x="65" y="15" width="70" height="8" fill="#ced4da" />
+        <!-- Tingkap & Lampu -->
+        <rect x="10" y="24" width="22" height="16" fill="#74c0fc" />
+        <rect x="36" y="24" width="18" height="16" fill="#4dabf7" />
+        <!-- Jalur Kuning Bomba -->
+        <rect x="5" y="42" width="130" height="6" fill="#ffd43b" />
+        <!-- NAMA RASMI BOMBA SEMEKAR -->
+        <text x="32" y="38" fill="#ffffff" font-size="6" font-weight="bold" font-family="'Press Start 2P', monospace">BOMBA SEMEKAR</text>
+        <rect x="2" y="38" width="4" height="14" fill="#ced4da" />
+        <rect x="2" y="32" width="4" height="5" fill="#ffe066" />
+        <!-- Roda Jentera -->
+        <circle cx="30" cy="56" r="10" fill="#212529" stroke="#495057" stroke-width="3" />
+        <circle cx="30" cy="56" r="4" fill="#dee2e6" />
+        <circle cx="105" cy="56" r="10" fill="#212529" stroke="#495057" stroke-width="3" />
+        <circle cx="105" cy="56" r="4" fill="#dee2e6" />
+      </svg>
     </div>
 
-    <!-- PENGATUR KELAJUAN API DI SUDUT KANAN -->
-    <div class="absolute bottom-4 right-4 z-30 pointer-events-auto flex items-center gap-2 bg-black/85 border border-gray-700 rounded-xl px-3 py-1.5 text-[10px] font-pixel text-gray-400 shadow-xl">
-      <span>KELAJUAN API:</span>
-      <button onclick="setFireSpeed('slow')" class="text-yellow-400 hover:underline">SANTAI (PERLAHAN)</button>
-      <span>|</span>
-      <button onclick="setFireSpeed('normal')" class="text-orange-400 hover:underline">SEDERHANA</button>
+    <!-- Anggota Bomba Memegang Nozel Hos -->
+    <div class="relative drop-shadow-xl mb-1">
+      <svg width="48" height="64" viewBox="0 0 45 60" class="w-10 sm:w-14 h-auto">
+        <rect x="16" y="6" width="16" height="8" fill="#fab005" />
+        <rect x="14" y="12" width="20" height="3" fill="#f59f00" />
+        <rect x="17" y="15" width="12" height="8" fill="#ffd8a8" />
+        <rect x="20" y="17" width="9" height="3" fill="#212529" />
+        <rect x="14" y="23" width="18" height="18" fill="#d9480f" />
+        <rect x="14" y="28" width="18" height="3" fill="#94d82d" />
+        <rect x="26" y="27" width="14" height="6" fill="#d9480f" />
+        <rect x="36" y="25" width="7" height="8" fill="#adb5bd" />
+        <rect x="15" y="41" width="7" height="12" fill="#212529" />
+        <rect x="24" y="41" width="7" height="12" fill="#212529" />
+        <rect x="14" y="52" width="9" height="5" fill="#000000" />
+        <rect x="24" y="52" width="9" height="5" fill="#000000" />
+        <path d="M 0 52 Q 15 54 36 29" fill="none" stroke="#ffe066" stroke-width="3" />
+      </svg>
+      <div id="nozzle-tip" class="absolute top-[26px] right-0 w-1 h-1"></div>
+    </div>
+
+    <!-- Papan Maklumat & Status Unit BOMBA SEMEKAR -->
+    <div class="hidden sm:flex flex-col border-l border-gray-700 pl-3">
+      <div class="flex items-center gap-1.5">
+        <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+        <span class="text-[9px] font-pixel text-yellow-400">UNIT PEMADAM: BOMBA SEMEKAR</span>
+      </div>
+      <span class="text-[11px] font-mono text-cyan-300" id="firefighter-speech">Sedia menerima jawapan tepat untuk menyiram!</span>
     </div>
 
   </div>
 
-  <!-- JAVASCRIPT: LOGIK APLIKASI & 110 SOALAN RBT -->
-  <script>
-    /* =====================================================================
-       1. TITIK AKHIR GOOGLE APPS SCRIPT WEB APP
-       ===================================================================== */
-    const GAS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbyq6LEfXj-_A9RT00jEOlQMooDkT0eHkjhGQn7BnoVE66NRDvqZtwW9Ul_J5ms-PJhz/exec";
+  <!-- PENGATUR KELAJUAN API DI SUDUT KANAN -->
+  <div class="fixed bottom-3 right-3 z-40 pointer-events-auto flex items-center gap-2 bg-gray-950/90 border border-gray-700 rounded-xl px-3 py-1.5 text-[10px] font-pixel text-gray-400 shadow-xl">
+    <span>KELAJUAN API:</span>
+    <button onclick="setFireSpeed('slow')" class="text-yellow-400 hover:underline">SANTAI</button>
+    <span>|</span>
+    <button onclick="setFireSpeed('normal')" class="text-orange-400 hover:underline">SEDERHANA</button>
+  </div>
 
-    /* =====================================================================
-       2. SENARAI RASMI MURID 2S1 & 2S2
-       ===================================================================== */
+  <!-- JAVASCRIPT: LOGIK APLIKASI, 110 SOALAN & HERO BOMBA -->
+  <script>
+    const GAS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbyq6LEfXj-_A9RT00jEOlQMooDkT0eHkjhGQn7BnoVE66NRDvqZtwW9Ul_J5ms-PJhz/exec";
+    const MAX_ALLOWED_ATTEMPTS = 4;
+
     const STUDENTS_DATA = {
       "2S1": [
         "AFIF ZUFAYRI BIN NAZARUDIN",
@@ -720,9 +740,6 @@
       ]
     };
 
-    /* =====================================================================
-       3. BANK 110 SOALAN RBT TINGKATAN 2 BERKAITAN KEBAKARAN
-       ===================================================================== */
     const QUESTION_BANK = [];
     (function generate110Questions() {
       const rawBank = [
@@ -788,7 +805,6 @@
         { id: 60, bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF", q: "Kaedah berstruktur mencari punca utama kemusnahan litar pintas sehingga terbakar dalam teori inventif ialah?", options: ["Analisis berantai punca dan kesan (CECA)", "Percambahan fikiran", "Analisis warna", "Ujian berat"], ans: 0, exp: "CECA menjejak punca masalah secara rantaian logik sehingga punca akar." }
       ];
 
-      // Tambahkan baki 50 soalan lagi secara sistematik sehingga genap 110 soalan
       for (let i = 0; i < rawBank.length; i++) {
         QUESTION_BANK.push(rawBank[i]);
       }
@@ -851,11 +867,9 @@
       }
     })();
 
-    /* =====================================================================
-       4. PENGURUSAN STATE, GOOGLE SHEETS & STORAGE
-       ===================================================================== */
     let currentClass = "";
     let currentStudent = "";
+    let currentStudentAttemptCount = 0;
     let sessionQuestions = [];
     let currentQuestionIdx = 0;
     let sessionScore = 0;
@@ -866,7 +880,6 @@
     let uniqueParticipants = new Set();
     let leaderboardRecords = [];
 
-    // Audio Synthesis Web Audio API
     let audioCtx = null;
     let audioEnabled = true;
 
@@ -924,22 +937,67 @@
       document.getElementById("audio-toggle-btn").textContent = audioEnabled ? "🔊" : "🔇";
     }
 
-    /* =====================================================================
-       5. SIMULASI GRAFIK 4 TAHAP KEMUSNAHAN BANGUNAN
-       ===================================================================== */
+    function getStudentAttemptCount(studentName) {
+      if (!studentName) return 0;
+      return leaderboardRecords.filter(r => r.studentName === studentName).length;
+    }
+
+    /* KEMAS KINI 3 HERO BOMBA SEMEKAR DI RUANGAN ATAS SECARA DINAMIK */
+    function updateTop3HeroesBanner() {
+      const container = document.getElementById("top-3-heroes-container");
+      if (!container) return;
+
+      let sorted = [...leaderboardRecords].sort((a, b) => {
+        if (b.score !== a.score) return b.score - a.score;
+        return a.durationSeconds - b.durationSeconds;
+      });
+
+      const medals = ["🥇", "🥈", "🥉"];
+      const borderColors = ["border-yellow-400", "border-gray-400", "border-amber-600"];
+      const textColors = ["text-yellow-300", "text-gray-200", "text-amber-400"];
+
+      let html = "";
+      for (let i = 0; i < 3; i++) {
+        const rec = sorted[i];
+        if (rec) {
+          html += `
+            <div class="bg-black/80 border ${borderColors[i]} rounded-xl px-2.5 py-1.5 flex items-center gap-2 shadow-lg truncate">
+              <span class="text-base shrink-0">${medals[i]}</span>
+              <div class="truncate text-left leading-tight">
+                <div class="font-pixel text-[9px] ${textColors[i]} truncate">${rec.studentName}</div>
+                <div class="text-[9px] text-gray-300 font-mono flex items-center gap-1.5">
+                  <span class="text-orange-300">${rec.className}</span>
+                  <span class="text-green-400 font-bold">${rec.score}/10</span>
+                  <span class="text-cyan-300">${rec.extinguishedPct}%</span>
+                </div>
+              </div>
+            </div>
+          `;
+        } else {
+          html += `
+            <div class="bg-black/50 border border-gray-800 rounded-xl px-2.5 py-1.5 flex items-center gap-2 opacity-60">
+              <span class="text-base shrink-0">${medals[i]}</span>
+              <div class="truncate text-left leading-tight">
+                <div class="font-pixel text-[8px] text-gray-400">MENANTI HERO ${i + 1}</div>
+                <div class="text-[8px] text-gray-500 font-mono">Belum ada rekod</div>
+              </div>
+            </div>
+          `;
+        }
+      }
+      container.innerHTML = html;
+    }
+
     const BUILDING_STAGES_SVG = {
       1: `
         <svg width="180" height="120" viewBox="0 0 180 120" class="drop-shadow-lg">
-          <!-- Bangunan Tahap 1: Kemusnahan Kecil (Utuh & Sedikit Asap) -->
           <rect x="25" y="40" width="130" height="70" fill="#495057" stroke="#ced4da" stroke-width="2" />
           <polygon points="15,40 90,12 165,40" fill="#c92a2a" stroke="#ffa94d" stroke-width="2" />
-          <!-- Tingkap & Pintu -->
           <rect x="38" y="52" width="22" height="20" fill="#74c0fc" />
           <rect x="79" y="52" width="22" height="20" fill="#74c0fc" />
           <rect x="120" y="52" width="22" height="20" fill="#74c0fc" />
           <rect x="78" y="82" width="24" height="28" fill="#adb5bd" />
           <text x="50" y="32" fill="#ffd43b" font-size="8" font-family="monospace" font-weight="bold">BENGKEL RBT</text>
-          <!-- Asap Kecil di Bumbung -->
           <circle cx="130" cy="22" r="7" fill="#868e96" opacity="0.6" class="animate-pulse" />
           <circle cx="140" cy="15" r="9" fill="#adb5bd" opacity="0.5" />
           <polygon points="120,38 126,26 132,38" fill="#ff922b" />
@@ -947,16 +1005,13 @@
       `,
       2: `
         <svg width="180" height="120" viewBox="0 0 180 120" class="drop-shadow-lg">
-          <!-- Bangunan Tahap 2: Kemusnahan Sederhana (Retak, Tingkap Jelaga & Api Merebak) -->
           <rect x="25" y="40" width="130" height="70" fill="#343a40" stroke="#f08c00" stroke-width="2" />
           <polygon points="15,40 90,14 165,40" fill="#992a2a" stroke="#e8590c" stroke-width="2" />
-          <!-- Retakan -->
           <path d="M 60 40 L 70 70 L 65 90" stroke="#ff8787" stroke-width="2" fill="none" />
           <rect x="38" y="52" width="22" height="20" fill="#f76707" />
           <rect x="79" y="52" width="22" height="20" fill="#495057" />
           <rect x="120" y="52" width="22" height="20" fill="#fd7e14" />
           <rect x="78" y="82" width="24" height="28" fill="#495057" />
-          <!-- Api Bumbung & Asap Tebal -->
           <polygon points="80,24 88,6 98,24" fill="#ff6b6b" class="flame-pulse" />
           <polygon points="94,26 102,10 110,26" fill="#ffa94d" class="flame-pulse" />
           <circle cx="140" cy="12" r="14" fill="#495057" opacity="0.8" />
@@ -965,15 +1020,12 @@
       `,
       3: `
         <svg width="180" height="120" viewBox="0 0 180 120" class="drop-shadow-lg">
-          <!-- Bangunan Tahap 3: Terbakar Sepenuhnya (Bumbung Runtuh & Api Marak) -->
           <rect x="25" y="48" width="130" height="62" fill="#212529" stroke="#d9480f" stroke-width="2" />
           <polygon points="20,50 65,35 110,54 160,50" fill="#5c1d1d" stroke="#ff922b" stroke-width="2" />
-          <!-- Api Menjulang Besar -->
           <polygon points="35,52 50,15 65,52" fill="#ff6b6b" class="flame-pulse" />
           <polygon points="60,52 80,4 98,52" fill="#ff922b" class="flame-pulse" />
           <polygon points="95,52 115,10 135,52" fill="#ffe066" class="flame-pulse" />
           <polygon points="130,52 145,22 155,52" fill="#f03e3e" class="flame-pulse" />
-          <!-- Tingkap Membara Merah -->
           <rect x="38" y="60" width="22" height="18" fill="#ff8787" />
           <rect x="79" y="60" width="22" height="18" fill="#ff922b" />
           <rect x="120" y="60" width="22" height="18" fill="#ff6b6b" />
@@ -983,13 +1035,10 @@
       `,
       4: `
         <svg width="180" height="120" viewBox="0 0 180 120" class="drop-shadow-lg">
-          <!-- Bangunan Tahap 4: Rentung Sepenuhnya (Arang Hitam & Bara Abu) -->
           <rect x="30" y="65" width="120" height="45" fill="#121212" stroke="#343a40" stroke-width="2" />
-          <!-- Tiang Runtuh -->
           <line x1="45" y1="65" x2="45" y2="35" stroke="#1f1f1f" stroke-width="6" />
           <line x1="85" y1="65" x2="70" y2="40" stroke="#1f1f1f" stroke-width="6" />
           <line x1="130" y1="65" x2="140" y2="48" stroke="#1f1f1f" stroke-width="5" />
-          <!-- Bara Api Malap & Abu Berterbangan -->
           <circle cx="50" cy="75" r="3" fill="#ff6b6b" class="animate-ping" />
           <circle cx="100" cy="85" r="2.5" fill="#ffa94d" class="animate-ping" />
           <circle cx="125" cy="72" r="3" fill="#ff8787" class="animate-ping" />
@@ -1030,9 +1079,21 @@
       desc.textContent = stageInfo[stageNum].desc;
     }
 
-    /* =====================================================================
-       6. ANIMASI RETRO PIXEL ART FIRE (PERLAHAN & AKSESIBEL)
-       ===================================================================== */
+    let demoAttemptStep = 0;
+    function simulateMultiAttemptDemo() {
+      demoAttemptStep = (demoAttemptStep % MAX_ALLOWED_ATTEMPTS) + 1;
+      triggerWaterSpray(40 + (demoAttemptStep * 12));
+      const feedback = document.getElementById("demo-attempt-feedback");
+      feedback.classList.remove("hidden");
+      
+      const remaining = MAX_ALLOWED_ATTEMPTS - demoAttemptStep;
+      feedback.innerHTML = `
+        🎯 <strong>Simulasi Percubaan Ke-${demoAttemptStep} / 4:</strong> Anggota BOMBA SEMEKAR berjaya menyiram air! 
+        ${remaining > 0 ? `(Baki ${remaining} kali lagi boleh membantu)` : `<span class="text-red-400 font-bold">(Had 4 kali maksimum dicapai bagi anggota ini!)</span>`}
+      `;
+    }
+
+    /* KANVAS API PIXEL RETRO */
     const fireCanvas = document.getElementById("fireCanvas");
     const fireCtx = fireCanvas.getContext("2d");
 
@@ -1123,9 +1184,7 @@
       }
     }
 
-    /* =====================================================================
-       7. ANIMASI PANCUTAN AIR BOMBA BERTEKANAN TINGGI
-       ===================================================================== */
+    /* KANVAS PANCUTAN AIR */
     const waterCanvas = document.getElementById("waterCanvas");
     const waterCtx = waterCanvas.getContext("2d");
     let waterParticles = [];
@@ -1139,15 +1198,15 @@
     function triggerWaterSpray(targetScreenPercent = 60) {
       playWaterSound();
       const nozzleEl = document.getElementById("nozzle-tip");
-      const rect = nozzleEl ? nozzleEl.getBoundingClientRect() : { left: 160, top: window.innerHeight - 80 };
-      const startX = rect.left + 5;
-      const startY = waterCanvas.height - 40;
+      const rect = nozzleEl ? nozzleEl.getBoundingClientRect() : null;
+      const startX = rect ? rect.left + 5 : 180;
+      const startY = rect ? rect.top : (window.innerHeight - 80);
 
       for (let i = 0; i < 90; i++) {
         setTimeout(() => {
           for (let p = 0; p < 4; p++) {
             const angle = -0.38 + (Math.random() * 0.16);
-            const speed = 12 + Math.random() * 10;
+            const speed = 13 + Math.random() * 10;
             waterParticles.push({
               x: startX,
               y: startY,
@@ -1184,9 +1243,6 @@
       requestAnimationFrame(updateWaterParticles);
     }
 
-    /* =====================================================================
-       8. KAWALAN PAPARAN / NAVIGATION
-       ===================================================================== */
     function navigateView(viewName) {
       document.querySelectorAll(".view-panel").forEach(p => p.classList.add("hidden"));
       const target = document.getElementById("view-" + viewName);
@@ -1196,6 +1252,9 @@
       }
       if (viewName === "leaderboard") {
         renderLeaderboardTable();
+      }
+      if (viewName === "home" && currentStudent) {
+        updateStudentAttemptStatusDisplay(currentStudent);
       }
     }
 
@@ -1215,33 +1274,85 @@
       dropdown.innerHTML = '<option value="">-- Sila Pilih Nama Anda --</option>';
       const names = STUDENTS_DATA[className] || [];
       names.forEach(name => {
+        const count = getStudentAttemptCount(name);
         const opt = document.createElement("option");
         opt.value = name;
-        opt.textContent = name;
+        opt.textContent = `${name} [Percubaan: ${count}/4]`;
         dropdown.appendChild(opt);
       });
 
       const container = document.getElementById("student-select-container");
       container.classList.remove("opacity-50", "pointer-events-none");
-      checkStartButtonStatus();
+      
+      document.getElementById("student-attempt-status-card").classList.add("hidden");
+      document.getElementById("btn-start-quiz").disabled = true;
     }
 
     document.getElementById("student-name-dropdown").addEventListener("change", function(e) {
       currentStudent = e.target.value;
-      checkStartButtonStatus();
+      if (currentStudent) {
+        updateStudentAttemptStatusDisplay(currentStudent);
+      } else {
+        document.getElementById("student-attempt-status-card").classList.add("hidden");
+        document.getElementById("btn-start-quiz").disabled = true;
+      }
     });
 
-    function checkStartButtonStatus() {
+    function updateStudentAttemptStatusDisplay(studentName) {
+      const card = document.getElementById("student-attempt-status-card");
+      const badge = document.getElementById("student-attempt-badge");
+      const bar = document.getElementById("student-attempt-bar");
+      const msg = document.getElementById("student-attempt-message");
       const btn = document.getElementById("btn-start-quiz");
-      btn.disabled = !(currentClass && currentStudent);
+
+      const attempts = getStudentAttemptCount(studentName);
+      currentStudentAttemptCount = attempts;
+      const remaining = MAX_ALLOWED_ATTEMPTS - attempts;
+
+      card.classList.remove("hidden", "bg-green-950/30", "border-green-600/60", "bg-red-950/40", "border-red-600/80", "bg-yellow-950/30", "border-yellow-600/60");
+
+      const pct = Math.min(100, (attempts / MAX_ALLOWED_ATTEMPTS) * 100);
+      bar.style.width = pct + "%";
+
+      if (attempts >= MAX_ALLOWED_ATTEMPTS) {
+        card.classList.add("bg-red-950/40", "border-red-600/80");
+        badge.textContent = `${attempts} / ${MAX_ALLOWED_ATTEMPTS} KALI (PENUH)`;
+        badge.className = "px-2 py-0.5 rounded font-pixel text-[10px] bg-red-800 text-white";
+        bar.className = "h-full bg-red-500 rounded-full";
+        msg.innerHTML = `
+          <strong class="text-red-400">⚠️ HAD MAKSIMUM DICAPAI:</strong> Anda telah menggunakan kesemua <strong>4 peluang percubaan</strong> bersama BOMBA SEMEKAR. Terima kasih atas sumbangan anda!
+        `;
+        btn.disabled = true;
+      } else {
+        if (attempts === 0) {
+          card.classList.add("bg-green-950/30", "border-green-600/60");
+          badge.textContent = `0 / ${MAX_ALLOWED_ATTEMPTS} KALI`;
+          badge.className = "px-2 py-0.5 rounded font-pixel text-[10px] bg-green-800 text-green-200";
+          bar.className = "h-full bg-green-500 rounded-full";
+          msg.innerHTML = `
+            <strong class="text-green-300">✅ ANGGOTA BAHARU:</strong> Anda mempunyai <strong>4 peluang penuh</strong> untuk membantu BOMBA SEMEKAR memadamkan kebakaran!
+          `;
+        } else {
+          card.classList.add("bg-yellow-950/30", "border-yellow-600/60");
+          badge.textContent = `${attempts} / ${MAX_ALLOWED_ATTEMPTS} KALI`;
+          badge.className = "px-2 py-0.5 rounded font-pixel text-[10px] bg-yellow-800 text-yellow-200";
+          bar.className = "h-full bg-yellow-500 rounded-full";
+          msg.innerHTML = `
+            <strong class="text-yellow-300">🔄 PERCUBAAN SETERUSNYA:</strong> Anda telah menyelesaikan <strong>${attempts} sesi</strong>. Masih ada <strong>${remaining} peluang lagi</strong> untuk membantu!
+          `;
+        }
+        btn.disabled = false;
+      }
     }
 
-    /* =====================================================================
-       9. LOGIK KUIZ (10 SOALAN RAWAK DARI 110 & TIADA JAWAPAN DIBOCORKAN)
-       ===================================================================== */
     function startQuizSession() {
+      const currentAttempts = getStudentAttemptCount(currentStudent);
+      if (currentAttempts >= MAX_ALLOWED_ATTEMPTS) {
+        alert("Harap maaf, anda telah mencapai had maksimum 4 percubaan!");
+        return;
+      }
+
       initAudio();
-      // Pilih 10 soalan rawak tanpa ulangan daripada 110 soalan
       const shuffled = [...QUESTION_BANK].sort(() => 0.5 - Math.random());
       sessionQuestions = shuffled.slice(0, 10);
       currentQuestionIdx = 0;
@@ -1249,8 +1360,10 @@
       sessionDuration = 0;
       sessionReplayEvents = [];
 
+      const nextAttemptNumber = currentAttempts + 1;
       document.getElementById("quiz-student-badge").textContent = currentStudent;
       document.getElementById("quiz-class-badge").textContent = currentClass;
+      document.getElementById("quiz-attempt-round-badge").textContent = `CUBAAN: ${nextAttemptNumber}/${MAX_ALLOWED_ATTEMPTS}`;
 
       if (sessionTimerInterval) clearInterval(sessionTimerInterval);
       sessionTimerInterval = setInterval(() => {
@@ -1307,13 +1420,12 @@
         saveGlobalQuestionsProgress();
 
         triggerWaterSpray(50 + (currentQuestionIdx * 4));
-        document.getElementById("firefighter-speech").textContent = "Bagus! Semburan air bertekanan tinggi berjaya dilancarkan!";
+        document.getElementById("firefighter-speech").textContent = "BOMBA SEMEKAR: Semburan air bertekanan tinggi berjaya dilancarkan!";
       } else {
         playTone(180, "sawtooth", 0.4, 0.25);
         buttons[selectedIndex].classList.remove("border-gray-700", "bg-gray-800/90");
         buttons[selectedIndex].classList.add("border-red-500", "bg-red-950/60");
-        // PERINGATAN: JAWAPAN TEPAT TIDAK DITUNJUKKAN / TIDAK DIWARNAKAN HIJAU
-        document.getElementById("firefighter-speech").textContent = "Awas! Jawapan tidak tepat. Suhu kebakaran terus meningkat!";
+        document.getElementById("firefighter-speech").textContent = "BOMBA SEMEKAR: Awas! Jawapan tidak tepat. Suhu terus meningkat!";
       }
 
       updateSessionFireGauge();
@@ -1337,12 +1449,12 @@
         expBox.classList.add("bg-green-950/40", "border-green-500");
         title.textContent = "✅ JAWAPAN TEPAT! SIRAMAN AIR BERJAYA!";
         title.className = "font-pixel text-xs text-green-400 mb-1";
-        desc.textContent = "Usaha anda berjaya mengurangkan suhu kebakaran bengkel RBT!";
+        desc.textContent = "Usaha anda bersama BOMBA SEMEKAR berjaya menyejukkan kebakaran bengkel RBT!";
       } else {
         expBox.classList.add("bg-red-950/40", "border-red-500");
         title.textContent = "❌ JAWAPAN KURANG TEPAT";
         title.className = "font-pixel text-xs text-red-400 mb-1";
-        desc.textContent = "Jawapan yang dipilih tidak tepat. Fokus pada soalan seterusnya untuk membantu bomba!";
+        desc.textContent = "Jawapan yang dipilih tidak tepat. Teruskan fokus untuk soalan seterusnya!";
       }
 
       document.getElementById("btn-next-question").disabled = false;
@@ -1377,20 +1489,36 @@
       const formattedTime = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
       const fireExtinguishedPct = sessionScore * 10;
 
-      // Rekod murid unik
       uniqueParticipants.add(currentStudent);
       saveUniqueParticipants();
 
+      const studentPreviousAttempts = getStudentAttemptCount(currentStudent);
+      const attemptNum = studentPreviousAttempts + 1;
+
       document.getElementById("result-summary-name").textContent = `Anggota: ${currentStudent} (${currentClass})`;
+      document.getElementById("result-attempt-round-info").textContent = `PERCUBAAN KE-${attemptNum} / ${MAX_ALLOWED_ATTEMPTS}`;
       document.getElementById("result-score-val").textContent = `${sessionScore}/10`;
       document.getElementById("result-extinguish-val").textContent = `${fireExtinguishedPct}%`;
       document.getElementById("result-time-val").textContent = formattedTime;
+
+      const remainingAttempts = MAX_ALLOWED_ATTEMPTS - attemptNum;
+      const hintEl = document.getElementById("result-next-attempt-hint");
+      if (remainingAttempts > 0) {
+        hintEl.innerHTML = `
+          Sumbangan anda telah direkodkan bersama BOMBA SEMEKAR! Anda masih mempunyai <strong>${remainingAttempts} percubaan lagi</strong> untuk memadamkan kebakaran sepenuhnya.
+        `;
+      } else {
+        hintEl.innerHTML = `
+          Tahniah! Anda telah menyempurnakan kesemua <strong>4 percubaan maksimum</strong> anda. Terima kasih atas dedikasi anda bersama BOMBA SEMEKAR!
+        `;
+      }
 
       const recordItem = {
         id: "REC_" + Date.now(),
         timestamp: new Date().toLocaleString("ms-MY"),
         studentName: currentStudent,
         className: currentClass,
+        attemptNumber: attemptNum,
         score: sessionScore,
         totalQuestions: 10,
         extinguishedPct: fireExtinguishedPct,
@@ -1401,40 +1529,34 @@
 
       saveAttemptRecord(recordItem);
       syncRecordToGoogleSheet(recordItem);
+      updateTop3HeroesBanner();
 
       navigateView("result");
     }
 
-    /* =====================================================================
-       10. PENGIRAAN BAKI API GLOBAL (110 SOALAN & SYARAT 15 MURID)
-       ===================================================================== */
     function loadGlobalQuestionsProgress() {
       const saved = localStorage.getItem("RBT_SOLVED_110_QUESTIONS");
       if (saved) {
         try {
-          const arr = JSON.parse(saved);
-          answeredGlobalQuestions = new Set(arr);
+          answeredGlobalQuestions = new Set(JSON.parse(saved));
         } catch(e){}
       }
       const savedStudents = localStorage.getItem("RBT_UNIQUE_STUDENTS");
       if (savedStudents) {
         try {
-          const sArr = JSON.parse(savedStudents);
-          uniqueParticipants = new Set(sArr);
+          uniqueParticipants = new Set(JSON.parse(savedStudents));
         } catch(e){}
       }
       updateGlobalFireUI();
     }
 
     function saveGlobalQuestionsProgress() {
-      const arr = Array.from(answeredGlobalQuestions);
-      localStorage.setItem("RBT_SOLVED_110_QUESTIONS", JSON.stringify(arr));
+      localStorage.setItem("RBT_SOLVED_110_QUESTIONS", JSON.stringify(Array.from(answeredGlobalQuestions)));
       updateGlobalFireUI();
     }
 
     function saveUniqueParticipants() {
-      const sArr = Array.from(uniqueParticipants);
-      localStorage.setItem("RBT_UNIQUE_STUDENTS", JSON.stringify(sArr));
+      localStorage.setItem("RBT_UNIQUE_STUDENTS", JSON.stringify(Array.from(uniqueParticipants)));
       updateGlobalFireUI();
     }
 
@@ -1446,12 +1568,10 @@
 
       document.getElementById("unique-student-count-badge").textContent = `${studentCount}/${reqStudents}`;
 
-      // Baki api dikira mengikut soalan yang belum selesai
       let rawRemainingFire = Math.max(0, Math.round(((totalQuestionsCount - solvedCount) / totalQuestionsCount) * 100));
 
-      // SYARAT KHAS: Api HANYA boleh mencecah 0% jika sekurang-kurangnya 15 murid unik telah sertai
       if (studentCount < reqStudents && rawRemainingFire === 0) {
-        rawRemainingFire = 10; // Kekalkan api minima 10% jika belum cukup 15 orang
+        rawRemainingFire = 10;
       }
 
       const textEl = document.getElementById("global-fire-text");
@@ -1466,12 +1586,10 @@
       }
     }
 
-    /* =====================================================================
-       11. PENYELARASAN DATA GOOGLE SHEETS
-       ===================================================================== */
     function saveAttemptRecord(record) {
       leaderboardRecords.unshift(record);
       localStorage.setItem("RBT_LEADERBOARD_DATA", JSON.stringify(leaderboardRecords));
+      updateTop3HeroesBanner();
     }
 
     function loadLocalLeaderboard() {
@@ -1484,6 +1602,7 @@
         }
       }
       renderLeaderboardTable();
+      updateTop3HeroesBanner();
     }
 
     async function syncRecordToGoogleSheet(record) {
@@ -1520,9 +1639,11 @@
           saveUniqueParticipants();
         }
         renderLeaderboardTable();
+        updateTop3HeroesBanner();
       } catch(err) {
         console.warn("Ralat muat turun Google Sheets, menggunakan storan pelayar.", err);
         renderLeaderboardTable();
+        updateTop3HeroesBanner();
       }
     }
 
@@ -1558,10 +1679,13 @@
         else if (idx === 1) rankBadge = "🥈 2";
         else if (idx === 2) rankBadge = "🥉 3";
 
+        const attNumber = rec.attemptNumber || 1;
+
         tr.innerHTML = `
           <td class="p-3 font-pixel text-yellow-400 font-bold">${rankBadge}</td>
           <td class="p-3 text-white font-medium">${rec.studentName}</td>
           <td class="p-3 text-gray-400 font-mono">${rec.className}</td>
+          <td class="p-3 text-center text-cyan-300 font-pixel text-[10px]">#${attNumber}/4</td>
           <td class="p-3 text-center text-green-400 font-bold font-pixel">${rec.score}/10</td>
           <td class="p-3 text-center text-cyan-400 font-pixel">${rec.extinguishedPct}%</td>
           <td class="p-3 text-center text-gray-300 font-mono">${rec.formattedTime}</td>
@@ -1575,22 +1699,17 @@
       });
     }
 
-    /* =====================================================================
-       12. TAYANGAN DUA TETINGKAP (DUAL-WINDOW REPLAY THEATER)
-       ===================================================================== */
     let activeReplayData = null;
     let replayCurrentStep = 0;
     let replayInterval = null;
     let isReplayPlaying = false;
 
-    // Kanvas Zarah Air Replay
     const replayWaterCanvas = document.getElementById("replayWaterCanvas");
     const replayWaterCtx = replayWaterCanvas.getContext("2d");
     let replayWaterParticles = [];
 
     function triggerReplayWaterSpray() {
       playWaterSound();
-      const rect = document.getElementById("replay-nozzle-tip")?.getBoundingClientRect();
       const canvasRect = replayWaterCanvas.getBoundingClientRect();
       replayWaterCanvas.width = canvasRect.width;
       replayWaterCanvas.height = canvasRect.height;
@@ -1601,7 +1720,7 @@
       for (let i = 0; i < 70; i++) {
         setTimeout(() => {
           for (let p = 0; p < 3; p++) {
-            const angle = Math.PI - 0.45 + (Math.random() * 0.2); // Semburan menghala ke kiri (ke arah bangunan)
+            const angle = Math.PI - 0.45 + (Math.random() * 0.2);
             const speed = 7 + Math.random() * 6;
             replayWaterParticles.push({
               x: startX,
@@ -1649,8 +1768,9 @@
       replayCurrentStep = 0;
       isReplayPlaying = true;
 
+      const attText = record.attemptNumber ? `Percubaan #${record.attemptNumber}/4` : `Sesi`;
       document.getElementById("replay-header-info").textContent = 
-        `Rakaman Murid: ${record.studentName} (${record.className}) | Skor: ${record.score}/10 | Masa: ${record.formattedTime}`;
+        `Rakaman: ${record.studentName} (${record.className}) | ${attText} | Skor: ${record.score}/10 | Masa: ${record.formattedTime}`;
       document.getElementById("replay-modal").classList.remove("hidden");
 
       renderReplayStep(0);
@@ -1677,7 +1797,6 @@
       const actionLog = document.getElementById("replay-action-log");
       const noteLog = document.getElementById("replay-note-log");
 
-      // Tentukan grafik bangunan berdasarkan baki api
       const buildingVisual = document.getElementById("replay-building-visual");
       let stage = 3;
       if (step.remainingSessionFirePct <= 25) stage = 1;
@@ -1689,7 +1808,7 @@
       if (step.isCorrect) {
         statusBadge.textContent = "TEPAT";
         statusBadge.className = "px-2 py-0.5 rounded text-[10px] bg-green-900 border border-green-500 text-green-300 font-pixel";
-        actionLog.textContent = "💦 Pancutan siraman air bomba diaktifkan!";
+        actionLog.textContent = "💦 BOMBA SEMEKAR: Pancutan siraman air diaktifkan!";
         actionLog.className = "text-cyan-400 font-pixel text-[10px]";
         noteLog.textContent = "Semburan bertekanan tinggi berjaya menyejukkan struktur bengkel.";
         triggerReplayWaterSpray();
@@ -1750,9 +1869,6 @@
       if (isReplayPlaying) startReplayLoop();
     }
 
-    /* =====================================================================
-       13. PORTAL ADMIN & RESET PERMAINAN (PASSWORD: adminrbt2)
-       ===================================================================== */
     function openAdminModal() {
       document.getElementById("admin-modal").classList.remove("hidden");
       document.getElementById("admin-pwd-input").value = "";
@@ -1771,6 +1887,10 @@
         document.getElementById("admin-panel-box").classList.remove("hidden");
         document.getElementById("admin-unique-count").textContent = uniqueParticipants.size;
         document.getElementById("admin-solved-count").textContent = `${answeredGlobalQuestions.size} / 110`;
+        
+        const totalAttempts = leaderboardRecords.length;
+        const avg = uniqueParticipants.size > 0 ? (totalAttempts / uniqueParticipants.size).toFixed(1) : 0;
+        document.getElementById("admin-avg-attempts").textContent = `${avg} / 4.0 sesi`;
       } else {
         alert("Kata laluan salah! Sila hubungi guru RBT.");
       }
@@ -1781,7 +1901,6 @@
         return;
       }
 
-      // Kosongkan storan tempatan
       localStorage.removeItem("RBT_SOLVED_110_QUESTIONS");
       localStorage.removeItem("RBT_UNIQUE_STUDENTS");
       localStorage.removeItem("RBT_LEADERBOARD_DATA");
@@ -1790,7 +1909,6 @@
       uniqueParticipants.clear();
       leaderboardRecords = [];
 
-      // Hantar permintaan reset ke Google Apps Script
       try {
         await fetch(GAS_WEBAPP_URL, {
           method: "POST",
@@ -1803,20 +1921,17 @@
 
       updateGlobalFireUI();
       renderLeaderboardTable();
+      updateTop3HeroesBanner();
       alert("Permainan berjaya di-reset kepada keadaan asal!");
       closeAdminModal();
     }
 
-    /* =====================================================================
-       14. INISIALISASI PADA MULA MUAT HALAMAN
-       ===================================================================== */
     window.addEventListener("DOMContentLoaded", () => {
       initFireMatrix();
       requestAnimationFrame(fireAnimationLoop);
       resizeWaterCanvas();
       requestAnimationFrame(updateWaterParticles);
 
-      // Pratonton default Tahap 1
       previewStage(1);
 
       loadGlobalQuestionsProgress();
