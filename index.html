@@ -65,14 +65,20 @@
       animation: question-appear 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
-    /* Kecerunan larut lembut di puncak 60vh & sempadan kiri agar sifar api di garisan pemisah */
-    .raging-inferno-fade {
+    /* Kecerunan biasa: Puncak 60vh & sempadan kiri sifar api */
+    .raging-inferno-normal {
       mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 6%, rgba(0,0,0,1) 14%),
                   linear-gradient(to top, rgba(0,0,0,1) 52%, rgba(0,0,0,0.7) 78%, transparent 100%);
       mask-composite: intersect;
       -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 6%, rgba(0,0,0,1) 14%),
                           linear-gradient(to top, rgba(0,0,0,1) 52%, rgba(0,0,0,0.7) 78%, transparent 100%);
       -webkit-mask-composite: source-in;
+    }
+
+    /* Kecerunan bencana kegagalan: 80vh & 100vw menyala penuh tanpa sempadan kiri */
+    .raging-inferno-disaster {
+      mask-image: linear-gradient(to top, rgba(0,0,0,1) 60%, rgba(0,0,0,0.8) 85%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 60%, rgba(0,0,0,0.8) 85%, transparent 100%);
     }
   </style>
 </head>
@@ -93,20 +99,26 @@
         </div>
       </div>
 
-      <!-- STATUS PENYERTAAN ANGGOTA UNIK -->
-      <div class="flex items-center gap-2 bg-black/70 border border-orange-500/50 rounded-xl px-3 py-1.5 shadow-inner text-xs font-mono">
-        <span class="text-gray-400 font-pixel text-[9px]">PENYERTAAN ANGGOTA:</span>
-        <span id="unique-student-count-badge" class="text-yellow-400 font-pixel text-[11px] font-bold">0/15</span>
+      <!-- TIMER TEMPOH AKHIR & PENYERTAAN -->
+      <div class="flex flex-wrap items-center gap-2">
+        <div class="flex items-center gap-2 bg-black/70 border border-red-500/50 rounded-xl px-2.5 py-1.5 shadow-inner text-xs font-mono">
+          <span class="text-red-400 font-pixel text-[9px]">DEADLINE:</span>
+          <span id="countdown-timer-text" class="text-yellow-300 font-pixel text-[10px]">--:--:--</span>
+        </div>
+        <div class="flex items-center gap-2 bg-black/70 border border-orange-500/50 rounded-xl px-2.5 py-1.5 shadow-inner text-xs font-mono">
+          <span class="text-gray-400 font-pixel text-[9px]">ANGGOTA:</span>
+          <span id="unique-student-count-badge" class="text-yellow-400 font-pixel text-[11px] font-bold">0/15</span>
+        </div>
       </div>
 
-      <div class="flex items-center gap-2">
-        <button type="button" onclick="navigateView('home')" class="px-2.5 py-1.5 bg-gray-800 hover:bg-gray-700 border border-gray-600 rounded text-xs font-pixel text-gray-200 transition">
+      <div class="flex items-center gap-2" id="header-nav-buttons">
+        <button type="button" onclick="navigateView('home')" id="nav-btn-home" class="px-2.5 py-1.5 bg-gray-800 hover:bg-gray-700 border border-gray-600 rounded text-xs font-pixel text-gray-200 transition">
           UTAMA
         </button>
-        <button type="button" onclick="navigateView('leaderboard')" class="px-2.5 py-1.5 bg-orange-700 hover:bg-orange-600 border border-yellow-500 rounded text-xs font-pixel text-yellow-300 transition shadow">
+        <button type="button" onclick="navigateView('leaderboard')" id="nav-btn-ranking" class="px-2.5 py-1.5 bg-orange-700 hover:bg-orange-600 border border-yellow-500 rounded text-xs font-pixel text-yellow-300 transition shadow">
           RANKING 🏆
         </button>
-        <button type="button" onclick="openAdminModal()" class="px-2.5 py-1.5 bg-red-900/80 hover:bg-red-800 border border-red-500 rounded text-xs font-pixel text-red-200 transition" title="Portal Guru / Admin">
+        <button type="button" onclick="openAdminModal()" id="nav-btn-admin" class="px-2.5 py-1.5 bg-red-900/90 hover:bg-red-800 border-2 border-red-500 rounded text-xs font-pixel text-white transition shadow-lg" title="Portal Guru / Admin">
           ADMIN 🔒
         </button>
         <button type="button" onclick="toggleAudio()" id="audio-toggle-btn" class="px-2 py-1.5 bg-gray-800 hover:bg-gray-700 border border-gray-600 rounded text-xs text-yellow-400" title="Audio">
@@ -117,7 +129,7 @@
   </header>
 
   <!-- RUANGAN TETAP DI ATAS: 3 HERO BOMBA SEMEKAR SEMASA -->
-  <section class="bg-gradient-to-r from-red-950/95 via-gray-900/95 to-red-950/95 border-b-2 border-yellow-500/70 sticky top-[57px] z-25 backdrop-blur-md shadow-xl px-3 py-2">
+  <section id="top-heroes-section" class="bg-gradient-to-r from-red-950/95 via-gray-900/95 to-red-950/95 border-b-2 border-yellow-500/70 sticky top-[57px] z-25 backdrop-blur-md shadow-xl px-3 py-2">
     <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-2">
       <div class="flex items-center gap-2 shrink-0">
         <span class="text-lg animate-bounce">🎖️</span>
@@ -127,8 +139,30 @@
     </div>
   </section>
 
+  <!-- PAPARAN AMARAN BENCANA (JIKA GAGAL SELEPAS 5.00 PETANG ESOK) -->
+  <div id="disaster-banner-container" class="hidden max-w-4xl mx-auto p-4 relative z-30 mt-6">
+    <div class="bg-red-950/95 border-4 border-red-600 rounded-3xl p-6 sm:p-8 text-center shadow-[0_0_50px_rgba(255,0,0,0.8)] backdrop-blur-md animate-pulse">
+      <div class="text-5xl sm:text-6xl mb-3">🔥 ⚠️ 🔥</div>
+      <h2 class="text-base sm:text-xl font-pixel text-yellow-300 mb-2 leading-relaxed">
+        OPERASI GAGAL! BENGKEL RBT TERBAKAR SEPENUHNYA!
+      </h2>
+      <p class="text-xs sm:text-sm text-gray-200 font-mono mb-4 leading-relaxed">
+        Tempoh pemadaman kebakaran telah <strong>TAMAT pada jam 5.00 Petang</strong>. Syarat pemadaman minimum 15 anggota dan 110 soalan gagal dipenuhi sebelum wisel penamat dibunyikan.
+      </p>
+      <div class="inline-block bg-black/80 border-2 border-yellow-500 rounded-2xl p-4 mb-4">
+        <p class="text-xs font-pixel text-yellow-400 mb-1">AKSES SISTEM DIKUNCI KEPADA GURU SAHAJA</p>
+        <p class="text-[11px] text-gray-300 font-mono">Guru masih boleh menyemak rekod markah murid dan status operasi dalam Portal Admin.</p>
+      </div>
+      <div>
+        <button type="button" onclick="openAdminModal()" class="px-6 py-3 bg-red-600 hover:bg-red-500 border-2 border-yellow-300 rounded-xl font-pixel text-xs text-white shadow-xl transition transform hover:scale-105">
+          🔒 BUKA PORTAL KAWALAN ADMIN
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- KANDUNGAN UTAMA (VIEW CONTAINER) -->
-  <main class="max-w-6xl w-full mx-auto p-3 sm:p-4 relative z-10">
+  <main id="main-content-wrapper" class="max-w-6xl w-full mx-auto p-3 sm:p-4 relative z-10">
 
     <!-- VIEW 1: HOME -->
     <section id="view-home" class="view-panel space-y-6">
@@ -138,7 +172,9 @@
           <span class="text-2xl sm:text-3xl">📜</span>
           <div>
             <h2 class="text-sm sm:text-base font-pixel text-yellow-400">PANDUAN OPERASI BOMBA SEMEKAR</h2>
-            <p class="text-xs text-gray-300">Waktu Operasi: <strong>9.00 Pagi sehingga 12.00 Tengah Malam</strong></p>
+            <p class="text-xs text-orange-300 font-mono">
+              Tempoh Akhir Misi: <strong>Jam 5.00 Petang Esok (12 Oktober 2026)</strong>
+            </p>
           </div>
         </div>
 
@@ -153,40 +189,31 @@
           <div class="bg-black/60 p-3 rounded-xl border border-yellow-500/30">
             <div class="font-pixel text-yellow-400 mb-1 text-[11px]">2. SYARAT API 0%</div>
             <p class="text-gray-300 text-[11px] leading-relaxed">
-              Kebakaran padam 100% apabila <strong>kesemua 110 soalan</strong> pernah dijawab tepat DAN minimum <strong>15 anggota berbeza</strong> telah menyertai operasi.
+              Kebakaran padam 100% apabila <strong>kesemua 110 soalan</strong> dijawab tepat DAN minimum <strong>15 anggota berbeza</strong> menyertai operasi sebelum jam 5.00 petang esok.
             </p>
           </div>
 
           <div class="bg-black/60 p-3 rounded-xl border border-green-500/30">
-            <div class="font-pixel text-green-400 mb-1 text-[11px]">3. SUMBANGAN UNIK</div>
+            <div class="font-pixel text-green-400 mb-1 text-[11px]">3. INTENSITI KEKAL TURUN</div>
             <p class="text-gray-300 text-[11px] leading-relaxed">
-              Kolum <strong>API PADAM</strong> mengira peratusan tepat soalan unik daripada 110 soalan yang berjaya anda padamkan secara individu!
+              Setiap jawapan tepat memadamkan api secara kekal. Intensiti api yang telah menyusut <strong>kekal tidak naik semula</strong>.
             </p>
           </div>
 
           <div class="bg-black/60 p-3 rounded-xl border border-red-500/30">
-            <div class="font-pixel text-red-400 mb-1 text-[11px]">4. API 70% HORIZONTAL</div>
+            <div class="font-pixel text-red-400 mb-1 text-[11px]">4. AWAS: KESAN GAGAL</div>
             <p class="text-gray-300 text-[11px] leading-relaxed">
-              Api marak meliputi 70% lebar kanan dan menjulang 60% vertikal skrin. 30% bahagian kiri kekal bebas agar soalan sentiasa mudah dibaca!
+              Jika syarat tidak dipenuhi menjelang jam 5.00 petang esok, bengkel musnah dan api akan membakar <strong>100% lebar & 80% tinggi skrin</strong>!
             </p>
           </div>
         </div>
 
-        <div class="mt-4 pt-3 border-t border-gray-800">
-          <div class="text-[11px] font-pixel text-yellow-300 mb-2">TAHAP KEMUSNAHAN BENGKEL MENGIKUT MASA:</div>
-          <div class="grid grid-cols-2 lg:grid-cols-4 gap-2 text-[10px] font-mono">
-            <div class="p-2 rounded-lg bg-green-950/30 border border-green-600/50">
-              <span class="text-green-400 font-bold font-pixel">Tahap 1 (Hingga 12 Tgh Hari)</span>: Kemusnahan kecil, struktur 90% selamat.
-            </div>
-            <div class="p-2 rounded-lg bg-yellow-950/30 border border-yellow-600/50">
-              <span class="text-yellow-400 font-bold font-pixel">Tahap 2 (Hingga 3 Ptg)</span>: Sederhana, dinding retak & tingkap berjelaga.
-            </div>
-            <div class="p-2 rounded-lg bg-orange-950/30 border border-orange-600/50">
-              <span class="text-orange-400 font-bold font-pixel">Tahap 3 (Hingga 6 Ptg)</span>: Terbakar marak & bumbung runtuh.
-            </div>
-            <div class="p-2 rounded-lg bg-red-950/30 border border-red-600/50">
-              <span class="text-red-400 font-bold font-pixel">Tahap 4 (Hingga 12 Tgh Mlm)</span>: Rentung sepenuhnya & arang hitam.
-            </div>
+        <div class="mt-3 p-3 rounded-xl bg-red-950/30 border border-red-600/50 flex items-center justify-between text-xs">
+          <div class="text-gray-300 font-mono">
+            ⏳ Masa Baki Sehingga Misi Ditutup (5.00 Ptg Esok):
+          </div>
+          <div id="inline-mission-timer" class="font-pixel text-yellow-400 font-bold text-xs sm:text-sm">
+            -- Jam -- Minit -- Saat
           </div>
         </div>
       </div>
@@ -396,69 +423,143 @@
 
   </main>
 
-  <!-- MODAL ADMIN -->
-  <div id="admin-modal" class="hidden fixed inset-0 bg-black/90 z-[10000] p-3 backdrop-blur-sm" style="display: none;">
-    <div class="bg-gray-900 border-2 border-red-500 rounded-2xl max-w-md w-full p-6 shadow-2xl relative mx-auto my-auto">
-      <button type="button" onclick="closeAdminModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white font-pixel text-sm">
-        ✖
-      </button>
-
-      <div class="flex items-center gap-2 mb-4">
-        <span class="text-2xl">🔒</span>
-        <div>
-          <h3 class="font-pixel text-sm text-red-400">PORTAL KAWALAN ADMIN</h3>
-          <p class="text-xs text-gray-400">Khusus Untuk Pengurusan & Tetapan Guru RBT</p>
+  <!-- ========================================================================= -->
+  <!-- MODAL ADMIN (LENGKAP DENGAN STATISTIK & JADUAL RANKING MURID)              -->
+  <!-- ========================================================================= -->
+  <div id="admin-modal" class="hidden fixed inset-0 bg-black/95 z-[10000] p-2 sm:p-4 backdrop-blur-md overflow-y-auto" style="display: none;">
+    <div class="bg-gray-900 border-2 border-red-500 rounded-2xl max-w-4xl w-full p-4 sm:p-6 shadow-2xl relative mx-auto my-auto flex flex-col max-h-[92vh]">
+      
+      <!-- HEADER MODAL -->
+      <div class="flex items-center justify-between pb-3 border-b border-gray-800 shrink-0">
+        <div class="flex items-center gap-2">
+          <span class="text-2xl">🔒</span>
+          <div>
+            <h3 class="font-pixel text-xs sm:text-sm text-red-400">PORTAL KAWALAN ADMIN & PENGURUSAN GURU</h3>
+            <p class="text-[11px] text-gray-400 font-mono">Pusat Data Prestasi Murid & Tetapan Sistem Bomba SEMEKAR</p>
+          </div>
         </div>
+        <button type="button" onclick="closeAdminModal()" class="text-gray-400 hover:text-white font-pixel text-sm p-1 rounded hover:bg-gray-800">
+          ✖
+        </button>
       </div>
 
-      <div id="admin-auth-box" class="space-y-4">
+      <!-- BAHAGIAN 1: PENGESAHAN KATA LALUAN -->
+      <div id="admin-auth-box" class="space-y-4 py-8 max-w-md mx-auto w-full">
         <div>
           <label class="block text-xs font-pixel text-gray-300 mb-2">MASUKKAN KATA LALUAN ADMIN:</label>
-          <input type="password" id="admin-pwd-input" placeholder="Masukkan password..." class="w-full bg-black border-2 border-gray-700 focus:border-red-500 rounded-xl p-3 text-sm text-yellow-300 font-mono outline-none">
+          <input type="password" id="admin-pwd-input" placeholder="Masukkan password guru..." class="w-full bg-black border-2 border-gray-700 focus:border-red-500 rounded-xl p-3 text-sm text-yellow-300 font-mono outline-none">
         </div>
         <button type="button" onclick="verifyAdminPassword()" class="w-full py-3 bg-red-700 hover:bg-red-600 font-pixel text-xs text-white rounded-xl shadow transition">
           SAHKAN KATA LALUAN ➔
         </button>
       </div>
 
-      <div id="admin-panel-box" class="hidden space-y-4 pt-2">
-        <div class="p-3 bg-green-950/40 border border-green-500 rounded-xl text-xs text-green-300 font-mono">
-          ✅ Akses Admin Disahkan!
+      <!-- BAHAGIAN 2: PANEL UTAMA ADMIN (DIPAPARKAN SELEPAS SAH) -->
+      <div id="admin-panel-box" class="hidden flex-1 overflow-y-auto space-y-4 pt-3 pr-1">
+        
+        <div class="flex flex-wrap items-center justify-between gap-2 p-3 bg-green-950/40 border border-green-500/80 rounded-xl text-xs font-mono">
+          <span class="text-green-300">✅ Akses Admin Disahkan! (Kalis Bencana & Sentiasa Boleh Dibuka)</span>
+          <button type="button" onclick="fetchLeaderboardData()" class="px-2.5 py-1 bg-gray-800 hover:bg-gray-700 border border-gray-600 text-yellow-300 rounded font-pixel text-[9px] flex items-center gap-1">
+            🔄 SEGAR DATA CLOUD
+          </button>
         </div>
 
-        <div class="bg-black/60 p-3 rounded-xl border border-gray-800 text-xs space-y-1">
-          <div class="font-pixel text-[10px] text-yellow-400">STATISTIK SEMASA:</div>
-          <div>Jumlah Murid Unik: <strong id="admin-unique-count" class="text-cyan-400">0</strong>/15</div>
-          <div>Soalan Terjawab Tepat: <strong id="admin-solved-count" class="text-green-400">0 / 110</strong></div>
+        <!-- STATISTIK KESELURUHAN (KAD RINGKASAN) -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+          <div class="bg-black/70 p-3 rounded-xl border border-gray-800">
+            <div class="font-pixel text-[9px] text-gray-400 mb-1">ANGGOTA UNIK</div>
+            <div class="text-lg font-pixel text-cyan-400" id="admin-unique-count">0/15</div>
+            <div class="text-[10px] text-gray-400 font-mono mt-0.5">Syarat: Min 15 Murid</div>
+          </div>
+          <div class="bg-black/70 p-3 rounded-xl border border-gray-800">
+            <div class="font-pixel text-[9px] text-gray-400 mb-1">SOALAN TERJAWAB</div>
+            <div class="text-lg font-pixel text-green-400" id="admin-solved-count">0/110</div>
+            <div class="text-[10px] text-gray-400 font-mono mt-0.5">Syarat: 110 Selesai</div>
+          </div>
+          <div class="bg-black/70 p-3 rounded-xl border border-gray-800">
+            <div class="font-pixel text-[9px] text-gray-400 mb-1">INTENSITI API GLOBAL</div>
+            <div class="text-lg font-pixel text-yellow-400" id="admin-fire-pct">100%</div>
+            <div class="text-[10px] text-gray-400 font-mono mt-0.5">Berkurang tetap</div>
+          </div>
+          <div class="bg-black/70 p-3 rounded-xl border border-gray-800">
+            <div class="font-pixel text-[9px] text-gray-400 mb-1">STATUS MISI</div>
+            <div class="text-xs font-pixel text-yellow-300 truncate pt-1" id="admin-mission-status">BERJALAN</div>
+            <div class="text-[10px] text-gray-400 font-mono mt-1">Tamat 5.00 Ptg Esok</div>
+          </div>
         </div>
 
-        <div class="pt-2 border-t border-gray-800">
-          <div class="font-pixel text-[10px] text-red-400 mb-2">RESET KESELURUHAN PERMAINAN:</div>
-          <button type="button" onclick="confirmResetGame()" class="w-full py-3 bg-red-950 border-2 border-red-600 hover:bg-red-800 text-red-200 font-pixel text-xs rounded-xl shadow transition">
+        <!-- JADUAL RANKING & PRESTASI MURID UNTUK ADMIN -->
+        <div class="bg-black/60 p-3 sm:p-4 rounded-xl border border-gray-800">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-3 pb-2 border-b border-gray-800">
+            <div class="flex items-center gap-2">
+              <span class="text-base">🏆</span>
+              <span class="font-pixel text-xs text-yellow-400">REKOD RANKING & PRESTASI MURID (GURU)</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <select id="admin-filter-class" onchange="renderAdminLeaderboard()" class="bg-gray-800 border border-gray-600 text-yellow-300 rounded px-2.5 py-1 text-[10px] font-pixel outline-none">
+                <option value="ALL">SEMUA KELAS</option>
+                <option value="2S1">KELAS 2S1</option>
+                <option value="2S2">KELAS 2S2</option>
+              </select>
+              <button type="button" onclick="exportAdminTableToCSV()" class="px-2.5 py-1 bg-green-700 hover:bg-green-600 border border-green-500 text-white rounded font-pixel text-[9px] flex items-center gap-1 shadow">
+                📥 EKSPORT CSV
+              </button>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto max-h-60 overflow-y-auto">
+            <table class="w-full text-left text-xs font-mono">
+              <thead class="sticky top-0 bg-gray-900 z-10">
+                <tr class="text-orange-400 font-pixel text-[9px] border-b border-gray-800">
+                  <th class="p-2">KED</th>
+                  <th class="p-2">NAMA MURID</th>
+                  <th class="p-2">KELAS</th>
+                  <th class="p-2 text-center">CUBAAN</th>
+                  <th class="p-2 text-center">MARKAH (/40)</th>
+                  <th class="p-2 text-center">API PADAM (%)</th>
+                  <th class="p-2 text-center">MASA</th>
+                  <th class="p-2 text-center">SESI TERAKHIR</th>
+                </tr>
+              </thead>
+              <tbody id="admin-leaderboard-tbody" class="divide-y divide-gray-800/80"></tbody>
+            </table>
+          </div>
+
+          <div id="admin-leaderboard-empty" class="text-center py-6 text-gray-500 font-pixel text-xs hidden">
+            Belum ada rekod murid menyertai.
+          </div>
+        </div>
+
+        <!-- TETAPAN ADMIN & RESET -->
+        <div class="p-3 bg-red-950/30 rounded-xl border border-red-800/60">
+          <div class="font-pixel text-[10px] text-red-400 mb-1">ZON BAHAYA: RESET DATA PERMAINAN</div>
+          <p class="text-[11px] text-gray-300 font-mono mb-2">
+            Mengosongkan semua rekod murid di storan tempatan dan Google Sheet untuk memulakan semula operasi.
+          </p>
+          <button type="button" onclick="confirmResetGame()" class="w-full py-2.5 bg-red-900 border-2 border-red-600 hover:bg-red-800 text-red-200 font-pixel text-xs rounded-xl shadow transition">
             ⚠️ RESET KESELURUHAN PERMAINAN
           </button>
         </div>
+
       </div>
 
     </div>
   </div>
 
   <!-- ========================================================================= -->
-  <!-- KAWASAN API INFERNO MENJULANG MARAK (TEPAT 70% HORIZONTAL & 60% VERTIKAL)  -->
-  <!-- Tepat 70vw di sebelah kanan (right-0 w-[70vw]), 30% kiri skrin 100% bebas  -->
-  <!-- Dilengkapi masking gradien lembut dan sifar api tepat pada sempadan        -->
+  <!-- KAWASAN API INFERNO (DINAMIK: 70vw/60vh BIASA VS 100vw/80vh BENCANA)       -->
   <!-- ========================================================================= -->
-  <div id="fire-overlay-wrapper" class="fixed bottom-9 right-0 w-[70vw] h-[60vh] pointer-events-none z-[9990] overflow-hidden select-none raging-inferno-fade">
+  <div id="fire-overlay-wrapper" class="fixed bottom-9 right-0 w-[70vw] h-[60vh] pointer-events-none z-[9990] overflow-hidden select-none raging-inferno-normal">
     <canvas id="fireCanvas" class="w-full h-full block filter drop-shadow-[0_-12px_24px_rgba(255,69,0,0.7)]"></canvas>
   </div>
 
-  <!-- KANVAS PANCUTAN AIR MERENTASI SKRIN DARI KIRI KE KANAN (z-[9992]) -->
+  <!-- KANVAS PANCUTAN AIR -->
   <canvas id="waterCanvas" class="fixed bottom-9 left-0 w-full h-[60vh] pointer-events-none z-[9992]"></canvas>
 
   <!-- ========================================================================= -->
-  <!-- BOMBA SEMEKAR: TERLETAK DI ATAS BAR LABEL (bottom-10) DI BAWAH KIRI        -->
+  <!-- BOMBA SEMEKAR (JENTERA & ANGGOTA)                                         -->
   <!-- ========================================================================= -->
-  <div class="fixed bottom-10 left-2 sm:left-4 z-[9995] pointer-events-auto flex items-end gap-1.5 sm:gap-2.5 select-none drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)]">
+  <div id="firefighter-unit" class="fixed bottom-10 left-2 sm:left-4 z-[9995] pointer-events-auto flex items-end gap-1.5 sm:gap-2.5 select-none drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)]">
     
     <div class="relative">
       <div class="absolute -top-2 left-6 w-2.5 h-2 bg-red-500 rounded-sm siren-active"></div>
@@ -507,7 +608,7 @@
   </div>
 
   <!-- BAR LABEL PALING BAWAH (bottom-0 h-9) -->
-  <div class="fixed bottom-0 left-0 right-0 h-9 z-[9999] pointer-events-auto flex items-center justify-between sm:justify-center gap-2 sm:gap-6 bg-black/95 backdrop-blur-md border-t border-orange-500/60 px-3 text-[8.5px] sm:text-[9.5px] font-pixel shadow-2xl">
+  <div id="bottom-status-bar" class="fixed bottom-0 left-0 right-0 h-9 z-[9999] pointer-events-auto flex items-center justify-between sm:justify-center gap-2 sm:gap-6 bg-black/95 backdrop-blur-md border-t border-orange-500/60 px-3 text-[8.5px] sm:text-[9.5px] font-pixel shadow-2xl">
     <div class="flex items-center gap-1.5 text-red-400 shrink-0">
       <span>🔥</span>
       <span class="hidden xs:inline">BAKI API GLOBAL:</span>
@@ -526,6 +627,9 @@
   <script>
     const GAS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbyq6LEfXj-_A9RT00jEOlQMooDkT0eHkjhGQn7BnoVE66NRDvqZtwW9Ul_J5ms-PJhz/exec";
     const MAX_ALLOWED_ATTEMPTS = 4;
+
+    // Tarikh & Masa Tamat Operasi: Jam 5.00 Petang (17:00), 12 Oktober 2026
+    const MISSION_DEADLINE_TIMESTAMP = new Date("2026-10-12T17:00:00+08:00").getTime();
 
     const STUDENTS_DATA = {
       "2S1": [
@@ -703,6 +807,7 @@
 
     let audioCtx = null;
     let audioEnabled = true;
+    let isDisasterTriggered = false;
 
     function initAudio() {
       if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -766,6 +871,111 @@
         second: '2-digit',
         hour12: true
       });
+    }
+
+    /* PENGURUSAN MASA DEADLINE & PENYELARASAN BENCANA */
+    function updateCountdownDisplay() {
+      const now = Date.now();
+      const diff = MISSION_DEADLINE_TIMESTAMP - now;
+      const timerBadge = document.getElementById("countdown-timer-text");
+      const inlineTimer = document.getElementById("inline-mission-timer");
+
+      if (diff <= 0) {
+        if (timerBadge) timerBadge.textContent = "TAMAT!";
+        if (inlineTimer) inlineTimer.textContent = "TEMPOH TAMAT (5.00 PTG)";
+        checkDisasterCondition();
+        return;
+      }
+
+      const totalSec = Math.floor(diff / 1000);
+      const hours = Math.floor(totalSec / 3600);
+      const minutes = Math.floor((totalSec % 3600) / 60);
+      const seconds = totalSec % 60;
+
+      const pad = (n) => String(n).padStart(2, '0');
+      const timeStr = `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+
+      if (timerBadge) timerBadge.textContent = timeStr;
+      if (inlineTimer) inlineTimer.textContent = `${hours} Jam ${minutes} Minit ${seconds} Saat`;
+
+      checkDisasterCondition();
+    }
+
+    function checkDisasterCondition() {
+      const now = Date.now();
+      const isPastDeadline = (now >= MISSION_DEADLINE_TIMESTAMP);
+      const isExtinguished = (answeredGlobalQuestions.size >= 110 && uniqueParticipants.size >= 15);
+
+      if (isPastDeadline && !isExtinguished) {
+        if (!isDisasterTriggered) {
+          triggerDisasterMode();
+        }
+      } else {
+        if (isDisasterTriggered) {
+          revertDisasterMode();
+        }
+      }
+    }
+
+    function triggerDisasterMode() {
+      isDisasterTriggered = true;
+
+      // 1. Laraskan kanvas api ke 100% lebar (100vw) dan 80% tinggi skrin (80vh)
+      const fireWrapper = document.getElementById("fire-overlay-wrapper");
+      fireWrapper.className = "fixed bottom-0 left-0 w-full h-[80vh] pointer-events-none z-[9990] overflow-hidden select-none raging-inferno-disaster";
+
+      // 2. Sembunyikan elemen operasi biasa (jentera, semburan air, views)
+      document.getElementById("main-content-wrapper").classList.add("hidden");
+      document.getElementById("top-heroes-section").classList.add("hidden");
+      document.getElementById("firefighter-unit").classList.add("hidden");
+      document.getElementById("waterCanvas").classList.add("hidden");
+      document.getElementById("bottom-status-bar").classList.add("hidden");
+
+      // 3. Matikan butang selain ADMIN
+      document.getElementById("nav-btn-home").classList.add("hidden");
+      document.getElementById("nav-btn-ranking").classList.add("hidden");
+
+      // 4. Paparkan Banner Kegagalan
+      document.getElementById("disaster-banner-container").classList.remove("hidden");
+
+      // 5. Kemas kini status admin
+      const statusEl = document.getElementById("admin-mission-status");
+      if (statusEl) {
+        statusEl.textContent = "GAGAL (BENGKEL MUSNAH)";
+        statusEl.className = "text-red-500 font-bold";
+      }
+
+      // 6. Konfigurasi semula kanvas api untuk mod bencana penuh
+      fireCanvas.width = 280;
+      fireCanvas.height = 130;
+      firePixels = new Array(280 * 130).fill(0);
+      repopulateFireBase();
+    }
+
+    function revertDisasterMode() {
+      isDisasterTriggered = false;
+
+      const fireWrapper = document.getElementById("fire-overlay-wrapper");
+      fireWrapper.className = "fixed bottom-9 right-0 w-[70vw] h-[60vh] pointer-events-none z-[9990] overflow-hidden select-none raging-inferno-normal";
+
+      document.getElementById("main-content-wrapper").classList.remove("hidden");
+      document.getElementById("top-heroes-section").classList.remove("hidden");
+      document.getElementById("firefighter-unit").classList.remove("hidden");
+      document.getElementById("waterCanvas").classList.remove("hidden");
+      document.getElementById("bottom-status-bar").classList.remove("hidden");
+
+      document.getElementById("nav-btn-home").classList.remove("hidden");
+      document.getElementById("nav-btn-ranking").classList.remove("hidden");
+
+      document.getElementById("disaster-banner-container").classList.add("hidden");
+
+      const statusEl = document.getElementById("admin-mission-status");
+      if (statusEl) {
+        statusEl.textContent = "BERJALAN";
+        statusEl.className = "text-yellow-400 font-bold";
+      }
+
+      initFireMatrix();
     }
 
     function getStudentAttemptCount(studentName) {
@@ -859,14 +1069,12 @@
       container.innerHTML = html;
     }
 
-    /* ========================================================================= */
-    /* ENJIN API MARAK LENGKAP 70% LEBAR SKRIN DENGAN SEMPADAN SIFAR API        */
-    /* ========================================================================= */
+    /* ENJIN API MARAK & DINAMIK */
     const fireCanvas = document.getElementById("fireCanvas");
     const fireCtx = fireCanvas.getContext("2d");
 
-    const fireWidth = 240;
-    const fireHeight = 110;
+    let fireWidth = 240;
+    let fireHeight = 110;
     let firePixels = [];
     let fireEmbers = [];
     let fireBaseIntensity = 36;
@@ -887,16 +1095,18 @@
 
     function initFireMatrix() {
       try {
+        fireWidth = isDisasterTriggered ? 280 : 240;
+        fireHeight = isDisasterTriggered ? 130 : 110;
         fireCanvas.width = fireWidth;
         fireCanvas.height = fireHeight;
         firePixels = new Array(fireWidth * fireHeight).fill(0);
         fireEmbers = [];
-        for (let e = 0; e < 40; e++) {
+        for (let e = 0; e < 45; e++) {
           fireEmbers.push({
-            x: (fireWidth * 0.08) + Math.random() * (fireWidth * 0.90),
+            x: Math.random() * fireWidth,
             y: Math.random() * fireHeight,
-            vy: 0.6 + Math.random() * 1.4,
-            vx: (Math.random() - 0.4) * 0.4,
+            vy: 0.6 + Math.random() * 1.5,
+            vx: (Math.random() - 0.5) * 0.4,
             life: Math.random() * 1.0
           });
         }
@@ -909,16 +1119,15 @@
     function repopulateFireBase() {
       try {
         const maxCol = firePalette.length - 1;
-        const baseVal = Math.min(maxCol, Math.max(0, Math.floor((fireBaseIntensity / 36) * maxCol)));
-        // 8% peralihan lembut di sempadan kiri bagi menjamin sempadan sifar api
-        const borderFadeWidth = Math.floor(fireWidth * 0.08);
+        const currentCap = isDisasterTriggered ? 36 : fireBaseIntensity;
+        const baseVal = Math.min(maxCol, Math.max(0, Math.floor((currentCap / 36) * maxCol)));
+        const borderFadeWidth = isDisasterTriggered ? 0 : Math.floor(fireWidth * 0.08);
 
         for (let x = 0; x < fireWidth; x++) {
-          if (x === 0) {
-            // Sempadan paling kiri mutlak tiada api
+          if (!isDisasterTriggered && x === 0) {
             firePixels[(fireHeight - 1) * fireWidth + x] = 0;
           } else {
-            const borderTaper = x < borderFadeWidth ? Math.pow(x / borderFadeWidth, 1.8) : 1.0;
+            const borderTaper = (!isDisasterTriggered && x < borderFadeWidth) ? Math.pow(x / borderFadeWidth, 1.8) : 1.0;
             const wave = Math.sin(x * 0.14 + Date.now() * 0.005) * 3;
             const jitter = (Math.random() - 0.5) * 4;
             let intensity = Math.floor((baseVal + wave + jitter) * borderTaper);
@@ -931,7 +1140,6 @@
 
     function updateFireSpread() {
       try {
-        const maxCol = firePalette.length - 1;
         const decayBase = fireSpeedSetting === "slow" ? 2.0 : 2.5;
 
         for (let x = 0; x < fireWidth; x++) {
@@ -946,8 +1154,7 @@
               const decay = Math.floor(Math.random() * decayBase);
               const toX = x + wind;
 
-              // Jangan biarkan api meresap keluar ke sempadan kiri (x <= 0)
-              if (toX <= 0) {
+              if (!isDisasterTriggered && toX <= 0) {
                 firePixels[fromIdx - fireWidth] = 0;
               } else {
                 const toIdx = fromIdx - fireWidth + wind;
@@ -959,9 +1166,10 @@
           }
         }
 
-        // Pastikan garisan sempadan x=0 sentiasa kekal sifar mutlak
-        for (let y = 0; y < fireHeight; y++) {
-          firePixels[y * fireWidth] = 0;
+        if (!isDisasterTriggered) {
+          for (let y = 0; y < fireHeight; y++) {
+            firePixels[y * fireWidth] = 0;
+          }
         }
 
         fireEmbers.forEach(emb => {
@@ -969,11 +1177,10 @@
           emb.x += emb.vx + (Math.random() - 0.5) * 0.3;
           emb.life -= 0.018;
 
-          // Hapus percikan api jika melepasi sempadan kiri (x <= fireWidth * 0.05)
-          if (emb.y <= 0 || emb.life <= 0 || emb.x <= (fireWidth * 0.05)) {
+          if (emb.y <= 0 || emb.life <= 0 || (!isDisasterTriggered && emb.x <= (fireWidth * 0.05))) {
             emb.y = fireHeight - 5 - Math.random() * 10;
-            emb.x = (fireWidth * 0.08) + Math.random() * (fireWidth * 0.90);
-            emb.vy = 0.6 + Math.random() * 1.4;
+            emb.x = Math.random() * fireWidth;
+            emb.vy = 0.6 + Math.random() * 1.5;
             emb.life = 0.8 + Math.random() * 0.4;
           }
         });
@@ -985,7 +1192,7 @@
         const imgData = fireCtx.createImageData(fireWidth, fireHeight);
         const data = imgData.data;
         const maxCol = firePalette.length - 1;
-        const borderFadeWidth = fireWidth * 0.08;
+        const borderFadeWidth = isDisasterTriggered ? 0 : fireWidth * 0.08;
 
         for (let y = 0; y < fireHeight; y++) {
           for (let x = 0; x < fireWidth; x++) {
@@ -994,20 +1201,19 @@
             const color = firePalette[intensity] || [0, 0, 0];
             const offset = idx * 4;
 
-            // Kecerunan alpha memastikan tepi sempadan larut licin tanpa sebarang garis tajam
-            const edgeAlpha = x < borderFadeWidth ? Math.pow(x / borderFadeWidth, 1.5) : 1.0;
+            const edgeAlpha = (!isDisasterTriggered && x < borderFadeWidth) ? Math.pow(x / borderFadeWidth, 1.5) : 1.0;
 
             data[offset] = color[0];
             data[offset + 1] = color[1];
             data[offset + 2] = color[2];
-            data[offset + 3] = intensity === 0 ? 0 : Math.floor(Math.min(235, 25 + intensity * 7) * edgeAlpha);
+            data[offset + 3] = intensity === 0 ? 0 : Math.floor(Math.min(240, 25 + intensity * 7) * edgeAlpha);
           }
         }
 
         fireEmbers.forEach(emb => {
           const ex = Math.floor(emb.x);
           const ey = Math.floor(emb.y);
-          if (ex >= Math.floor(fireWidth * 0.06) && ex < fireWidth && ey >= 0 && ey < fireHeight) {
+          if (ex >= 0 && ex < fireWidth && ey >= 0 && ey < fireHeight) {
             const off = (ey * fireWidth + ex) * 4;
             data[off] = 255;
             data[off + 1] = 230;
@@ -1039,14 +1245,21 @@
       fireIntervalTime = spd === "slow" ? 60 : 38;
     }
 
-    function adjustFireVisualIntensity(globalRemainingPercent) {
-      const isCompletelyExtinguished = (globalRemainingPercent <= 0 && uniqueParticipants.size >= 15 && answeredGlobalQuestions.size >= 110);
+    /* PENGURUSAN INTENSITI BERKURANG TETAP (MONOTONIK) */
+    function adjustFireVisualIntensity(remainingPercent) {
+      if (isDisasterTriggered) {
+        fireBaseIntensity = 36;
+        return;
+      }
+
+      const isCompletelyExtinguished = (remainingPercent <= 0 && uniqueParticipants.size >= 15 && answeredGlobalQuestions.size >= 110);
       
       if (isCompletelyExtinguished) {
         fireBaseIntensity = 0;
         firePixels.fill(0);
       } else {
-        fireBaseIntensity = Math.max(20, Math.floor((globalRemainingPercent / 100) * 36));
+        const smoothScale = Math.floor((remainingPercent / 100) * 36);
+        fireBaseIntensity = Math.max(3, smoothScale);
       }
     }
 
@@ -1111,6 +1324,7 @@
 
     /* NAVIGASI VIEW */
     function navigateView(viewName) {
+      if (isDisasterTriggered) return;
       try {
         const views = ["home", "quiz", "result", "leaderboard"];
         views.forEach(v => {
@@ -1327,7 +1541,7 @@
         playTone(180, "sawtooth", 0.4, 0.25);
         buttons[selectedIndex].classList.remove("border-gray-700", "bg-gray-800/90");
         buttons[selectedIndex].classList.add("border-red-500", "bg-red-950/60");
-        document.getElementById("firefighter-speech").textContent = "BOMBA SEMEKAR: Awas! Api di kanan semakin marak!";
+        document.getElementById("firefighter-speech").textContent = "BOMBA SEMEKAR: Awas! Api di kanan masih membara!";
       }
 
       updateSessionFireGauge();
@@ -1463,6 +1677,7 @@
       updateGlobalFireUI();
     }
 
+    /* KEMAS KINI UI & MENGEKALKAN INTENSITI TERENDAH TANPA NAIK SEMULA */
     function updateGlobalFireUI() {
       const totalQuestionsCount = 110;
       const solvedCount = answeredGlobalQuestions.size;
@@ -1477,22 +1692,39 @@
         rawRemainingFire = 10;
       }
 
+      // Kunci nilai api terendah supaya tidak naik semula (Monotonik)
+      let lowestFire = Number(localStorage.getItem("RBT_LOWEST_FIRE_PCT") || 100);
+      if (rawRemainingFire < lowestFire) {
+        lowestFire = rawRemainingFire;
+        localStorage.setItem("RBT_LOWEST_FIRE_PCT", lowestFire);
+      }
+
+      const displayFireVal = lowestFire;
+
       const textEls = document.querySelectorAll(".global-fire-val");
       textEls.forEach(el => {
-        if (rawRemainingFire <= 0 && studentCount >= reqStudents) {
+        if (displayFireVal <= 0 && studentCount >= reqStudents) {
           el.textContent = "0% (TERPADAM!)";
           el.className = "global-fire-val text-green-400 font-bold";
         } else {
-          el.textContent = rawRemainingFire + "%";
+          el.textContent = displayFireVal + "%";
           el.className = "global-fire-val text-yellow-400 font-bold";
         }
       });
 
-      if (rawRemainingFire <= 0 && studentCount >= reqStudents) {
+      // Kemas kini juga nilai peratusan api pada panel admin jika ada
+      const adminFireEl = document.getElementById("admin-fire-pct");
+      if (adminFireEl) {
+        adminFireEl.textContent = (displayFireVal <= 0 && studentCount >= reqStudents) ? "0% (PADAM)" : displayFireVal + "%";
+      }
+
+      if (displayFireVal <= 0 && studentCount >= reqStudents) {
         adjustFireVisualIntensity(0);
       } else {
-        adjustFireVisualIntensity(rawRemainingFire);
+        adjustFireVisualIntensity(displayFireVal);
       }
+
+      checkDisasterCondition();
     }
 
     function saveAttemptRecord(record) {
@@ -1517,6 +1749,7 @@
 
       localStorage.setItem("RBT_LEADERBOARD_DATA", JSON.stringify(leaderboardRecords));
       updateTop3HeroesBanner();
+      renderAdminLeaderboard();
     }
 
     function loadLocalLeaderboard() {
@@ -1539,6 +1772,7 @@
         }
       }
       renderLeaderboardTable();
+      renderAdminLeaderboard();
       updateTop3HeroesBanner();
     }
 
@@ -1594,12 +1828,14 @@
           saveUniqueParticipants();
 
           renderLeaderboardTable();
+          renderAdminLeaderboard();
           updateTop3HeroesBanner();
           updateGlobalFireUI();
         }
       } catch(err) {
         console.warn("Menggunakan storan tempatan:", err);
         renderLeaderboardTable();
+        renderAdminLeaderboard();
         updateTop3HeroesBanner();
         updateGlobalFireUI();
       }
@@ -1676,6 +1912,103 @@
       }
     }
 
+    /* PENGURUSAN JADUAL RANKING DALAM MODAL ADMIN (KALIS BENCANA) */
+    function renderAdminLeaderboard() {
+      try {
+        const filterSelect = document.getElementById("admin-filter-class");
+        const filterClass = filterSelect ? filterSelect.value : "ALL";
+        const tbody = document.getElementById("admin-leaderboard-tbody");
+        const emptyEl = document.getElementById("admin-leaderboard-empty");
+        if (!tbody) return;
+
+        tbody.innerHTML = "";
+
+        let list = [...leaderboardRecords];
+        if (filterClass !== "ALL") {
+          list = list.filter(r => r.className === filterClass);
+        }
+
+        list.sort((a, b) => {
+          if (b.score !== a.score) return b.score - a.score;
+          return a.durationSeconds - b.durationSeconds;
+        });
+
+        if (list.length === 0) {
+          if (emptyEl) emptyEl.classList.remove("hidden");
+          return;
+        } else {
+          if (emptyEl) emptyEl.classList.add("hidden");
+        }
+
+        list.forEach((rec, idx) => {
+          const tr = document.createElement("tr");
+          tr.className = "hover:bg-gray-800/60 transition border-b border-gray-800/60";
+
+          let rankBadge = `${idx + 1}`;
+          if (idx === 0) rankBadge = "🥇 1";
+          else if (idx === 1) rankBadge = "🥈 2";
+          else if (idx === 2) rankBadge = "🥉 3";
+
+          const attNumber = rec.attemptNumber || 1;
+          const answeringDur = rec.answeringDuration || "00:00";
+          const lastSession = rec.lastSessionTimestamp || "-";
+          const studentUniquePct = rec.extinguishedPct || getStudentUniqueExtinguishedPct(rec.studentName);
+
+          tr.innerHTML = `
+            <td class="p-2 font-pixel text-yellow-400 font-bold">${rankBadge}</td>
+            <td class="p-2 text-white font-medium truncate max-w-[180px]">${rec.studentName}</td>
+            <td class="p-2 text-orange-300 font-mono">${rec.className}</td>
+            <td class="p-2 text-center text-cyan-300 font-pixel text-[10px]">#${attNumber}/4</td>
+            <td class="p-2 text-center text-green-400 font-bold font-pixel">${rec.score}/40</td>
+            <td class="p-2 text-center text-cyan-400 font-pixel">${studentUniquePct}%</td>
+            <td class="p-2 text-center text-yellow-300 font-mono text-[11px]">${answeringDur}</td>
+            <td class="p-2 text-center text-gray-300 font-mono text-[10px]">${lastSession}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+      } catch (err) {
+        console.warn("Render admin leaderboard error:", err);
+      }
+    }
+
+    /* FUNGSI EKSPORT CSV UNTUK GURU / ADMIN */
+    function exportAdminTableToCSV() {
+      if (!leaderboardRecords || leaderboardRecords.length === 0) {
+        alert("Tiada rekod data murid untuk dieksport.");
+        return;
+      }
+
+      let csvContent = "data:text/csv;charset=utf-8,";
+      csvContent += "Kedudukan,Nama Murid,Kelas,Percubaan,Markah (/40),Sumbangan Api (%),Masa Menjawab,Sesi Terakhir\r\n";
+
+      let sorted = [...leaderboardRecords].sort((a, b) => {
+        if (b.score !== a.score) return b.score - a.score;
+        return a.durationSeconds - b.durationSeconds;
+      });
+
+      sorted.forEach((r, idx) => {
+        const row = [
+          idx + 1,
+          `"${r.studentName || ''}"`,
+          `"${r.className || ''}"`,
+          r.attemptNumber || 1,
+          r.score || 0,
+          `${r.extinguishedPct || 0}%`,
+          `"${r.answeringDuration || '00:00'}"`,
+          `"${r.lastSessionTimestamp || '-'}"`
+        ];
+        csvContent += row.join(",") + "\r\n";
+      });
+
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", `Bomba_SEMEKAR_RBT_T2_Ranking_${Date.now()}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
     /* PENGURUSAN MODAL ADMIN */
     function openAdminModal() {
       const m = document.getElementById("admin-modal");
@@ -1701,8 +2034,27 @@
       if (pwd === "adminrbt2") {
         document.getElementById("admin-auth-box").classList.add("hidden");
         document.getElementById("admin-panel-box").classList.remove("hidden");
-        document.getElementById("admin-unique-count").textContent = uniqueParticipants.size;
+        
+        // Kemas kini statistik semasa
+        document.getElementById("admin-unique-count").textContent = `${uniqueParticipants.size}/15`;
         document.getElementById("admin-solved-count").textContent = `${answeredGlobalQuestions.size} / 110`;
+        
+        const lowestFire = Number(localStorage.getItem("RBT_LOWEST_FIRE_PCT") || 100);
+        document.getElementById("admin-fire-pct").textContent = (lowestFire <= 0 && uniqueParticipants.size >= 15) ? "0% (PADAM)" : `${lowestFire}%`;
+        
+        const statusEl = document.getElementById("admin-mission-status");
+        if (isDisasterTriggered) {
+          statusEl.textContent = "GAGAL (BENGKEL MUSNAH)";
+          statusEl.className = "text-xs font-pixel text-red-500 font-bold truncate";
+        } else if (lowestFire <= 0 && uniqueParticipants.size >= 15) {
+          statusEl.textContent = "BERJAYA PADAM!";
+          statusEl.className = "text-xs font-pixel text-green-400 font-bold truncate";
+        } else {
+          statusEl.textContent = "SEDANG BERJALAN";
+          statusEl.className = "text-xs font-pixel text-yellow-400 font-bold truncate";
+        }
+
+        renderAdminLeaderboard();
       } else {
         alert("Kata laluan salah! Sila hubungi guru RBT.");
       }
@@ -1717,6 +2069,7 @@
       localStorage.removeItem("RBT_STUDENT_ATTEMPTS");
       localStorage.removeItem("RBT_STUDENT_CUMULATIVE_SCORES");
       localStorage.removeItem("RBT_STUDENT_SOLVED_QUESTIONS");
+      localStorage.removeItem("RBT_LOWEST_FIRE_PCT");
 
       answeredGlobalQuestions.clear();
       uniqueParticipants.clear();
@@ -1735,15 +2088,17 @@
         console.warn("Reset sheet:", e);
       }
 
+      revertDisasterMode();
       updateGlobalFireUI();
       renderLeaderboardTable();
+      renderAdminLeaderboard();
       updateTop3HeroesBanner();
 
       if (currentStudent) {
         updateStudentAttemptStatusDisplay(currentStudent);
       }
 
-      alert("Permainan berjaya di-reset kepada keadaan asal!");
+      alert("Permainan dan rekod kebakaran berjaya di-reset!");
       closeAdminModal();
     }
 
@@ -1757,6 +2112,9 @@
       loadGlobalQuestionsProgress();
       loadLocalLeaderboard();
       fetchLeaderboardData();
+
+      updateCountdownDisplay();
+      setInterval(updateCountdownDisplay, 1000);
     });
   </script>
 </body>
