@@ -65,17 +65,18 @@
       animation: question-appear 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
+    /* Kecerunan larut organik: separuh skrin terbakar tetapi teks tetap boleh dibaca */
     .seamless-fire-overlay {
-      mask-image: linear-gradient(to top, rgba(0,0,0,1) 40%, rgba(0,0,0,0.85) 75%, transparent 100%),
-                  linear-gradient(to left, rgba(0,0,0,1) 45%, rgba(0,0,0,0.75) 85%, transparent 100%);
+      mask-image: linear-gradient(to top, rgba(0,0,0,0.95) 30%, rgba(0,0,0,0.65) 65%, transparent 100%),
+                  linear-gradient(to left, rgba(0,0,0,0.95) 35%, rgba(0,0,0,0.6) 75%, transparent 100%);
       mask-composite: intersect;
-      -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 40%, rgba(0,0,0,0.85) 75%, transparent 100%),
-                          linear-gradient(to left, rgba(0,0,0,1) 45%, rgba(0,0,0,0.75) 85%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.95) 30%, rgba(0,0,0,0.65) 65%, transparent 100%),
+                          linear-gradient(to left, rgba(0,0,0,0.95) 35%, rgba(0,0,0,0.6) 75%, transparent 100%);
       -webkit-mask-composite: source-in;
     }
   </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between relative selection:bg-orange-600 selection:text-white pb-60">
+<body class="min-h-screen flex flex-col justify-between relative selection:bg-orange-600 selection:text-white pb-52">
 
   <div class="fixed inset-0 crt-overlay z-20 pointer-events-none opacity-20"></div>
 
@@ -92,7 +93,7 @@
         </div>
       </div>
 
-      <!-- STATUS PENYERTAAN ANGGOTA UNIK -->
+      <!-- STATUS ANGGOTA UNIK -->
       <div class="flex items-center gap-2 bg-black/70 border border-orange-500/50 rounded-xl px-3 py-1.5 shadow-inner text-xs font-mono">
         <span class="text-gray-400 font-pixel text-[9px]">PENYERTAAN ANGGOTA:</span>
         <span id="unique-student-count-badge" class="text-yellow-400 font-pixel text-[11px] font-bold">0/15</span>
@@ -442,16 +443,23 @@
     </div>
   </div>
 
-  <!-- LAPISAN PALING ATAS: API MENJULANG DI BAWAH KANAN (z-[9990]) -->
-  <div id="fire-overlay-wrapper" class="fixed bottom-0 right-0 w-full sm:w-[85vw] md:w-[75vw] pointer-events-none z-[9990] overflow-hidden select-none seamless-fire-overlay transition-all duration-1000" style="height: 50vh;">
-    <canvas id="fireCanvas" class="w-full h-full opacity-90"></canvas>
+  <!-- ========================================================================= -->
+  <!-- KAWASAN API MENJULANG: DI ATAS LABEL PALING BAWAH (bottom-9)              -->
+  <!-- MELIPUTI SEPARUH SKRIN (w-1/2 sm:w-1/2 & 50vh) - SEMULA JADI & SELESA     -->
+  <!-- ========================================================================= -->
+  <div id="fire-overlay-wrapper" class="fixed bottom-9 right-0 w-1/2 sm:w-1/2 pointer-events-none z-[9990] overflow-hidden select-none seamless-fire-overlay transition-all duration-1000" style="height: 50vh;">
+    <canvas id="fireCanvas" class="w-full h-full opacity-85"></canvas>
   </div>
 
-  <!-- KANVAS PANCUTAN AIR MERENTASI SKRIN DARI KIRI KE KANAN (z-[9995]) -->
-  <canvas id="waterCanvas" class="fixed bottom-0 left-0 w-full h-full pointer-events-none z-[9995]"></canvas>
+  <!-- KANVAS PANCUTAN AIR MERENTASI SKRIN DARI KIRI KE KANAN (z-[9992]) -->
+  <canvas id="waterCanvas" class="fixed bottom-9 left-0 w-full h-full pointer-events-none z-[9992]"></canvas>
 
-  <!-- BOMBA SEMEKAR DI BAWAH KIRI (z-[9999]) -->
-  <div class="fixed bottom-2 left-2 sm:left-4 z-[9999] pointer-events-auto flex items-end gap-1.5 sm:gap-2.5 select-none drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
+  <!-- ========================================================================= -->
+  <!-- BOMBA SEMEKAR: TERLETAK DI ATAS LABEL BAWAH (bottom-10) DI BAWAH KIRI     -->
+  <!-- TIADA FRAME / KOTAK DI BELAKANG (TELUS SEMPURNA)                          -->
+  <!-- ========================================================================= -->
+  <div class="fixed bottom-10 left-2 sm:left-4 z-[9995] pointer-events-auto flex items-end gap-1.5 sm:gap-2.5 select-none drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)]">
+    
     <div class="relative">
       <div class="absolute -top-2 left-6 w-2.5 h-2 bg-red-500 rounded-sm siren-active"></div>
       <div class="absolute -top-2 left-10 w-2.5 h-2 bg-cyan-400 rounded-sm siren-active" style="animation-delay: 0.25s;"></div>
@@ -498,15 +506,19 @@
     </div>
   </div>
 
-  <!-- BAR KAWALAN DI BAWAH KANAN: BAKI API GLOBAL & KELAJUAN API SEBARIS (z-[9999]) -->
-  <div class="fixed bottom-2 right-2 z-[9999] pointer-events-auto flex flex-wrap items-center gap-2.5 bg-black/85 backdrop-blur-md border border-orange-500/60 rounded-xl px-3 py-1.5 shadow-2xl text-[9px] font-pixel">
-    <div class="flex items-center gap-1.5 text-red-400">
+  <!-- ========================================================================= -->
+  <!-- BAR LABEL PALING BAWAH (SEBARIS DI DASAR SKRIN: bottom-0 h-9)              -->
+  <!-- Mengekalkan paparan bersih tanpa menghalang animasi bomba & kebakaran     -->
+  <!-- ========================================================================= -->
+  <div class="fixed bottom-0 left-0 right-0 h-9 z-[9999] pointer-events-auto flex items-center justify-between sm:justify-center gap-2 sm:gap-6 bg-black/90 backdrop-blur-md border-t border-orange-500/50 px-3 text-[8.5px] sm:text-[9.5px] font-pixel shadow-2xl">
+    <div class="flex items-center gap-1.5 text-red-400 shrink-0">
       <span>🔥</span>
-      <span>BAKI API GLOBAL:</span>
-      <span id="global-fire-text" class="text-yellow-400 font-bold">100%</span>
+      <span class="hidden xs:inline">BAKI API GLOBAL:</span>
+      <span class="xs:hidden">API GLOBAL:</span>
+      <span class="global-fire-val text-yellow-400 font-bold">100%</span>
     </div>
     <span class="text-gray-600">|</span>
-    <div class="flex items-center gap-1.5 text-gray-400">
+    <div class="flex items-center gap-1.5 text-gray-400 shrink-0">
       <span>KELAJUAN API:</span>
       <button onclick="setFireSpeed('slow')" class="text-yellow-400 hover:underline">SANTAI</button>
       <span>/</span>
@@ -869,10 +881,7 @@
       }
 
       const currentHeightVh = 50 + (timeFraction * 42); 
-      const currentWidthVw = Math.min(100, 75 + (timeFraction * 25));
-
       wrapper.style.height = `${currentHeightVh}vh`;
-      wrapper.style.width = `${currentWidthVw}vw`;
     }
 
     const fireCanvas = document.getElementById("fireCanvas");
@@ -1155,7 +1164,6 @@
       navigateView("quiz");
     }
 
-    /* FUNGSI BUTANG DI JADUAL RANKING: TERUS SAMBUNG SESI BERIKUTNYA */
     function continueNextSession(studentName, className) {
       const attempts = getStudentAttemptCount(studentName);
       if (attempts >= MAX_ALLOWED_ATTEMPTS) {
@@ -1396,18 +1404,21 @@
         rawRemainingFire = 10;
       }
 
-      const textEl = document.getElementById("global-fire-text");
-
-      if (textEl) {
+      const textEls = document.querySelectorAll(".global-fire-val");
+      textEls.forEach(el => {
         if (rawRemainingFire <= 0 && studentCount >= reqStudents) {
-          textEl.textContent = "0% (TERPADAM!)";
-          textEl.className = "text-green-400 font-bold";
-          adjustFireVisualIntensity(0);
+          el.textContent = "0% (TERPADAM!)";
+          el.className = "global-fire-val text-green-400 font-bold";
         } else {
-          textEl.textContent = rawRemainingFire + "%";
-          textEl.className = "text-yellow-400 font-bold";
-          adjustFireVisualIntensity(rawRemainingFire);
+          el.textContent = rawRemainingFire + "%";
+          el.className = "global-fire-val text-yellow-400 font-bold";
         }
+      });
+
+      if (rawRemainingFire <= 0 && studentCount >= reqStudents) {
+        adjustFireVisualIntensity(0);
+      } else {
+        adjustFireVisualIntensity(rawRemainingFire);
       }
     }
 
@@ -1544,11 +1555,9 @@
         const answeringDur = rec.answeringDuration || "00:00";
         const lastSession = rec.lastSessionTimestamp || "-";
         
-        // Kiraan sumbangan unik
         const studentUniquePct = rec.extinguishedPct || getStudentUniqueExtinguishedPct(rec.studentName);
         const attemptsLeft = MAX_ALLOWED_ATTEMPTS - attNumber;
 
-        // Butang sambung main sesi seterusnya
         let actionBtnHtml = "";
         if (attNumber < MAX_ALLOWED_ATTEMPTS) {
           actionBtnHtml = `
