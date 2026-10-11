@@ -92,7 +92,7 @@
         </div>
       </div>
 
-      <!-- STATUS ANGGOTA UNIK -->
+      <!-- STATUS PENYERTAAN ANGGOTA UNIK -->
       <div class="flex items-center gap-2 bg-black/70 border border-orange-500/50 rounded-xl px-3 py-1.5 shadow-inner text-xs font-mono">
         <span class="text-gray-400 font-pixel text-[9px]">PENYERTAAN ANGGOTA:</span>
         <span id="unique-student-count-badge" class="text-yellow-400 font-pixel text-[11px] font-bold">0/15</span>
@@ -157,9 +157,9 @@
           </div>
 
           <div class="bg-black/60 p-3 rounded-xl border border-green-500/30">
-            <div class="font-pixel text-green-400 mb-1 text-[11px]">3. 1 BARIS RANKING</div>
+            <div class="font-pixel text-green-400 mb-1 text-[11px]">3. SUMBANGAN UNIK</div>
             <p class="text-gray-300 text-[11px] leading-relaxed">
-              Nama anda kekal 1 baris sahaja dalam ranking. Markah kumulatif, peratus api terpadam global, dan sesi terkini dikemas kini secara automatik.
+              Kolum <strong>API PADAM</strong> mengira peratusan khusus soalan unik daripada 110 soalan yang berjaya anda padamkan sepanjang semua percubaan anda!
             </p>
           </div>
 
@@ -309,14 +309,14 @@
         <p class="text-sm text-gray-300 mb-1 font-mono" id="result-summary-name">Anggota: -</p>
         <p class="text-xs text-yellow-400 font-pixel mb-6" id="result-attempt-round-info">PERCUBAAN KE-1 / 4</p>
 
-        <!-- 4 KOTAK KEPUTUSAN (MARKAH /40) -->
+        <!-- 4 KOTAK KEPUTUSAN -->
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
           <div class="bg-black/60 p-3.5 rounded-xl border border-gray-800">
             <div class="text-[9px] font-pixel text-gray-400 mb-1">JUMLAH MARKAH</div>
             <div class="text-xl sm:text-2xl font-pixel text-yellow-400" id="result-score-val">0/40</div>
           </div>
           <div class="bg-black/60 p-3.5 rounded-xl border border-gray-800">
-            <div class="text-[9px] font-pixel text-gray-400 mb-1">API TERPADAM GLOBAL</div>
+            <div class="text-[9px] font-pixel text-gray-400 mb-1">SUMBANGAN UNIK</div>
             <div class="text-xl sm:text-2xl font-pixel text-cyan-400" id="result-extinguish-val">0%</div>
           </div>
           <div class="bg-black/60 p-3.5 rounded-xl border border-gray-800">
@@ -330,7 +330,7 @@
         </div>
 
         <p class="text-xs sm:text-sm text-gray-300 mb-6 leading-relaxed" id="result-next-attempt-hint">
-          Sumbangan anda telah direkodkan bersama BOMBA SEMEKAR! Anda masih mempunyai peluang untuk mencuba lagi bagi mencapai 40/40.
+          Sumbangan unik anda telah direkodkan bersama BOMBA SEMEKAR! Anda masih mempunyai peluang untuk mencuba lagi bagi mencapai 40/40.
         </p>
 
         <div class="flex flex-wrap justify-center gap-3">
@@ -353,7 +353,7 @@
             <h2 class="text-base sm:text-lg font-pixel text-yellow-400 flex items-center gap-2">
               🏆 PAPAN KECEMERLANGAN OPERASI BOMBA SEMEKAR
             </h2>
-            <p class="text-xs text-gray-400 font-mono mt-1">Ranking murid berdasarkan markah terkumpul (/40) & peratus pemadaman api global</p>
+            <p class="text-xs text-gray-400 font-mono mt-1">Ranking murid berdasarkan markah terkumpul (/40) & sumbangan unik memadamkan kebakaran global</p>
           </div>
           <div class="flex items-center gap-2">
             <select id="leaderboard-filter-class" onchange="renderLeaderboardTable()" class="bg-gray-800 border border-gray-600 text-yellow-300 rounded px-3 py-1.5 text-xs font-pixel outline-none">
@@ -376,7 +376,7 @@
                 <th class="p-3">KELAS</th>
                 <th class="p-3 text-center">CUBAAN</th>
                 <th class="p-3 text-center">MARKAH (/40)</th>
-                <th class="p-3 text-center">API PADAM (GLOBAL)</th>
+                <th class="p-3 text-center">API PADAM (SUMBANGAN UNIK)</th>
                 <th class="p-3 text-center">MASA MENJAWAB</th>
                 <th class="p-3 text-center">SESI TERAKHIR</th>
               </tr>
@@ -664,25 +664,20 @@
         { id: 110, bab: "BAB 1 INVENTIF", q: "Bahan busa pemadam kebakaran (firefighting foam) mengandungi gelembung buih yang ringan dan terapung di atas minyak. Sifat ini mengurangkan parameter apa?", options: ["Ketumpatan bahan pemadam berbanding minyak petrol", "Suhu bilik", "Daya geseran", "Graviti"], ans: 0, exp: "Ketumpatan buih yang lebih rendah membolehkannya terapung dan menutup lapisan minyak." }
       ];
 
-      // GABUNGKAN SEMUA SOALAN & SUSUN SEMULA JAWAPAN SUPAYA BERTERABUR SEIMBANG (A, B, C & D)
+      // GABUNGKAN & BERTERABURKAN PILIHAN JAWAPAN (A, B, C & D SECARA SEIMBANG)
       const allRaw = [...rawBank, ...extraQuestions];
-
-      // Corak taburan seimbang 25% setiap pilihan A (0), B (1), C (2), D (3)
       const balancedPattern = [1, 3, 0, 2, 2, 0, 3, 1, 3, 2, 0, 1, 0, 3, 1, 2, 2, 1, 0, 3];
 
       allRaw.forEach((item, index) => {
         const correctText = item.options[item.ans];
         const incorrectOptions = item.options.filter((_, idx) => idx !== item.ans);
-        
-        // Tetapkan indeks baharu secara berselang-seli
         const targetIndex = balancedPattern[item.id % balancedPattern.length];
         
         const newOptions = [...incorrectOptions];
         newOptions.splice(targetIndex, 0, correctText);
         
         item.options = newOptions;
-        item.ans = targetIndex; // Indeks jawapan tepat kini berterabur antara A, B, C & D
-        
+        item.ans = targetIndex;
         QUESTION_BANK.push(item);
       });
     })();
@@ -699,6 +694,7 @@
     let leaderboardRecords = [];
     let studentCumulativeScores = {};
     let studentAttemptsMap = {};
+    let studentSolvedQuestionsMap = {}; // Menjejak soalan unik dijawab tepat oleh setiap murid
     let simulatedHourOverride = null;
 
     let audioCtx = null;
@@ -786,27 +782,24 @@
         if (savedAtt) studentAttemptsMap = JSON.parse(savedAtt);
         const savedScores = localStorage.getItem("RBT_STUDENT_CUMULATIVE_SCORES");
         if (savedScores) studentCumulativeScores = JSON.parse(savedScores);
+        const savedSolved = localStorage.getItem("RBT_STUDENT_SOLVED_QUESTIONS");
+        if (savedSolved) studentSolvedQuestionsMap = JSON.parse(savedSolved);
       } catch (e) {}
     }
 
     function saveStudentTrackingMaps() {
       localStorage.setItem("RBT_STUDENT_ATTEMPTS", JSON.stringify(studentAttemptsMap));
       localStorage.setItem("RBT_STUDENT_CUMULATIVE_SCORES", JSON.stringify(studentCumulativeScores));
+      localStorage.setItem("RBT_STUDENT_SOLVED_QUESTIONS", JSON.stringify(studentSolvedQuestionsMap));
     }
 
-    function getGlobalExtinguishedPct() {
-      const totalQuestionsCount = 110;
-      const solvedCount = answeredGlobalQuestions.size;
-      const studentCount = uniqueParticipants.size;
-      const reqStudents = 15;
-
-      let rawRemainingFire = Math.max(0, Math.round(((totalQuestionsCount - solvedCount) / totalQuestionsCount) * 100));
-
-      if (studentCount < reqStudents && rawRemainingFire === 0) {
-        rawRemainingFire = 10;
-      }
-
-      return Math.max(0, 100 - rawRemainingFire);
+    /* KIRA SUMBANGAN UNIK KHUSUS PESERTA (%) */
+    function getStudentUniqueExtinguishedPct(studentName) {
+      if (!studentName) return 0;
+      const key = studentName.trim().toUpperCase();
+      const list = studentSolvedQuestionsMap[key] || [];
+      const uniqueCount = new Set(list).size;
+      return Number(((uniqueCount / 110) * 100).toFixed(1));
     }
 
     function updateTop3HeroesBanner() {
@@ -826,6 +819,7 @@
       for (let i = 0; i < 3; i++) {
         const rec = sorted[i];
         if (rec) {
+          const sPct = rec.extinguishedPct || getStudentUniqueExtinguishedPct(rec.studentName);
           html += `
             <div class="bg-black/80 border ${borderColors[i]} rounded-xl px-2.5 py-1.5 flex items-center gap-2 shadow-lg truncate">
               <span class="text-base shrink-0">${medals[i]}</span>
@@ -834,7 +828,7 @@
                 <div class="text-[9px] text-gray-300 font-mono flex items-center gap-1.5">
                   <span class="text-orange-300">${rec.className}</span>
                   <span class="text-green-400 font-bold">${rec.score}/40</span>
-                  <span class="text-cyan-300">${rec.extinguishedPct}% Global</span>
+                  <span class="text-cyan-300 font-bold">${sPct}% Sumbangan</span>
                 </div>
               </div>
             </div>
@@ -1103,6 +1097,7 @@
 
       const attempts = getStudentAttemptCount(studentName);
       const score = getStudentScore(studentName);
+      const sContribution = getStudentUniqueExtinguishedPct(studentName);
       const remaining = MAX_ALLOWED_ATTEMPTS - attempts;
 
       card.classList.remove("hidden", "bg-green-950/30", "border-green-600/60", "bg-red-950/40", "border-red-600/80", "bg-yellow-950/30", "border-yellow-600/60");
@@ -1116,7 +1111,7 @@
         badge.className = "px-2 py-0.5 rounded font-pixel text-[10px] bg-red-800 text-white";
         bar.className = "h-full bg-red-500 rounded-full";
         msg.innerHTML = `
-          <strong class="text-red-400">⚠️ HAD PERCUBAAN DICAPAI:</strong> Anda telah menggunakan kesemua 4 peluang. Markah akhir anda ialah <strong>${score}/40</strong>. Terima kasih atas usaha anda memadamkan kebakaran!
+          <strong class="text-red-400">⚠️ HAD PERCUBAAN DICAPAI:</strong> Anda telah menggunakan kesemua 4 peluang. Markah akhir anda: <strong class="text-green-400">${score}/40</strong> | Sumbangan unik anda: <strong class="text-cyan-300">${sContribution}%</strong>. Terima kasih atas usaha anda memadamkan kebakaran!
         `;
         btn.disabled = true;
       } else {
@@ -1125,11 +1120,13 @@
         badge.className = "px-2 py-0.5 rounded font-pixel text-[10px] bg-yellow-800 text-yellow-200";
         bar.className = "h-full bg-yellow-500 rounded-full";
         msg.innerHTML = `
-          Markah terkumpul anda setakat ini: <strong class="text-green-400">${score}/40</strong>. Anda masih ada <strong>${remaining} peluang lagi</strong> untuk menambah markah dan membantu pasukan BOMBA SEMEKAR!
+          Markah anda: <strong class="text-green-400">${score}/40</strong> | Sumbangan unik anda: <strong class="text-cyan-300">${sContribution}%</strong>. Anda masih ada <strong>${remaining} peluang lagi</strong> untuk menambah markah dan peratus sumbangan pemadaman anda!
         `;
         btn.disabled = false;
       }
     }
+
+    let sessionCorrectQuestionIds = [];
 
     function startQuizSession() {
       const currentAttempts = getStudentAttemptCount(currentStudent);
@@ -1144,6 +1141,7 @@
       currentQuestionIdx = 0;
       sessionScore = 0;
       sessionDuration = 0;
+      sessionCorrectQuestionIds = [];
 
       const nextAttemptNumber = currentAttempts + 1;
       document.getElementById("quiz-student-badge").textContent = currentStudent;
@@ -1216,6 +1214,7 @@
 
       if (isCorrect) {
         sessionScore++;
+        sessionCorrectQuestionIds.push(qData.id);
         playTone(660, "triangle", 0.2, 0.2);
         buttons[selectedIndex].classList.remove("border-gray-700", "bg-gray-800/90");
         buttons[selectedIndex].classList.add("border-green-500", "bg-green-950/60");
@@ -1291,17 +1290,29 @@
       const currentAttemptNumber = previousAttempts + 1;
       studentAttemptsMap[studentKey] = currentAttemptNumber;
 
+      // Kemas kini soalan unik murid ini
+      if (!studentSolvedQuestionsMap[studentKey]) {
+        studentSolvedQuestionsMap[studentKey] = [];
+      }
+      sessionCorrectQuestionIds.forEach(id => {
+        if (!studentSolvedQuestionsMap[studentKey].includes(id)) {
+          studentSolvedQuestionsMap[studentKey].push(id);
+        }
+      });
+
+      // Kira markah kumulatif (maksimum 40)
       const prevScore = studentCumulativeScores[studentKey] || 0;
       const cumulativeScore = Math.min(40, prevScore + sessionScore);
       studentCumulativeScores[studentKey] = cumulativeScore;
       saveStudentTrackingMaps();
 
-      const globalExtinguishedPct = getGlobalExtinguishedPct();
+      // Kira sumbangan unik khusus murid ini
+      const studentUniqueExtinguishedPct = getStudentUniqueExtinguishedPct(currentStudent);
 
       document.getElementById("result-summary-name").textContent = `Anggota: ${currentStudent} (${currentClass})`;
       document.getElementById("result-attempt-round-info").textContent = `PERCUBAAN KE-${currentAttemptNumber} / ${MAX_ALLOWED_ATTEMPTS}`;
       document.getElementById("result-score-val").textContent = `${cumulativeScore}/40`;
-      document.getElementById("result-extinguish-val").textContent = `${globalExtinguishedPct}%`;
+      document.getElementById("result-extinguish-val").textContent = `${studentUniqueExtinguishedPct}%`;
       document.getElementById("result-answering-duration").textContent = answeringDurationStr;
       document.getElementById("result-last-session-time").textContent = lastSessionTimestampStr;
 
@@ -1309,11 +1320,11 @@
       const hintEl = document.getElementById("result-next-attempt-hint");
       if (remainingAttempts > 0) {
         hintEl.innerHTML = `
-          Sumbangan anda direkodkan bersama BOMBA SEMEKAR! Markah terkumpul anda kini <strong>${cumulativeScore}/40</strong> dan anda mempunyai <strong>${remainingAttempts} peluang lagi</strong> untuk bermain!
+          Sumbangan anda direkodkan bersama BOMBA SEMEKAR! Markah terkumpul anda kini <strong>${cumulativeScore}/40</strong> | Sumbangan unik anda: <strong>${studentUniqueExtinguishedPct}%</strong>. Anda mempunyai <strong>${remainingAttempts} peluang lagi</strong> untuk mencuba!
         `;
       } else {
         hintEl.innerHTML = `
-          Tahniah! Anda telah menyempurnakan kesemua <strong>4 percubaan maksimum</strong> dengan markah akhir <strong>${cumulativeScore}/40</strong>!
+          Tahniah! Anda telah menyempurnakan kesemua <strong>4 percubaan maksimum</strong> dengan markah akhir <strong>${cumulativeScore}/40</strong> dan sumbangan pemadaman <strong>${studentUniqueExtinguishedPct}%</strong>!
         `;
       }
 
@@ -1323,9 +1334,9 @@
         studentName: currentStudent,
         className: currentClass,
         attemptNumber: currentAttemptNumber,
-        score: cumulativeScore,
+        score: cumulativeScore, // Markah kumulatif /40
         totalQuestions: 40,
-        extinguishedPct: globalExtinguishedPct,
+        extinguishedPct: studentUniqueExtinguishedPct, // % Sumbangan unik khusus murid ini
         answeringDuration: answeringDurationStr,
         durationSeconds: sessionDuration
       };
@@ -1400,7 +1411,7 @@
           lastSessionTimestamp: record.lastSessionTimestamp,
           attemptNumber: record.attemptNumber,
           score: record.score,
-          extinguishedPct: record.extinguishedPct,
+          extinguishedPct: record.extinguishedPct, // Sumbangan unik murid
           answeringDuration: record.answeringDuration,
           durationSeconds: record.durationSeconds
         };
@@ -1509,8 +1520,6 @@
         emptyEl.classList.add("hidden");
       }
 
-      const globalExtinguished = getGlobalExtinguishedPct();
-
       list.forEach((rec, idx) => {
         const tr = document.createElement("tr");
         tr.className = "hover:bg-gray-800/50 transition border-b border-gray-800";
@@ -1523,6 +1532,9 @@
         const attNumber = rec.attemptNumber || 1;
         const answeringDur = rec.answeringDuration || "00:00";
         const lastSession = rec.lastSessionTimestamp || "-";
+        
+        // Kiraan sumbangan unik khusus murid ini
+        const studentUniquePct = rec.extinguishedPct || getStudentUniqueExtinguishedPct(rec.studentName);
 
         tr.innerHTML = `
           <td class="p-3 font-pixel text-yellow-400 font-bold">${rankBadge}</td>
@@ -1530,7 +1542,7 @@
           <td class="p-3 text-gray-400 font-mono">${rec.className}</td>
           <td class="p-3 text-center text-cyan-300 font-pixel text-[10px]">#${attNumber}/4</td>
           <td class="p-3 text-center text-green-400 font-bold font-pixel">${rec.score}/40</td>
-          <td class="p-3 text-center text-cyan-400 font-pixel font-bold">${globalExtinguished}%</td>
+          <td class="p-3 text-center text-cyan-400 font-pixel font-bold">${studentUniquePct}%</td>
           <td class="p-3 text-center text-yellow-300 font-mono">${answeringDur}</td>
           <td class="p-3 text-center text-gray-300 font-mono text-[11px]">${lastSession}</td>
         `;
@@ -1569,12 +1581,14 @@
       localStorage.removeItem("RBT_LEADERBOARD_DATA");
       localStorage.removeItem("RBT_STUDENT_ATTEMPTS");
       localStorage.removeItem("RBT_STUDENT_CUMULATIVE_SCORES");
+      localStorage.removeItem("RBT_STUDENT_SOLVED_QUESTIONS");
 
       answeredGlobalQuestions.clear();
       uniqueParticipants.clear();
       leaderboardRecords = [];
       studentAttemptsMap = {};
       studentCumulativeScores = {};
+      studentSolvedQuestionsMap = {};
 
       try {
         await fetch(GAS_WEBAPP_URL, {
