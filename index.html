@@ -26,11 +26,12 @@
     .font-retro { font-family: var(--retro-font); }
 
     .crt-overlay {
-      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.28) 50%);
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
       background-size: 100% 4px;
       pointer-events: none;
     }
 
+    /* Rendering piksel yang halus dan tajam */
     canvas {
       image-rendering: pixelated;
       image-rendering: crisp-edges;
@@ -56,12 +57,22 @@
     .flame-pulse {
       animation: pulse-flame 1.4s ease-in-out infinite;
     }
+
+    /* Api bebas tanpa sempadan kotak - kecerunan larut lembut */
+    .seamless-fire-overlay {
+      mask-image: linear-gradient(to top, rgba(0,0,0,1) 35%, rgba(0,0,0,0.85) 65%, transparent 100%),
+                  linear-gradient(to left, rgba(0,0,0,1) 45%, rgba(0,0,0,0.8) 75%, transparent 100%);
+      mask-composite: intersect;
+      -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 35%, rgba(0,0,0,0.85) 65%, transparent 100%),
+                          linear-gradient(to left, rgba(0,0,0,1) 45%, rgba(0,0,0,0.8) 75%, transparent 100%);
+      -webkit-mask-composite: source-in;
+    }
   </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between relative selection:bg-orange-600 selection:text-white pb-72">
+<body class="min-h-screen flex flex-col justify-between relative selection:bg-orange-600 selection:text-white pb-64">
 
   <!-- Lapisan Scanlines CRT -->
-  <div class="fixed inset-0 crt-overlay z-50 pointer-events-none opacity-25"></div>
+  <div class="fixed inset-0 crt-overlay z-30 pointer-events-none opacity-20"></div>
 
   <!-- HEADER UTAMA & STATUS MISI GLOBAL -->
   <header class="bg-gray-900/95 backdrop-blur border-b-2 border-orange-600/80 sticky top-0 z-30 px-3 sm:px-4 py-2.5 shadow-2xl">
@@ -115,10 +126,7 @@
         <span class="text-lg animate-bounce">🎖️</span>
         <span class="font-pixel text-[10px] sm:text-xs text-yellow-400 tracking-wider">3 HERO BOMBA SEMEKAR (SEMASA):</span>
       </div>
-      <!-- Grid 3 Slot Hero Semasa -->
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 w-full md:w-auto flex-1 max-w-3xl" id="top-3-heroes-container">
-        <!-- Dimuatkan secara langsung oleh JS -->
-      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 w-full md:w-auto flex-1 max-w-3xl" id="top-3-heroes-container"></div>
     </div>
   </section>
 
@@ -473,9 +481,7 @@
               <span id="replay-status-badge" class="px-2 py-0.5 rounded text-[10px]">STATUS</span>
             </div>
             <div class="text-[11px] font-pixel text-gray-400 mb-2" id="replay-chapter-tag">BAB: -</div>
-            <h4 class="text-sm font-medium text-white mb-3 leading-relaxed" id="replay-question-text">
-              -
-            </h4>
+            <h4 class="text-sm font-medium text-white mb-3 leading-relaxed" id="replay-question-text">-</h4>
             <div class="p-3 rounded-lg bg-gray-900 border border-gray-800 text-xs font-mono mb-2">
               <span class="text-gray-400">Pilihan Dijawab Oleh Murid:</span>
               <div class="text-yellow-300 font-bold mt-1" id="replay-chosen-text">-</div>
@@ -516,7 +522,7 @@
                   <rect x="17" y="15" width="12" height="8" fill="#ffd8a8" />
                   <rect x="14" y="23" width="18" height="18" fill="#d9480f" />
                   <rect x="26" y="27" width="14" height="6" fill="#d9480f" />
-                  <rect x="36" y="25" width="7" height="8" fill="#868e96" />
+                  <rect x="36" y="25" width="7" height="8" fill="#adb5bd" />
                   <rect x="15" y="41" width="7" height="12" fill="#212529" />
                   <rect x="24" y="41" width="7" height="12" fill="#212529" />
                 </svg>
@@ -600,18 +606,21 @@
     </div>
   </div>
 
-  <!-- PENTAS KEKAL BAWAH: API HORIZONTAL & DEK BOMBA SEMEKAR DI HADAPAN -->
-  <!-- KANVAS API: BERADA DI LAPISAN BELAKANG (z-10) -->
-  <div class="fixed bottom-0 left-0 right-0 h-48 pointer-events-none z-10 overflow-hidden select-none">
-    <div class="absolute inset-0 bg-gradient-to-t from-transparent via-[#08090d]/30 to-transparent"></div>
-    <canvas id="fireCanvas" class="absolute bottom-0 left-0 w-full h-44 opacity-95"></canvas>
+  <!-- ========================================================================= -->
+  <!-- LAPISAN PALING ATAS (OVERLAY): API MENJULANG DI BAWAH KANAN (TIADA SEMPADAN) -->
+  <!-- ========================================================================= -->
+  <div class="fixed bottom-0 right-0 w-full sm:w-3/4 md:w-3/5 lg:w-1/2 h-80 sm:h-96 pointer-events-none z-45 overflow-hidden select-none seamless-fire-overlay">
+    <!-- Kanvas Api Halus Menjulang Membakar Webpage -->
+    <canvas id="fireCanvas" class="w-full h-full opacity-90"></canvas>
   </div>
 
-  <!-- KANVAS PANCUTAN AIR: BERADA DI LAPISAN TENGAH (z-20) -->
-  <canvas id="waterCanvas" class="fixed bottom-0 left-0 w-full h-64 pointer-events-none z-20"></canvas>
+  <!-- KANVAS PANCUTAN AIR MERENTASI SKRIN DARI KIRI KE KANAN -->
+  <canvas id="waterCanvas" class="fixed bottom-0 left-0 w-full h-72 sm:h-80 pointer-events-none z-48"></canvas>
 
-  <!-- DEK OPERASI BOMBA SEMEKAR BERBINGKAI: BERADA DI HADAPAN LAPISAN API (z-40) -->
-  <div class="fixed bottom-3 left-2 sm:left-6 z-40 pointer-events-auto flex items-end gap-2 sm:gap-4 bg-gray-950/95 border-2 border-yellow-400 p-2.5 sm:p-3 rounded-2xl shadow-[0_0_30px_rgba(255,165,0,0.4)] backdrop-blur-md">
+  <!-- ========================================================================= -->
+  <!-- BOMBA SEMEKAR: TERLETAK DI HADAPAN SEKALI DI SEBELAH BAWAH KIRI (z-50) -->
+  <!-- ========================================================================= -->
+  <div class="fixed bottom-3 left-3 sm:left-6 z-50 pointer-events-auto flex items-end gap-2.5 sm:gap-4 bg-gray-950/95 border-2 border-yellow-400 p-2.5 sm:p-3.5 rounded-2xl shadow-[0_0_35px_rgba(255,165,0,0.5)] backdrop-blur-md">
     
     <!-- Jentera Bomba Pixel Art dengan Tulisan "BOMBA SEMEKAR" -->
     <div class="relative drop-shadow-2xl">
@@ -619,7 +628,7 @@
       <div class="absolute -top-3 left-9 w-3.5 h-2.5 bg-red-500 rounded-sm siren-active"></div>
       <div class="absolute -top-3 left-14 w-3.5 h-2.5 bg-cyan-400 rounded-sm siren-active" style="animation-delay: 0.25s;"></div>
 
-      <svg width="165" height="78" viewBox="0 0 140 70" class="w-36 sm:w-48 h-auto drop-shadow-md">
+      <svg width="170" height="80" viewBox="0 0 140 70" class="w-36 sm:w-48 h-auto drop-shadow-md">
         <!-- Badan Jentera Merah -->
         <rect x="5" y="20" width="130" height="35" fill="#c92a2a" />
         <rect x="5" y="10" width="60" height="15" fill="#e03131" />
@@ -665,15 +674,15 @@
     <div class="hidden sm:flex flex-col border-l border-gray-700 pl-3">
       <div class="flex items-center gap-1.5">
         <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-        <span class="text-[9px] font-pixel text-yellow-400">UNIT PEMADAM: BOMBA SEMEKAR</span>
+        <span class="text-[9px] font-pixel text-yellow-400">PASUKAN: BOMBA SEMEKAR</span>
       </div>
-      <span class="text-[11px] font-mono text-cyan-300" id="firefighter-speech">Sedia menerima jawapan tepat untuk menyiram!</span>
+      <span class="text-[11px] font-mono text-cyan-300" id="firefighter-speech">Sedia menyembur air ke arah kebakaran di kanan!</span>
     </div>
 
   </div>
 
-  <!-- PENGATUR KELAJUAN API DI SUDUT KANAN -->
-  <div class="fixed bottom-3 right-3 z-40 pointer-events-auto flex items-center gap-2 bg-gray-950/90 border border-gray-700 rounded-xl px-3 py-1.5 text-[10px] font-pixel text-gray-400 shadow-xl">
+  <!-- PENGATUR KELAJUAN API DI SUDUT KANAN ATAS API -->
+  <div class="fixed bottom-2 right-3 z-50 pointer-events-auto flex items-center gap-2 bg-gray-950/90 border border-gray-700 rounded-xl px-2.5 py-1 text-[9px] font-pixel text-gray-400 shadow-xl">
     <span>KELAJUAN API:</span>
     <button onclick="setFireSpeed('slow')" class="text-yellow-400 hover:underline">SANTAI</button>
     <span>|</span>
@@ -942,7 +951,6 @@
       return leaderboardRecords.filter(r => r.studentName === studentName).length;
     }
 
-    /* KEMAS KINI 3 HERO BOMBA SEMEKAR DI RUANGAN ATAS SECARA DINAMIK */
     function updateTop3HeroesBanner() {
       const container = document.getElementById("top-3-heroes-container");
       if (!container) return;
@@ -1088,42 +1096,57 @@
       
       const remaining = MAX_ALLOWED_ATTEMPTS - demoAttemptStep;
       feedback.innerHTML = `
-        🎯 <strong>Simulasi Percubaan Ke-${demoAttemptStep} / 4:</strong> Anggota BOMBA SEMEKAR berjaya menyiram air! 
+        🎯 <strong>Simulasi Percubaan Ke-${demoAttemptStep} / 4:</strong> Anggota BOMBA SEMEKAR berjaya menyiram air ke arah api di kanan! 
         ${remaining > 0 ? `(Baki ${remaining} kali lagi boleh membantu)` : `<span class="text-red-400 font-bold">(Had 4 kali maksimum dicapai bagi anggota ini!)</span>`}
       `;
     }
 
-    /* KANVAS API PIXEL RETRO */
+    /* ========================================================================= */
+    /* SIMULASI API PIKSEL HALUS (FINE-PIXEL) MENJULANG DI SEBELAH BAWAH KANAN   */
+    /* ========================================================================= */
     const fireCanvas = document.getElementById("fireCanvas");
     const fireCtx = fireCanvas.getContext("2d");
 
-    let fireWidth = 140;
-    let fireHeight = 44;
+    // Resolusi piksel diperhalus daripada 140x44 kepada 280x90
+    let fireWidth = 280;
+    let fireHeight = 90;
     let firePixels = [];
     let fireBaseIntensity = 35;
     let fireSpeedSetting = "slow";
-    let fireIntervalTime = 110;
+    let fireIntervalTime = 95;
     let lastFireTick = 0;
 
     const firePalette = [
-      [7,7,7], [31,7,7], [47,15,7], [71,15,7], [87,23,7], [103,31,7],
-      [119,31,7], [143,39,7], [159,47,7], [175,63,7], [191,71,7], [199,71,7],
-      [223,79,7], [223,87,7], [223,87,7], [215,95,7], [215,95,7], [215,103,15],
-      [207,111,15], [207,119,15], [207,127,15], [207,135,23], [199,135,23], [199,143,23],
-      [199,151,31], [191,159,31], [191,159,31], [191,167,39], [191,167,39], [191,175,47],
-      [183,175,47], [183,183,47], [183,183,55], [207,207,111], [223,223,159], [239,239,199],
+      [0,0,0], [28,5,5], [45,10,5], [68,14,5], [85,20,5], [102,28,6],
+      [118,30,6], [140,38,6], [158,45,6], [175,60,6], [190,70,6], [198,70,6],
+      [220,78,6], [222,85,6], [222,85,6], [215,92,6], [215,92,6], [215,100,12],
+      [207,110,14], [207,118,14], [207,126,14], [207,134,20], [199,134,20], [199,142,20],
+      [199,150,28], [191,158,28], [191,158,28], [191,166,36], [191,166,36], [191,174,45],
+      [183,174,45], [183,182,45], [183,182,52], [207,207,105], [223,223,155], [239,239,195],
       [255,255,255]
     ];
 
     function initFireMatrix() {
       firePixels = new Array(fireWidth * fireHeight).fill(0);
+      repopulateFireBase();
+    }
+
+    /* Pangkalan api: tertumpu dan membara di sebelah kanan, melarut secara semula jadi ke kiri */
+    function repopulateFireBase() {
       for (let x = 0; x < fireWidth; x++) {
-        firePixels[(fireHeight - 1) * fireWidth + x] = fireBaseIntensity;
+        // Tapering: Api bermula dari kira-kira 25% lebar dan memuncak ke kanan 100%
+        let taperRatio = Math.max(0, (x - (fireWidth * 0.20)) / (fireWidth * 0.80));
+        let intensity = Math.floor(fireBaseIntensity * taperRatio);
+        // Sedikit rawak organik pada pangkalan api
+        if (intensity > 0) {
+          intensity = Math.max(0, intensity - Math.floor(Math.random() * 3));
+        }
+        firePixels[(fireHeight - 1) * fireWidth + x] = intensity;
       }
     }
 
     function updateFireSpread() {
-      const decayStep = fireSpeedSetting === "slow" ? 2 : 3;
+      const decayFactor = fireSpeedSetting === "slow" ? 2 : 3;
       for (let x = 0; x < fireWidth; x++) {
         for (let y = 1; y < fireHeight; y++) {
           const fromIdx = y * fireWidth + x;
@@ -1131,11 +1154,13 @@
           if (pixelValue === 0) {
             firePixels[fromIdx - fireWidth] = 0;
           } else {
-            const rand = Math.floor(Math.random() * decayStep);
-            const toIdx = (fromIdx - fireWidth - rand + 1);
+            const rand = Math.floor(Math.random() * decayFactor);
+            // Angin lembut meniup api sedikit ke arah kiri (arah semburan)
+            const windDrift = Math.random() > 0.6 ? 1 : 0;
+            const toIdx = (fromIdx - fireWidth - rand - windDrift);
             if (toIdx >= 0) {
               const decayVal = Math.floor(Math.random() * (fireSpeedSetting === "slow" ? 2 : 3));
-              firePixels[toIdx] = Math.max(0, pixelValue - (decayVal & 2));
+              firePixels[toIdx] = Math.max(0, pixelValue - decayVal);
             }
           }
         }
@@ -1155,7 +1180,8 @@
         data[offset] = color[0];
         data[offset + 1] = color[1];
         data[offset + 2] = color[2];
-        data[offset + 3] = intensity === 0 ? 0 : 235;
+        // Lutsinar sempurna jika tiada api, dan separa lutsinar organik pada bara sejuk
+        data[offset + 3] = intensity === 0 ? 0 : Math.min(240, intensity * 7 + 40);
       }
       fireCtx.putImageData(imgData, 0, 0);
     }
@@ -1171,54 +1197,56 @@
 
     function setFireSpeed(spd) {
       fireSpeedSetting = spd;
-      fireIntervalTime = spd === "slow" ? 110 : 65;
+      fireIntervalTime = spd === "slow" ? 100 : 60;
     }
 
     function adjustFireVisualIntensity(remainingPercent) {
       fireBaseIntensity = Math.floor((remainingPercent / 100) * 36);
-      for (let x = 0; x < fireWidth; x++) {
-        firePixels[(fireHeight - 1) * fireWidth + x] = fireBaseIntensity;
-      }
+      repopulateFireBase();
       if (remainingPercent <= 0) {
         firePixels.fill(0);
       }
     }
 
-    /* KANVAS PANCUTAN AIR */
+    /* ========================================================================= */
+    /* PANCUTAN AIR MERENTASI DARI NOZEL (KIRI) KE ARAH KEBAKARAN (KANAN)       */
+    /* ========================================================================= */
     const waterCanvas = document.getElementById("waterCanvas");
     const waterCtx = waterCanvas.getContext("2d");
     let waterParticles = [];
 
     function resizeWaterCanvas() {
       waterCanvas.width = window.innerWidth;
-      waterCanvas.height = waterCanvas.offsetHeight || 250;
+      waterCanvas.height = waterCanvas.offsetHeight || 300;
     }
     window.addEventListener("resize", resizeWaterCanvas);
 
-    function triggerWaterSpray(targetScreenPercent = 60) {
+    function triggerWaterSpray(targetScreenPercent = 75) {
       playWaterSound();
       const nozzleEl = document.getElementById("nozzle-tip");
       const rect = nozzleEl ? nozzleEl.getBoundingClientRect() : null;
-      const startX = rect ? rect.left + 5 : 180;
-      const startY = rect ? rect.top : (window.innerHeight - 80);
+      const startX = rect ? rect.right : 180;
+      const startY = rect ? (rect.top - (window.innerHeight - waterCanvas.height)) : (waterCanvas.height - 40);
 
-      for (let i = 0; i < 90; i++) {
+      // Pancutan zarah melengkung tinggi dari kiri menghala ke kanan (ke arah api)
+      for (let i = 0; i < 95; i++) {
         setTimeout(() => {
           for (let p = 0; p < 4; p++) {
-            const angle = -0.38 + (Math.random() * 0.16);
-            const speed = 13 + Math.random() * 10;
+            // Sudut dongak pancutan melengkung ke kanan atas lalu jatuh ke api
+            const angle = -0.42 + (Math.random() * 0.14);
+            const speed = 16 + Math.random() * 11;
             waterParticles.push({
               x: startX,
               y: startY,
               vx: Math.cos(angle) * speed,
               vy: Math.sin(angle) * speed,
-              gravity: 0.35,
+              gravity: 0.38,
               life: 1.0,
-              size: 3.5 + Math.random() * 4,
+              size: 3 + Math.random() * 3.5,
               color: Math.random() > 0.4 ? '#38d9a9' : '#4dabf7'
             });
           }
-        }, i * 14);
+        }, i * 13);
       }
     }
 
@@ -1229,11 +1257,12 @@
         p.x += p.vx;
         p.y += p.vy;
         p.vy += p.gravity;
-        p.life -= 0.02;
+        p.life -= 0.018;
 
         if (p.life <= 0 || p.y >= waterCanvas.height) {
-          waterCtx.fillStyle = 'rgba(255, 255, 255, 0.4)';
-          waterCtx.fillRect(p.x, waterCanvas.height - 12, p.size * 1.5, p.size);
+          // Kesan wap putih apabila titisan air mencecah zon api di kanan
+          waterCtx.fillStyle = 'rgba(255, 255, 255, 0.45)';
+          waterCtx.fillRect(p.x, waterCanvas.height - 14, p.size * 2, p.size);
           waterParticles.splice(i, 1);
         } else {
           waterCtx.fillStyle = p.color;
@@ -1419,13 +1448,14 @@
         answeredGlobalQuestions.add(qData.id);
         saveGlobalQuestionsProgress();
 
-        triggerWaterSpray(50 + (currentQuestionIdx * 4));
-        document.getElementById("firefighter-speech").textContent = "BOMBA SEMEKAR: Semburan air bertekanan tinggi berjaya dilancarkan!";
+        // Semburkan air ke arah api di sebelah kanan
+        triggerWaterSpray(75);
+        document.getElementById("firefighter-speech").textContent = "BOMBA SEMEKAR: Semburan air tepat ke punca api di sebelah kanan!";
       } else {
         playTone(180, "sawtooth", 0.4, 0.25);
         buttons[selectedIndex].classList.remove("border-gray-700", "bg-gray-800/90");
         buttons[selectedIndex].classList.add("border-red-500", "bg-red-950/60");
-        document.getElementById("firefighter-speech").textContent = "BOMBA SEMEKAR: Awas! Jawapan tidak tepat. Suhu terus meningkat!";
+        document.getElementById("firefighter-speech").textContent = "BOMBA SEMEKAR: Awas! Jawapan tidak tepat. Api di sebelah kanan semakin marak!";
       }
 
       updateSessionFireGauge();
