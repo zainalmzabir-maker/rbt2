@@ -65,14 +65,10 @@
       animation: question-appear 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
-    /* Topeng larut lembut pada sempadan api: api marak tanpa garisan kotak kaku */
-    .raging-inferno-mask {
-      mask-image: linear-gradient(to top, rgba(0,0,0,1) 50%, rgba(0,0,0,0.85) 75%, transparent 100%),
-                  linear-gradient(to left, rgba(0,0,0,1) 65%, rgba(0,0,0,0.75) 88%, transparent 100%);
-      mask-composite: intersect;
-      -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 50%, rgba(0,0,0,0.85) 75%, transparent 100%),
-                          linear-gradient(to left, rgba(0,0,0,1) 65%, rgba(0,0,0,0.75) 88%, transparent 100%);
-      -webkit-mask-composite: source-in;
+    /* Topeng larut lembut atas: selamat di semua pelayar tanpa pepijat ketelusan */
+    .raging-inferno-fade {
+      mask-image: linear-gradient(to top, rgba(0,0,0,1) 60%, rgba(0,0,0,0.8) 80%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 60%, rgba(0,0,0,0.8) 80%, transparent 100%);
     }
   </style>
 </head>
@@ -153,7 +149,7 @@
           <div class="bg-black/60 p-3 rounded-xl border border-yellow-500/30">
             <div class="font-pixel text-yellow-400 mb-1 text-[11px]">2. SYARAT API 0%</div>
             <p class="text-gray-300 text-[11px] leading-relaxed">
-              Kebakaran padam 100% apabila <strong>kesemua 110 soalan</strong> pernah dijawab tepat DAN minimum <strong>15 anggota berbeza</strong> telah menyertai operasi.
+              Kebakaran padam 100% apabila <strong>kesemua 110 soalan</strong> pernah dijawab tepat DAN minimum <strong>15 anggota berbeza</strong> telah menyertai operasi[cite: 1, 2].
             </p>
           </div>
 
@@ -167,7 +163,7 @@
           <div class="bg-black/60 p-3 rounded-xl border border-red-500/30">
             <div class="font-pixel text-red-400 mb-1 text-[11px]">4. API MERBAHAYA</div>
             <p class="text-gray-300 text-[11px] leading-relaxed">
-              Api marak membakar 55% lebar kanan dan menjulang 70% ketinggian skrin. Teks tetap boleh dibaca dan ditatal mengikut keselesaan anda!
+              Api marak membakar separuh ruangan kanan (50% horizontal & 50vh vertikal). Kandungan webapp di belakang api tetap boleh dibaca dan ditatal ke atas/bawah!
             </p>
           </div>
         </div>
@@ -444,15 +440,16 @@
   </div>
 
   <!-- ========================================================================= -->
-  <!-- KAWASAN API INFERNO MENJULANG MARAK (TEPAT 55% HORIZONTAL & 70% VERTIKAL)  -->
-  <!-- Menjulang tinggi di sebelah kanan (55vw & 70vh) di atas bar label lantai  -->
+  <!-- KAWASAN API INFERNO MENJULANG MARAK (50% HORIZONTAL & 50% VERTIKAL)        -->
+  <!-- Tepat 50% lebar kanan (w-1/2) dan 50% tinggi vertikal (50vh)              -->
+  <!-- Dilapisi bayang membara pekat (drop-shadow fiery aura)                     -->
   <!-- ========================================================================= -->
-  <div id="fire-overlay-wrapper" class="fixed bottom-9 right-0 w-[55vw] h-[70vh] pointer-events-none z-[9990] overflow-hidden select-none raging-inferno-mask transition-all duration-700 drop-shadow-[0_-16px_45px_rgba(255,69,0,0.6)]" style="height: 70vh; width: 55vw;">
+  <div id="fire-overlay-wrapper" class="fixed bottom-9 right-0 w-1/2 h-[50vh] pointer-events-none z-[9990] overflow-hidden select-none raging-inferno-fade drop-shadow-[0_-15px_30px_rgba(255,69,0,0.7)] drop-shadow-[0_-4px_10px_rgba(255,215,0,0.5)]">
     <canvas id="fireCanvas" class="w-full h-full"></canvas>
   </div>
 
   <!-- KANVAS PANCUTAN AIR MERENTASI SKRIN DARI KIRI KE KANAN (z-[9992]) -->
-  <canvas id="waterCanvas" class="fixed bottom-9 left-0 w-full h-[70vh] pointer-events-none z-[9992]"></canvas>
+  <canvas id="waterCanvas" class="fixed bottom-9 left-0 w-full h-[50vh] pointer-events-none z-[9992]"></canvas>
 
   <!-- ========================================================================= -->
   <!-- BOMBA SEMEKAR: TERLETAK DI ATAS BAR LABEL (bottom-10) DI BAWAH KIRI        -->
