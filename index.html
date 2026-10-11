@@ -65,10 +65,10 @@
       animation: question-appear 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
-    /* Topeng larut lembut atas api */
+    /* Kecerunan larut lembut di puncak api */
     .raging-inferno-fade {
-      mask-image: linear-gradient(to top, rgba(0,0,0,1) 55%, rgba(0,0,0,0.75) 80%, transparent 100%);
-      -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 55%, rgba(0,0,0,0.75) 80%, transparent 100%);
+      mask-image: linear-gradient(to top, rgba(0,0,0,1) 50%, rgba(0,0,0,0.7) 78%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 50%, rgba(0,0,0,0.7) 78%, transparent 100%);
     }
   </style>
 </head>
@@ -96,16 +96,16 @@
       </div>
 
       <div class="flex items-center gap-2">
-        <button onclick="navigateView('home')" class="px-2.5 py-1.5 bg-gray-800 hover:bg-gray-700 border border-gray-600 rounded text-xs font-pixel text-gray-200 transition">
+        <button type="button" onclick="navigateView('home')" class="px-2.5 py-1.5 bg-gray-800 hover:bg-gray-700 border border-gray-600 rounded text-xs font-pixel text-gray-200 transition">
           UTAMA
         </button>
-        <button onclick="navigateView('leaderboard')" class="px-2.5 py-1.5 bg-orange-700 hover:bg-orange-600 border border-yellow-500 rounded text-xs font-pixel text-yellow-300 transition shadow">
+        <button type="button" onclick="navigateView('leaderboard')" class="px-2.5 py-1.5 bg-orange-700 hover:bg-orange-600 border border-yellow-500 rounded text-xs font-pixel text-yellow-300 transition shadow">
           RANKING 🏆
         </button>
-        <button onclick="openAdminModal()" class="px-2.5 py-1.5 bg-red-900/80 hover:bg-red-800 border border-red-500 rounded text-xs font-pixel text-red-200 transition" title="Portal Guru / Admin">
+        <button type="button" onclick="openAdminModal()" class="px-2.5 py-1.5 bg-red-900/80 hover:bg-red-800 border border-red-500 rounded text-xs font-pixel text-red-200 transition" title="Portal Guru / Admin">
           ADMIN 🔒
         </button>
-        <button onclick="toggleAudio()" id="audio-toggle-btn" class="px-2 py-1.5 bg-gray-800 hover:bg-gray-700 border border-gray-600 rounded text-xs text-yellow-400" title="Audio">
+        <button type="button" onclick="toggleAudio()" id="audio-toggle-btn" class="px-2 py-1.5 bg-gray-800 hover:bg-gray-700 border border-gray-600 rounded text-xs text-yellow-400" title="Audio">
           🔊
         </button>
       </div>
@@ -127,7 +127,7 @@
   <main class="max-w-6xl w-full mx-auto p-3 sm:p-4 relative z-10">
 
     <!-- VIEW 1: HOME -->
-    <section id="view-home" class="view-panel transition-opacity duration-300 space-y-6">
+    <section id="view-home" class="view-panel space-y-6">
 
       <div class="bg-gradient-to-r from-gray-900 via-red-950/40 to-gray-900 border-2 border-orange-600/70 rounded-2xl p-5 sm:p-6 shadow-2xl backdrop-blur-md">
         <div class="flex items-center gap-3 mb-3">
@@ -161,9 +161,9 @@
           </div>
 
           <div class="bg-black/60 p-3 rounded-xl border border-red-500/30">
-            <div class="font-pixel text-red-400 mb-1 text-[11px]">4. API INFERNO KANAN</div>
+            <div class="font-pixel text-red-400 mb-1 text-[11px]">4. API KANAN MARAK</div>
             <p class="text-gray-300 text-[11px] leading-relaxed">
-              Api marak membakar di sebelah kanan skrin. Bahagian kiri kekal lapang sepenuhnya dan teks sentiasa boleh dibaca dengan jelas!
+              Api marak membakar di sebelah kanan skrin. Bahagian kiri kekal lapang dan teks soalan sentiasa boleh dibaca dengan selesa!
             </p>
           </div>
         </div>
@@ -226,7 +226,7 @@
             <p id="student-attempt-message" class="text-gray-300 text-[11px] leading-relaxed mt-1">-</p>
           </div>
 
-          <button id="btn-start-quiz" onclick="startQuizSession()" disabled class="w-full mt-3 py-4 bg-gradient-to-r from-red-600 via-orange-600 to-yellow-600 hover:from-red-500 hover:to-yellow-500 disabled:opacity-40 disabled:cursor-not-allowed text-black font-pixel font-bold text-xs sm:text-sm rounded-xl shadow-lg shadow-orange-700/50 transform active:scale-95 transition border-2 border-yellow-300">
+          <button type="button" id="btn-start-quiz" onclick="startQuizSession()" disabled class="w-full mt-3 py-4 bg-gradient-to-r from-red-600 via-orange-600 to-yellow-600 hover:from-red-500 hover:to-yellow-500 disabled:opacity-40 disabled:cursor-not-allowed text-black font-pixel font-bold text-xs sm:text-sm rounded-xl shadow-lg shadow-orange-700/50 transform active:scale-95 transition border-2 border-yellow-300">
             🔥 MASUKKAN JENTERA KE ZON KEBAKARAN!
           </button>
         </div>
@@ -235,7 +235,7 @@
     </section>
 
     <!-- VIEW 2: SESI KUIZ PEMADAMAN -->
-    <section id="view-quiz" style="display: none;" class="view-panel transition-opacity duration-300">
+    <section id="view-quiz" class="view-panel hidden transition-opacity duration-300">
       <div id="quiz-card-content" class="max-w-3xl mx-auto bg-gray-900/95 border-2 border-orange-500/80 rounded-2xl p-5 sm:p-7 shadow-2xl backdrop-blur-md relative">
         
         <div id="new-question-indicator" class="hidden absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-yellow-400 text-black font-pixel text-[10px] rounded-full shadow-lg border-2 border-orange-600 animate-bounce z-20">
@@ -290,7 +290,7 @@
         </div>
 
         <div class="flex justify-end">
-          <button id="btn-next-question" onclick="nextQuestion()" disabled class="px-6 py-3 bg-gray-800 text-gray-500 font-pixel text-xs rounded-xl border border-gray-700 disabled:opacity-40 disabled:cursor-not-allowed transition hover:bg-orange-600 hover:text-white hover:border-yellow-400">
+          <button type="button" id="btn-next-question" onclick="nextQuestion()" disabled class="px-6 py-3 bg-gray-800 text-gray-500 font-pixel text-xs rounded-xl border border-gray-700 disabled:opacity-40 disabled:cursor-not-allowed transition hover:bg-orange-600 hover:text-white hover:border-yellow-400">
             SOALAN SETERUSNYA ➔
           </button>
         </div>
@@ -299,7 +299,7 @@
     </section>
 
     <!-- VIEW 3: KEPUTUSAN MISI -->
-    <section id="view-result" style="display: none;" class="view-panel transition-opacity duration-300">
+    <section id="view-result" class="view-panel hidden transition-opacity duration-300">
       <div class="max-w-2xl mx-auto bg-gray-900/95 border-2 border-yellow-500/80 rounded-2xl p-6 sm:p-8 text-center shadow-2xl backdrop-blur-md">
         <div class="text-4xl mb-2">🎉</div>
         <h2 class="text-xl sm:text-2xl font-pixel text-yellow-400 mb-1">OPERASI SELESAI!</h2>
@@ -331,10 +331,10 @@
         </p>
 
         <div class="flex flex-wrap justify-center gap-3">
-          <button onclick="navigateView('home')" class="px-5 py-3 bg-gray-800 hover:bg-gray-700 border border-gray-600 rounded-xl font-pixel text-xs text-white transition">
+          <button type="button" onclick="navigateView('home')" class="px-5 py-3 bg-gray-800 hover:bg-gray-700 border border-gray-600 rounded-xl font-pixel text-xs text-white transition">
             🔄 SESI BARU
           </button>
-          <button onclick="navigateView('leaderboard')" class="px-5 py-3 bg-orange-600 hover:bg-orange-500 border border-yellow-400 rounded-xl font-pixel text-xs text-yellow-200 transition shadow-lg">
+          <button type="button" onclick="navigateView('leaderboard')" class="px-5 py-3 bg-orange-600 hover:bg-orange-500 border border-yellow-400 rounded-xl font-pixel text-xs text-yellow-200 transition shadow-lg">
             🏆 LIHAT RANKING
           </button>
         </div>
@@ -342,7 +342,7 @@
     </section>
 
     <!-- VIEW 4: RANKING KESELURUHAN -->
-    <section id="view-leaderboard" style="display: none;" class="view-panel transition-opacity duration-300">
+    <section id="view-leaderboard" class="view-panel hidden transition-opacity duration-300">
       <div class="max-w-5xl mx-auto bg-gray-900/95 border-2 border-orange-600/80 rounded-2xl p-5 sm:p-7 shadow-2xl backdrop-blur-md">
         
         <div class="flex flex-wrap items-center justify-between gap-3 mb-6 pb-4 border-b border-gray-800">
@@ -358,7 +358,7 @@
               <option value="2S1">KELAS 2S1</option>
               <option value="2S2">KELAS 2S2</option>
             </select>
-            <button onclick="fetchLeaderboardData()" class="p-2 bg-gray-800 hover:bg-gray-700 border border-gray-600 text-yellow-400 rounded text-xs" title="Segarkan Data Google Sheet">
+            <button type="button" onclick="fetchLeaderboardData()" class="p-2 bg-gray-800 hover:bg-gray-700 border border-gray-600 text-yellow-400 rounded text-xs" title="Segarkan Data Google Sheet">
               🔄
             </button>
           </div>
@@ -392,10 +392,10 @@
 
   </main>
 
-  <!-- MODAL ADMIN -->
-  <div id="admin-modal" style="display: none;" class="fixed inset-0 bg-black/90 z-[10000] flex items-center justify-center p-3 backdrop-blur-sm">
+  <!-- MODAL ADMIN (DISEMBUNYIKAN SECARA BETUL DENGAN KELAS HIDDEN) -->
+  <div id="admin-modal" class="hidden fixed inset-0 bg-black/90 z-[10000] items-center justify-center p-3 backdrop-blur-sm">
     <div class="bg-gray-900 border-2 border-red-500 rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
-      <button onclick="closeAdminModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white font-pixel text-sm">
+      <button type="button" onclick="closeAdminModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white font-pixel text-sm">
         ✖
       </button>
 
@@ -417,7 +417,7 @@
         </button>
       </div>
 
-      <div id="admin-panel-box" style="display: none;" class="space-y-4 pt-2">
+      <div id="admin-panel-box" class="hidden space-y-4 pt-2">
         <div class="p-3 bg-green-950/40 border border-green-500 rounded-xl text-xs text-green-300 font-mono">
           ✅ Akses Admin Disahkan!
         </div>
@@ -440,10 +440,10 @@
   </div>
 
   <!-- ========================================================================= -->
-  <!-- KAWASAN API INFERNO MENJULANG MARAK DI SEBELAH KANAN (right-0 w-[52vw])   -->
-  <!-- Tepat di sebelah kanan, tiada api di kiri, dan lidah api terkawal         -->
+  <!-- KAWASAN API INFERNO MENJULANG MARAK (TEPAT 50% HORIZONTAL & 50% VERTIKAL)  -->
+  <!-- Tepat di sebelah kanan (w-1/2), 0% api di kiri, dan lidah api terkawal     -->
   <!-- ========================================================================= -->
-  <div id="fire-overlay-wrapper" class="fixed bottom-9 right-0 w-[52vw] h-[50vh] pointer-events-none z-[9990] overflow-hidden select-none raging-inferno-fade drop-shadow-[0_-12px_28px_rgba(255,69,0,0.75)]">
+  <div id="fire-overlay-wrapper" class="fixed bottom-9 right-0 w-1/2 h-[50vh] pointer-events-none z-[9990] overflow-hidden select-none raging-inferno-fade drop-shadow-[0_-12px_28px_rgba(255,69,0,0.75)]">
     <canvas id="fireCanvas" class="w-full h-full block"></canvas>
   </div>
 
@@ -452,7 +452,6 @@
 
   <!-- ========================================================================= -->
   <!-- BOMBA SEMEKAR: TERLETAK DI ATAS BAR LABEL (bottom-10) DI BAWAH KIRI        -->
-  <!-- Bebas frame kotak, jernih & kemas                                         -->
   <!-- ========================================================================= -->
   <div class="fixed bottom-10 left-2 sm:left-4 z-[9995] pointer-events-auto flex items-end gap-1.5 sm:gap-2.5 select-none drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)]">
     
@@ -502,9 +501,7 @@
     </div>
   </div>
 
-  <!-- ========================================================================= -->
-  <!-- BAR LABEL PALING BAWAH (SEBARIS DI DASAR SKRIN: bottom-0 h-9)              -->
-  <!-- ========================================================================= -->
+  <!-- BAR LABEL PALING BAWAH (SEBARIS DI DASAR SKRIN: bottom-0 h-9) -->
   <div class="fixed bottom-0 left-0 right-0 h-9 z-[9999] pointer-events-auto flex items-center justify-between sm:justify-center gap-2 sm:gap-6 bg-black/95 backdrop-blur-md border-t border-orange-500/60 px-3 text-[8.5px] sm:text-[9.5px] font-pixel shadow-2xl">
     <div class="flex items-center gap-1.5 text-red-400 shrink-0">
       <span>🔥</span>
@@ -515,9 +512,9 @@
     <span class="text-gray-600">|</span>
     <div class="flex items-center gap-1.5 text-gray-400 shrink-0">
       <span>KELAJUAN API:</span>
-      <button onclick="setFireSpeed('slow')" class="text-yellow-400 hover:underline">SANTAI</button>
+      <button type="button" onclick="setFireSpeed('slow')" class="text-yellow-400 hover:underline">SANTAI</button>
       <span>/</span>
-      <button onclick="setFireSpeed('normal')" class="text-orange-400 hover:underline">LAJU</button>
+      <button type="button" onclick="setFireSpeed('normal')" class="text-orange-400 hover:underline">LAJU</button>
     </div>
   </div>
 
@@ -785,12 +782,16 @@
     function loadStudentTrackingMaps() {
       try {
         const savedAtt = localStorage.getItem("RBT_STUDENT_ATTEMPTS");
-        if (savedAtt) studentAttemptsMap = JSON.parse(savedAtt);
+        if (savedAtt) studentAttemptsMap = JSON.parse(savedAtt) || {};
         const savedScores = localStorage.getItem("RBT_STUDENT_CUMULATIVE_SCORES");
-        if (savedScores) studentCumulativeScores = JSON.parse(savedScores);
+        if (savedScores) studentCumulativeScores = JSON.parse(savedScores) || {};
         const savedSolved = localStorage.getItem("RBT_STUDENT_SOLVED_QUESTIONS");
-        if (savedSolved) studentSolvedQuestionsMap = JSON.parse(savedSolved);
-      } catch (e) {}
+        if (savedSolved) studentSolvedQuestionsMap = JSON.parse(savedSolved) || {};
+      } catch (e) {
+        studentAttemptsMap = {};
+        studentCumulativeScores = {};
+        studentSolvedQuestionsMap = {};
+      }
     }
 
     function saveStudentTrackingMaps() {
@@ -851,6 +852,307 @@
         }
       }
       container.innerHTML = html;
+    }
+
+    /* ENJIN API MARAK & BERBAHAYA (KANAN SAHAJA, TIADA DI KIRI) */
+    const fireCanvas = document.getElementById("fireCanvas");
+    const fireCtx = fireCanvas.getContext("2d");
+
+    const fireWidth = 160;
+    const fireHeight = 90;
+    let firePixels = [];
+    let fireEmbers = [];
+    let fireBaseIntensity = 36;
+    let fireSpeedSetting = "slow";
+    let fireIntervalTime = 60;
+    let lastFireTick = 0;
+
+    const firePalette = [
+      [0, 0, 0],       [30, 4, 4],     [60, 7, 7],     [90, 10, 8],
+      [120, 15, 8],    [150, 22, 8],   [180, 30, 8],   [210, 40, 8],
+      [230, 52, 8],    [245, 68, 8],   [255, 85, 10],  [255, 105, 12],
+      [255, 125, 14],  [255, 145, 18], [255, 165, 22], [255, 180, 26],
+      [255, 195, 32],  [255, 210, 40], [255, 222, 48], [255, 232, 58],
+      [255, 240, 70],  [255, 246, 85], [255, 250, 105],[255, 252, 130],
+      [255, 253, 160], [255, 254, 190],[255, 255, 220],[255, 255, 245],
+      [255, 255, 255]
+    ];
+
+    function initFireMatrix() {
+      fireCanvas.width = fireWidth;
+      fireCanvas.height = fireHeight;
+      firePixels = new Array(fireWidth * fireHeight).fill(0);
+      fireEmbers = [];
+      for (let e = 0; e < 35; e++) {
+        fireEmbers.push({
+          x: (fireWidth * 0.1) + Math.random() * (fireWidth * 0.9),
+          y: Math.random() * fireHeight,
+          vy: 0.5 + Math.random() * 1.3,
+          vx: (Math.random() - 0.5) * 0.6,
+          life: Math.random() * 1.0
+        });
+      }
+      repopulateFireBase();
+    }
+
+    function repopulateFireBase() {
+      const maxCol = firePalette.length - 1;
+      const baseVal = Math.min(maxCol, Math.max(0, Math.floor((fireBaseIntensity / 36) * maxCol)));
+      
+      for (let x = 0; x < fireWidth; x++) {
+        // Taper lembut dari tepi kiri kanvas (0) sehingga penuh di sebelah kanan (1.0)
+        const taper = Math.min(1.0, Math.pow(x / (fireWidth * 0.75), 1.6));
+        const wave = Math.sin(x * 0.15 + Date.now() * 0.005) * 3;
+        const jitter = (Math.random() - 0.5) * 4;
+        let intensity = Math.floor((baseVal + wave + jitter) * taper);
+
+        firePixels[(fireHeight - 1) * fireWidth + x] = Math.max(0, Math.min(maxCol, intensity));
+      }
+    }
+
+    function updateFireSpread() {
+      const maxCol = firePalette.length - 1;
+      const decayBase = fireSpeedSetting === "slow" ? 2.1 : 2.6;
+
+      for (let x = 0; x < fireWidth; x++) {
+        for (let y = 1; y < fireHeight; y++) {
+          const fromIdx = y * fireWidth + x;
+          const pixelValue = firePixels[fromIdx];
+
+          if (pixelValue === 0) {
+            firePixels[fromIdx - fireWidth] = 0;
+          } else {
+            const wind = Math.floor(Math.random() * 3) - 1;
+            const decay = Math.floor(Math.random() * decayBase);
+            const toIdx = (fromIdx - fireWidth + wind);
+
+            if (toIdx >= 0 && toIdx < firePixels.length) {
+              firePixels[toIdx] = Math.max(0, pixelValue - decay);
+            }
+          }
+        }
+      }
+
+      fireEmbers.forEach(emb => {
+        emb.y -= emb.vy;
+        emb.x += emb.vx + (Math.random() - 0.5) * 0.3;
+        emb.life -= 0.018;
+
+        if (emb.y <= 0 || emb.life <= 0) {
+          emb.y = fireHeight - 5 - Math.random() * 10;
+          emb.x = (fireWidth * 0.15) + Math.random() * (fireWidth * 0.85);
+          emb.vy = 0.5 + Math.random() * 1.3;
+          emb.life = 0.8 + Math.random() * 0.4;
+        }
+      });
+    }
+
+    function renderFireCanvas() {
+      const imgData = fireCtx.createImageData(fireWidth, fireHeight);
+      const data = imgData.data;
+      const maxCol = firePalette.length - 1;
+
+      for (let i = 0; i < firePixels.length; i++) {
+        const intensity = Math.min(maxCol, firePixels[i]);
+        const color = firePalette[intensity] || [0, 0, 0];
+        const offset = i * 4;
+
+        data[offset] = color[0];
+        data[offset + 1] = color[1];
+        data[offset + 2] = color[2];
+        data[offset + 3] = intensity === 0 ? 0 : Math.min(220, 30 + intensity * 7);
+      }
+
+      fireEmbers.forEach(emb => {
+        const ex = Math.floor(emb.x);
+        const ey = Math.floor(emb.y);
+        if (ex >= 0 && ex < fireWidth && ey >= 0 && ey < fireHeight) {
+          const off = (ey * fireWidth + ex) * 4;
+          data[off] = 255;
+          data[off + 1] = 230;
+          data[off + 2] = 120;
+          data[off + 3] = Math.floor(emb.life * 230);
+        }
+      });
+
+      fireCtx.putImageData(imgData, 0, 0);
+    }
+
+    function fireAnimationLoop(timestamp) {
+      if (timestamp - lastFireTick > fireIntervalTime) {
+        lastFireTick = timestamp;
+        repopulateFireBase();
+        updateFireSpread();
+        renderFireCanvas();
+      }
+      requestAnimationFrame(fireAnimationLoop);
+    }
+
+    function setFireSpeed(spd) {
+      fireSpeedSetting = spd;
+      fireIntervalTime = spd === "slow" ? 60 : 38;
+    }
+
+    function adjustFireVisualIntensity(globalRemainingPercent) {
+      const isCompletelyExtinguished = (globalRemainingPercent <= 0 && uniqueParticipants.size >= 15 && answeredGlobalQuestions.size >= 110);
+      
+      if (isCompletelyExtinguished) {
+        fireBaseIntensity = 0;
+        firePixels.fill(0);
+      } else {
+        fireBaseIntensity = Math.max(20, Math.floor((globalRemainingPercent / 100) * 36));
+      }
+    }
+
+    /* PANCUTAN AIR */
+    const waterCanvas = document.getElementById("waterCanvas");
+    const waterCtx = waterCanvas.getContext("2d");
+    let waterParticles = [];
+
+    function resizeWaterCanvas() {
+      waterCanvas.width = window.innerWidth;
+      waterCanvas.height = window.innerHeight * 0.5;
+    }
+    window.addEventListener("resize", resizeWaterCanvas);
+
+    function triggerWaterSpray(targetScreenPercent = 75) {
+      playWaterSound();
+      const nozzleEl = document.getElementById("nozzle-tip");
+      const rect = nozzleEl ? nozzleEl.getBoundingClientRect() : null;
+      const startX = rect ? rect.right : 120;
+      const startY = waterCanvas.height - 35;
+
+      for (let i = 0; i < 95; i++) {
+        setTimeout(() => {
+          for (let p = 0; p < 4; p++) {
+            const angle = -0.38 + (Math.random() * 0.14);
+            const speed = 17 + Math.random() * 11;
+            waterParticles.push({
+              x: startX,
+              y: startY,
+              vx: Math.cos(angle) * speed,
+              vy: Math.sin(angle) * speed,
+              gravity: 0.42,
+              life: 1.0,
+              size: 3 + Math.random() * 3.5,
+              color: Math.random() > 0.4 ? '#38d9a9' : '#4dabf7'
+            });
+          }
+        }, i * 13);
+      }
+    }
+
+    function updateWaterParticles() {
+      waterCtx.clearRect(0, 0, waterCanvas.width, waterCanvas.height);
+      for (let i = waterParticles.length - 1; i >= 0; i--) {
+        const p = waterParticles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += p.gravity;
+        p.life -= 0.018;
+
+        if (p.life <= 0 || p.y >= waterCanvas.height) {
+          waterCtx.fillStyle = 'rgba(255, 255, 255, 0.45)';
+          waterCtx.fillRect(p.x, waterCanvas.height - 14, p.size * 2, p.size);
+          waterParticles.splice(i, 1);
+        } else {
+          waterCtx.fillStyle = p.color;
+          waterCtx.fillRect(p.x, p.y, p.size, p.size);
+        }
+      }
+      requestAnimationFrame(updateWaterParticles);
+    }
+
+    function navigateView(viewName) {
+      document.querySelectorAll(".view-panel").forEach(p => {
+        p.classList.add("hidden");
+      });
+      const target = document.getElementById("view-" + viewName);
+      if (target) {
+        target.classList.remove("hidden");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+      if (viewName === "leaderboard") renderLeaderboardTable();
+      if (viewName === "home" && currentStudent) updateStudentAttemptStatusDisplay(currentStudent);
+    }
+
+    function selectClass(className) {
+      currentClass = className;
+      document.querySelectorAll(".class-btn").forEach(btn => {
+        btn.classList.remove("border-yellow-400", "bg-orange-950/80");
+        btn.classList.add("border-gray-700", "bg-gray-800");
+      });
+      const activeBtn = document.getElementById("btn-class-" + className.toLowerCase());
+      if (activeBtn) {
+        activeBtn.classList.remove("border-gray-700", "bg-gray-800");
+        activeBtn.classList.add("border-yellow-400", "bg-orange-950/80");
+      }
+
+      const dropdown = document.getElementById("student-name-dropdown");
+      dropdown.innerHTML = '<option value="">-- Sila Pilih Nama Anda --</option>';
+      const names = STUDENTS_DATA[className] || [];
+      names.forEach(name => {
+        const count = getStudentAttemptCount(name);
+        const currentScore = getStudentScore(name);
+        const opt = document.createElement("option");
+        opt.value = name;
+        opt.textContent = `${name} [Percubaan: ${count}/4 | Markah: ${currentScore}/40]`;
+        dropdown.appendChild(opt);
+      });
+
+      const container = document.getElementById("student-select-container");
+      container.classList.remove("opacity-50", "pointer-events-none");
+      
+      document.getElementById("student-attempt-status-card").classList.add("hidden");
+      document.getElementById("btn-start-quiz").disabled = true;
+    }
+
+    document.getElementById("student-name-dropdown").addEventListener("change", function(e) {
+      currentStudent = e.target.value;
+      if (currentStudent) {
+        updateStudentAttemptStatusDisplay(currentStudent);
+      } else {
+        document.getElementById("student-attempt-status-card").classList.add("hidden");
+        document.getElementById("btn-start-quiz").disabled = true;
+      }
+    });
+
+    function updateStudentAttemptStatusDisplay(studentName) {
+      const card = document.getElementById("student-attempt-status-card");
+      const badge = document.getElementById("student-attempt-badge");
+      const bar = document.getElementById("student-attempt-bar");
+      const msg = document.getElementById("student-attempt-message");
+      const btn = document.getElementById("btn-start-quiz");
+
+      const attempts = getStudentAttemptCount(studentName);
+      const score = getStudentScore(studentName);
+      const sContribution = getStudentUniqueExtinguishedPct(studentName);
+      const remaining = MAX_ALLOWED_ATTEMPTS - attempts;
+
+      card.classList.remove("hidden", "bg-green-950/30", "border-green-600/60", "bg-red-950/40", "border-red-600/80", "bg-yellow-950/30", "border-yellow-600/60");
+
+      const pct = Math.min(100, (attempts / MAX_ALLOWED_ATTEMPTS) * 100);
+      bar.style.width = pct + "%";
+
+      if (attempts >= MAX_ALLOWED_ATTEMPTS) {
+        card.classList.add("bg-red-950/40", "border-red-600/80");
+        badge.textContent = `${attempts} / ${MAX_ALLOWED_ATTEMPTS} KALI (PENUH)`;
+        badge.className = "px-2 py-0.5 rounded font-pixel text-[10px] bg-red-800 text-white";
+        bar.className = "h-full bg-red-500 rounded-full";
+        msg.innerHTML = `
+          <strong class="text-red-400">⚠️ HAD PERCUBAAN DICAPAI:</strong> Anda telah menggunakan kesemua 4 peluang. Markah akhir: <strong class="text-green-400">${score}/40</strong> | Sumbangan unik: <strong class="text-cyan-300">${sContribution}%</strong>. Terima kasih atas usaha anda memadamkan kebakaran!
+        `;
+        btn.disabled = true;
+      } else {
+        card.classList.add("bg-yellow-950/30", "border-yellow-600/60");
+        badge.textContent = `${attempts} / ${MAX_ALLOWED_ATTEMPTS} KALI`;
+        badge.className = "px-2 py-0.5 rounded font-pixel text-[10px] bg-yellow-800 text-yellow-200";
+        bar.className = "h-full bg-yellow-500 rounded-full";
+        msg.innerHTML = `
+          Markah anda: <strong class="text-green-400">${score}/40</strong> | Sumbangan unik anda: <strong class="text-cyan-300">${sContribution}%</strong>. Anda masih ada <strong>${remaining} peluang lagi</strong> untuk menambah markah dan peratus sumbangan pemadaman anda!
+        `;
+        btn.disabled = false;
+      }
     }
 
     let sessionCorrectQuestionIds = [];
@@ -1280,7 +1582,7 @@
         let actionBtnHtml = "";
         if (attNumber < MAX_ALLOWED_ATTEMPTS) {
           actionBtnHtml = `
-            <button onclick="continueNextSession('${rec.studentName}', '${rec.className}')" class="px-2.5 py-1 bg-gradient-to-r from-orange-600 to-yellow-600 hover:from-orange-500 hover:to-yellow-500 text-black font-pixel text-[9px] font-bold rounded shadow transition flex items-center justify-center gap-1 mx-auto">
+            <button type="button" onclick="continueNextSession('${rec.studentName}', '${rec.className}')" class="px-2.5 py-1 bg-gradient-to-r from-orange-600 to-yellow-600 hover:from-orange-500 hover:to-yellow-500 text-black font-pixel text-[9px] font-bold rounded shadow transition flex items-center justify-center gap-1 mx-auto">
               <span>▶</span> SESI ${attNumber + 1}/4 (BAKI ${attemptsLeft})
             </button>
           `;
@@ -1305,24 +1607,27 @@
       });
     }
 
-    /* PENGURUSAN MODAL ADMIN */
+    /* PENGURUSAN MODAL ADMIN MENGGUNAKAN KELAS HIDDEN SECARA BERSIH */
     function openAdminModal() {
       const m = document.getElementById("admin-modal");
-      m.style.display = "flex";
+      m.classList.remove("hidden");
+      m.classList.add("flex");
       document.getElementById("admin-pwd-input").value = "";
-      document.getElementById("admin-auth-box").style.display = "block";
-      document.getElementById("admin-panel-box").style.display = "none";
+      document.getElementById("admin-auth-box").classList.remove("hidden");
+      document.getElementById("admin-panel-box").classList.add("hidden");
     }
 
     function closeAdminModal() {
-      document.getElementById("admin-modal").style.display = "none";
+      const m = document.getElementById("admin-modal");
+      m.classList.add("hidden");
+      m.classList.remove("flex");
     }
 
     function verifyAdminPassword() {
       const pwd = document.getElementById("admin-pwd-input").value.trim();
       if (pwd === "adminrbt2") {
-        document.getElementById("admin-auth-box").style.display = "none";
-        document.getElementById("admin-panel-box").style.display = "block";
+        document.getElementById("admin-auth-box").classList.add("hidden");
+        document.getElementById("admin-panel-box").classList.remove("hidden");
         document.getElementById("admin-unique-count").textContent = uniqueParticipants.size;
         document.getElementById("admin-solved-count").textContent = `${answeredGlobalQuestions.size} / 110`;
       } else {
