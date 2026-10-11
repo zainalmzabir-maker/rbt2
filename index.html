@@ -186,7 +186,7 @@
                 <span>3️⃣</span> MAKSIMUM 4 KALI CUBA
               </div>
               <p class="text-gray-300 leading-relaxed text-[11px]">
-                Setiap murid <strong>dibenarkan menjawab semula sehingga 4 kali</strong> untuk membantu pasukan memadamkan kebakaran. Rekod ranking akan dikemas kini pada baris anda tanpa duplikasi!
+                Setiap murid dibenarkan mencuba sehingga 4 kali. Nama murid kekal 1 baris sahaja dalam ranking dan catatannya dikemas kini mengikut skor terbaik!
               </p>
             </div>
           </div>
@@ -197,7 +197,7 @@
                 <span>4️⃣</span> DUAL-WINDOW REPLAY
               </div>
               <p class="text-gray-300 leading-relaxed text-[11px]">
-                Setiap jawapan tepat melancarkan pancutan air bertekanan tinggi. Seluruh usaha direkodkan dan boleh ditonton semula pada bila-bila masa melalui butang <strong>▶ PLAY</strong>!
+                Setiap usaha direkodkan dan boleh ditonton semula melalui butang <strong>▶ PLAY</strong> lengkap dengan paparan soalan dan semburan air jentera!
               </p>
             </div>
           </div>
@@ -374,21 +374,26 @@
       <div class="max-w-2xl mx-auto bg-gray-900/95 border-2 border-yellow-500/80 rounded-2xl p-6 sm:p-8 text-center shadow-2xl backdrop-blur-md">
         <div class="text-4xl mb-2">🎉</div>
         <h2 class="text-xl sm:text-2xl font-pixel text-yellow-400 mb-1">OPERASI SELESAI!</h2>
-        <p class="text-sm text-gray-300 mb-2 font-mono" id="result-summary-name">Anggota: -</p>
+        <p class="text-sm text-gray-300 mb-1 font-mono" id="result-summary-name">Anggota: -</p>
         <p class="text-xs text-yellow-400 font-pixel mb-6" id="result-attempt-round-info">PERCUBAAN KE-1 / 4</p>
 
-        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-6">
-          <div class="bg-black/60 p-4 rounded-xl border border-gray-800">
-            <div class="text-[10px] font-pixel text-gray-400 mb-1">SKOR AKHIR</div>
-            <div class="text-2xl font-pixel text-yellow-400" id="result-score-val">0/10</div>
+        <!-- 2 MASA DIPAPARKAN DENGAN JELAS -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+          <div class="bg-black/60 p-3.5 rounded-xl border border-gray-800">
+            <div class="text-[9px] font-pixel text-gray-400 mb-1">SKOR AKHIR</div>
+            <div class="text-xl sm:text-2xl font-pixel text-yellow-400" id="result-score-val">0/10</div>
           </div>
-          <div class="bg-black/60 p-4 rounded-xl border border-gray-800">
-            <div class="text-[10px] font-pixel text-gray-400 mb-1">API TERPADAM (SESI)</div>
-            <div class="text-2xl font-pixel text-cyan-400" id="result-extinguish-val">0%</div>
+          <div class="bg-black/60 p-3.5 rounded-xl border border-gray-800">
+            <div class="text-[9px] font-pixel text-gray-400 mb-1">API TERPADAM (SESI)</div>
+            <div class="text-xl sm:text-2xl font-pixel text-cyan-400" id="result-extinguish-val">0%</div>
           </div>
-          <div class="bg-black/60 p-4 rounded-xl border border-gray-800 col-span-2 sm:col-span-1">
-            <div class="text-[10px] font-pixel text-gray-400 mb-1">MASA DIAMBIL</div>
-            <div class="text-2xl font-pixel text-green-400" id="result-time-val">00:00</div>
+          <div class="bg-black/60 p-3.5 rounded-xl border border-gray-800">
+            <div class="text-[9px] font-pixel text-gray-400 mb-1">MASA MENJAWAB (DURASI)</div>
+            <div class="text-xl sm:text-2xl font-pixel text-green-400" id="result-answering-duration">00:00</div>
+          </div>
+          <div class="bg-black/60 p-3.5 rounded-xl border border-gray-800">
+            <div class="text-[9px] font-pixel text-gray-400 mb-1">SESI TERAKHIR</div>
+            <div class="text-xs sm:text-sm font-mono text-orange-300 pt-1" id="result-last-session-time">-</div>
           </div>
         </div>
 
@@ -407,16 +412,16 @@
       </div>
     </section>
 
-    <!-- VIEW 4: RANKING KESELURUHAN -->
+    <!-- VIEW 4: RANKING KESELURUHAN (DENGAN 2 LAJUR MASA BERASINGAN) -->
     <section id="view-leaderboard" class="view-panel hidden transition-opacity duration-300">
-      <div class="max-w-4xl mx-auto bg-gray-900/95 border-2 border-orange-600/80 rounded-2xl p-5 sm:p-7 shadow-2xl backdrop-blur-md">
+      <div class="max-w-5xl mx-auto bg-gray-900/95 border-2 border-orange-600/80 rounded-2xl p-5 sm:p-7 shadow-2xl backdrop-blur-md">
         
         <div class="flex flex-wrap items-center justify-between gap-3 mb-6 pb-4 border-b border-gray-800">
           <div>
             <h2 class="text-base sm:text-lg font-pixel text-yellow-400 flex items-center gap-2">
               🏆 PAPAN KECEMERLANGAN OPERASI BOMBA SEMEKAR
             </h2>
-            <p class="text-xs text-gray-400 font-mono mt-1">Ranking terkini setiap murid (Catatan unik dikemas kini mengikut prestasi terbaik)</p>
+            <p class="text-xs text-gray-400 font-mono mt-1">Setiap murid kekal 1 baris sahaja (Dikemas kini rekod terbaik tanpa duplikasi)</p>
           </div>
           <div class="flex items-center gap-2">
             <select id="leaderboard-filter-class" onchange="renderLeaderboardTable()" class="bg-gray-800 border border-gray-600 text-yellow-300 rounded px-3 py-1.5 text-xs font-pixel outline-none">
@@ -433,15 +438,16 @@
         <div class="overflow-x-auto">
           <table class="w-full text-left text-xs font-mono">
             <thead>
-              <tr class="bg-black/60 text-orange-400 font-pixel text-[10px] border-b border-gray-800">
-                <th class="p-3">KED</th>
-                <th class="p-3">NAMA MURID</th>
-                <th class="p-3">KELAS</th>
-                <th class="p-3 text-center">PERCUBAAN</th>
-                <th class="p-3 text-center">SKOR</th>
-                <th class="p-3 text-center">API PADAM</th>
-                <th class="p-3 text-center">MASA</th>
-                <th class="p-3 text-center">RAKAMAN USAHA</th>
+              <tr class="bg-black/60 text-orange-400 font-pixel text-[9.5px] border-b border-gray-800">
+                <th class="p-2.5">KED</th>
+                <th class="p-2.5">NAMA MURID</th>
+                <th class="p-2.5">KELAS</th>
+                <th class="p-2.5 text-center">CUBAAN</th>
+                <th class="p-2.5 text-center">SKOR</th>
+                <th class="p-2.5 text-center">API PADAM</th>
+                <th class="p-2.5 text-center">MASA MENJAWAB</th>
+                <th class="p-2.5 text-center">SESI TERAKHIR</th>
+                <th class="p-2.5 text-center">RAKAMAN</th>
               </tr>
             </thead>
             <tbody id="leaderboard-tbody" class="divide-y divide-gray-800/80"></tbody>
@@ -525,6 +531,9 @@
                   <rect x="36" y="25" width="7" height="8" fill="#adb5bd" />
                   <rect x="15" y="41" width="7" height="12" fill="#212529" />
                   <rect x="24" y="41" width="7" height="12" fill="#212529" />
+                  <rect x="14" y="52" width="9" height="5" fill="#000000" />
+                  <rect x="24" y="52" width="9" height="5" fill="#000000" />
+                  <path d="M 0 52 Q 15 54 36 29" fill="none" stroke="#ffe066" stroke-width="3" />
                 </svg>
                 <div id="replay-nozzle-tip" class="absolute top-[22px] right-0 w-1 h-1"></div>
               </div>
@@ -625,9 +634,8 @@
   <!-- KANVAS PANCUTAN AIR MERENTASI SKRIN DARI KIRI KE KANAN (z-[9995]) -->
   <canvas id="waterCanvas" class="fixed bottom-0 left-0 w-full h-full pointer-events-none z-[9995]"></canvas>
 
-  <!-- BOMBA SEMEKAR: TERLETAK DI HADAPAN SEKALI DI BAWAH KIRI (z-[9999]) -->
+  <!-- BOMBA SEMEKAR: DI HADAPAN SEKALI DI BAWAH KIRI TANPA FRAME (z-[9999]) -->
   <div class="fixed bottom-2 left-2 sm:left-4 z-[9999] pointer-events-auto flex items-end gap-1.5 sm:gap-2.5 select-none drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
-    
     <div class="relative">
       <div class="absolute -top-2 left-6 w-2.5 h-2 bg-red-500 rounded-sm siren-active"></div>
       <div class="absolute -top-2 left-10 w-2.5 h-2 bg-cyan-400 rounded-sm siren-active" style="animation-delay: 0.25s;"></div>
@@ -672,7 +680,6 @@
       <span class="font-pixel text-yellow-400">BOMBA SEMEKAR</span>
       <span class="font-mono text-cyan-300" id="firefighter-speech">Menyiram api di kanan!</span>
     </div>
-
   </div>
 
   <div class="fixed bottom-2 right-2 z-[9999] pointer-events-auto flex items-center gap-1.5 bg-black/75 backdrop-blur-sm border border-gray-700 rounded-lg px-2 py-1 text-[8.5px] font-pixel text-gray-400 shadow-xl">
@@ -688,56 +695,30 @@
 
     const STUDENTS_DATA = {
       "2S1": [
-        "AFIF ZUFAYRI BIN NAZARUDIN",
-        "ALYAANA NABIHAH BINTI ALIZAL",
-        "CHIU YU YANG",
-        "DAING MUHAMAD IRFAN WAFIY BIN MOHD ESKANDAR",
-        "MARCO EE PIAO YONG",
-        "MUHAMMAD ADAM IRFAN BIN MOHD SAMSOL",
-        "MUHAMMAD FAHIM ZAFRI BIN ZAIDE",
-        "MUHAMMAD HAFIZUL RAIZAM BIN KAMAL",
-        "MUHAMMAD HARIZZUDIN BIN IBRAHIM",
-        "MUHAMMAD YUSRI DANIAL BIN NOOR HADI",
-        "NUR BATRISYA BINTI MOHD ZAILI",
-        "NUR DAMIA DAYANA BINTI HAFIZUL",
-        "NUR NAZIHA AISYA BINTI MOHD AKHBAR",
-        "NUR SYAFIQAH BINTI ANWAR",
-        "NUR YASMIN THURAIYA MAHATA BINTI ABDUL RAHMAN",
-        "NURAMYLIA NATASYA BINTI ABDULLAH",
-        "NURSHAZWINA BINTI ZEFFRY ZUL",
-        "PAVAANA A/P A PARAMESVARAN",
-        "PUTERI IRIS ZAHIRAH BINTI ISMAIL",
-        "QASEH NAURA AUNI BATRISYAH BINTI EDI NOOR FADLI",
-        "SITI NUR ZULAIKA BINTI MOHD ROZI",
+        "AFIF ZUFAYRI BIN NAZARUDIN", "ALYAANA NABIHAH BINTI ALIZAL", "CHIU YU YANG",
+        "DAING MUHAMAD IRFAN WAFIY BIN MOHD ESKANDAR", "MARCO EE PIAO YONG",
+        "MUHAMMAD ADAM IRFAN BIN MOHD SAMSOL", "MUHAMMAD FAHIM ZAFRI BIN ZAIDE",
+        "MUHAMMAD HAFIZUL RAIZAM BIN KAMAL", "MUHAMMAD HARIZZUDIN BIN IBRAHIM",
+        "MUHAMMAD YUSRI DANIAL BIN NOOR HADI", "NUR BATRISYA BINTI MOHD ZAILI",
+        "NUR DAMIA DAYANA BINTI HAFIZUL", "NUR NAZIHA AISYA BINTI MOHD AKHBAR",
+        "NUR SYAFIQAH BINTI ANWAR", "NUR YASMIN THURAIYA MAHATA BINTI ABDUL RAHMAN",
+        "NURAMYLIA NATASYA BINTI ABDULLAH", "NURSHAZWINA BINTI ZEFFRY ZUL",
+        "PAVAANA A/P A PARAMESVARAN", "PUTERI IRIS ZAHIRAH BINTI ISMAIL",
+        "QASEH NAURA AUNI BATRISYAH BINTI EDI NOOR FADLI", "SITI NUR ZULAIKA BINTI MOHD ROZI",
         "UMMU SALAMAH BINTI ROHIZAD"
       ],
       "2S2": [
-        "ABDUL AL MUZHAFFAR BIN ABD KADIR",
-        "AQIL NAUFAL BIN MOHD ASRI",
-        "CHONG YIN EN",
-        "DHIKSHAA A/P SUKUMARAN",
-        "GOH YU LING",
-        "MOHAMMAD HAKIMI BIN ABDULLAH",
-        "MOHAMMAD KHAMARUL ASRAF BIN ROSLY",
-        "MUHAMMAD ASHRAF DANISH BIN HAIROL",
-        "MUHAMMAD AZIEM MUNIR BIN MINHED",
-        "MUHAMMAD DANISH FITRI BIN NORAISHAM",
-        "MUHAMMAD HAFIEQ DANIEL BIN MOHD NOR",
-        "MUHAMMAD HARIZ HAQIMIE BIN YUSOF",
-        "MUHAMMAD HAZWAN WAFIY BIN MOHD SAUFI",
-        "MUHAMMAD ILMAN HAZIQ BIN AKHMAL HISAM",
-        "MUHAMMAD KAUSAR BIN MOHD IZZUAN",
-        "MUHAMMAD QAISKU FIQRY BIN MOHD FAUZI",
-        "MUHAMMAD RAIHAN BIN MOHD FAIZAL",
-        "MUHAMMAD RIZQI RAMADHAN BIN MUJIKO",
-        "MUHAMMAD SHAHLEEZAN BIN ABDULLAH",
-        "MUHAMMAD SHAHRIZWAN BIN ABDULLAH",
-        "NUR QAMARINA BINTI ABDULLAH",
-        "PUTRI AYU NAJIHA BINTI MOHD FADLY",
-        "TAN YING RU",
-        "TAN ZI SHAN",
-        "WONG LI XIAN",
-        "WONG YEE TING"
+        "ABDUL AL MUZHAFFAR BIN ABD KADIR", "AQIL NAUFAL BIN MOHD ASRI", "CHONG YIN EN",
+        "DHIKSHAA A/P SUKUMARAN", "GOH YU LING", "MOHAMMAD HAKIMI BIN ABDULLAH",
+        "MOHAMMAD KHAMARUL ASRAF BIN ROSLY", "MUHAMMAD ASHRAF DANISH BIN HAIROL",
+        "MUHAMMAD AZIEM MUNIR BIN MINHED", "MUHAMMAD DANISH FITRI BIN NORAISHAM",
+        "MUHAMMAD HAFIEQ DANIEL BIN MOHD NOR", "MUHAMMAD HARIZ HAQIMIE BIN YUSOF",
+        "MUHAMMAD HAZWAN WAFIY BIN MOHD SAUFI", "MUHAMMAD ILMAN HAZIQ BIN AKHMAL HISAM",
+        "MUHAMMAD KAUSAR BIN MOHD IZZUAN", "MUHAMMAD QAISKU FIQRY BIN MOHD FAUZI",
+        "MUHAMMAD RAIHAN BIN MOHD FAIZAL", "MUHAMMAD RIZQI RAMADHAN BIN MUJIKO",
+        "MUHAMMAD SHAHLEEZAN BIN ABDULLAH", "MUHAMMAD SHAHRIZWAN BIN ABDULLAH",
+        "NUR QAMARINA BINTI ABDULLAH", "PUTRI AYU NAJIHA BINTI MOHD FADLY",
+        "TAN YING RU", "TAN ZI SHAN", "WONG LI XIAN", "WONG YEE TING"
       ]
     };
 
@@ -806,9 +787,7 @@
         { id: 60, bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF", q: "Kaedah berstruktur mencari punca utama kemusnahan litar pintas sehingga terbakar dalam teori inventif ialah?", options: ["Analisis berantai punca dan kesan (CECA)", "Percambahan fikiran", "Analisis warna", "Ujian berat"], ans: 0, exp: "CECA menjejak punca masalah secara rantaian logik sehingga punca akar." }
       ];
 
-      for (let i = 0; i < rawBank.length; i++) {
-        QUESTION_BANK.push(rawBank[i]);
-      }
+      for (let i = 0; i < rawBank.length; i++) QUESTION_BANK.push(rawBank[i]);
 
       const extraQuestions = [
         { id: 61, bab: "BAB 2.2 MEKANIKAL", q: "Apakah jenis minyak pelincir yang digunakan pada engsel mekanikal jentera bomba untuk mengurangkan geseran?", options: ["Gris pelincir tahan haba", "Air garam", "Minyak masak", "Asid bateri"], ans: 0, exp: "Gris pelincir mengurangkan geseran dan haus pada komponen logam mekanikal." },
@@ -863,13 +842,7 @@
         { id: 110, bab: "BAB 1 INVENTIF", q: "Bahan busa pemadam kebakaran (firefighting foam) mengandungi gelembung buih yang ringan dan terapung di atas minyak. Sifat ini mengurangkan parameter apa?", options: ["Ketumpatan bahan pemadam berbanding minyak petrol", "Suhu bilik", "Daya geseran", "Graviti"], ans: 0, exp: "Ketumpatan buih yang lebih rendah membolehkannya terapung dan menutup lapisan minyak." }
       ];
 
-      for (let i = 0; i < rawBank.length; i++) {
-        QUESTION_BANK.push(rawBank[i]);
-      }
-
-      for (let j = 0; j < extraQuestions.length; j++) {
-        QUESTION_BANK.push(extraQuestions[j]);
-      }
+      for (let j = 0; j < extraQuestions.length; j++) QUESTION_BANK.push(extraQuestions[j]);
     })();
 
     let currentClass = "";
@@ -891,9 +864,7 @@
     let audioEnabled = true;
 
     function initAudio() {
-      if (!audioCtx) {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      }
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     }
 
     function playTone(freq, type, duration, vol=0.1) {
@@ -920,9 +891,7 @@
         const bufferSize = audioCtx.sampleRate * 0.9;
         const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
         const data = buffer.getChannelData(0);
-        for (let i = 0; i < bufferSize; i++) {
-          data[i] = Math.random() * 2 - 1;
-        }
+        for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
         const noise = audioCtx.createBufferSource();
         noise.buffer = buffer;
         const filter = audioCtx.createBiquadFilter();
@@ -944,7 +913,6 @@
       document.getElementById("audio-toggle-btn").textContent = audioEnabled ? "🔊" : "🔇";
     }
 
-    /* FORMAT MASA MALAYSIA (DD/MM/YYYY, HH:MM:SS PG/PTG/MLM) */
     function getMalaysianTimestamp() {
       const now = new Date();
       return now.toLocaleString('ms-MY', {
@@ -1148,7 +1116,6 @@
       alert(hour === null ? "Mod masa dikembalikan ke jam sebenar komputer." : `Simulasi masa ditetapkan ke jam: ${hour}:00`);
     }
 
-    /* KANVAS API HALUS MENJULANG */
     const fireCanvas = document.getElementById("fireCanvas");
     const fireCtx = fireCanvas.getContext("2d");
 
@@ -1239,7 +1206,6 @@
       fireIntervalTime = spd === "slow" ? 100 : 60;
     }
 
-    /* PENTING: Api visual HANYA dilaraskan mengikut BAKI API GLOBAL, BUKAN sesi kuiz! */
     function adjustFireVisualIntensity(globalRemainingPercent) {
       const isCompletelyExtinguished = (globalRemainingPercent <= 0 && uniqueParticipants.size >= 15 && answeredGlobalQuestions.size >= 110);
       
@@ -1247,13 +1213,11 @@
         fireBaseIntensity = 0;
         firePixels.fill(0);
       } else {
-        // Api kekal menjulang membakar skrin (skala 20 hingga 36) selagi api global belum 0%
         fireBaseIntensity = Math.max(20, Math.floor((globalRemainingPercent / 100) * 36));
         repopulateFireBase();
       }
     }
 
-    /* KANVAS PANCUTAN AIR */
     const waterCanvas = document.getElementById("waterCanvas");
     const waterCtx = waterCanvas.getContext("2d");
     let waterParticles = [];
@@ -1319,12 +1283,8 @@
         target.classList.remove("hidden");
         window.scrollTo({ top: 0, behavior: "smooth" });
       }
-      if (viewName === "leaderboard") {
-        renderLeaderboardTable();
-      }
-      if (viewName === "home" && currentStudent) {
-        updateStudentAttemptStatusDisplay(currentStudent);
-      }
+      if (viewName === "leaderboard") renderLeaderboardTable();
+      if (viewName === "home" && currentStudent) updateStudentAttemptStatusDisplay(currentStudent);
     }
 
     function selectClass(className) {
@@ -1435,9 +1395,7 @@
       document.getElementById("quiz-attempt-round-badge").textContent = `CUBAAN: ${nextAttemptNumber}/${MAX_ALLOWED_ATTEMPTS}`;
 
       if (sessionTimerInterval) clearInterval(sessionTimerInterval);
-      sessionTimerInterval = setInterval(() => {
-        sessionDuration++;
-      }, 1000);
+      sessionTimerInterval = setInterval(() => { sessionDuration++; }, 1000);
 
       updateSessionFireGauge();
       loadQuestionIndex(0);
@@ -1471,16 +1429,13 @@
         optContainer.appendChild(btn);
       });
 
-      // Tatal secara automatik ke bahagian atas soalan baru tanpa perlu menatal manual
+      // Tatal secara automatik ke bahagian atas kad soalan
       const quizCard = document.getElementById("view-quiz");
       if (quizCard) {
         const headerOffset = 115;
         const cardPosition = quizCard.getBoundingClientRect().top;
         const targetScroll = cardPosition + window.pageYOffset - headerOffset;
-        window.scrollTo({
-          top: Math.max(0, targetScroll),
-          behavior: "smooth"
-        });
+        window.scrollTo({ top: Math.max(0, targetScroll), behavior: "smooth" });
       }
 
       const quizContentBox = document.getElementById("quiz-card-content");
@@ -1493,9 +1448,7 @@
       const indicator = document.getElementById("new-question-indicator");
       if (indicator && idx > 0) {
         indicator.classList.remove("hidden");
-        setTimeout(() => {
-          indicator.classList.add("hidden");
-        }, 1500);
+        setTimeout(() => { indicator.classList.add("hidden"); }, 1500);
       }
     }
 
@@ -1562,7 +1515,6 @@
       return Math.max(0, 100 - (sessionScore * 10));
     }
 
-    /* Hanya mengemas kini tolok di dalam kotak sesi murid, TIDAK memadamkan api skrin */
     function updateSessionFireGauge() {
       const remaining = calculateCurrentSessionFirePct();
       document.getElementById("session-fire-pct").textContent = remaining + "%";
@@ -1582,7 +1534,12 @@
       if (sessionTimerInterval) clearInterval(sessionTimerInterval);
       const minutes = Math.floor(sessionDuration / 60);
       const seconds = sessionDuration % 60;
-      const formattedTime = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+      
+      // 1. MASA MENJAWAB (DURASI FORMAT mm:ss)
+      const answeringDurationStr = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+      // 2. SESI TERAKHIR MEMADAM KEBAKARAN (FORMAT TARIKH & MASA MALAYSIA)
+      const lastSessionTimestampStr = getMalaysianTimestamp();
+
       const fireExtinguishedPct = sessionScore * 10;
 
       uniqueParticipants.add(currentStudent);
@@ -1598,7 +1555,8 @@
       document.getElementById("result-attempt-round-info").textContent = `PERCUBAAN KE-${currentAttemptNumber} / ${MAX_ALLOWED_ATTEMPTS}`;
       document.getElementById("result-score-val").textContent = `${sessionScore}/10`;
       document.getElementById("result-extinguish-val").textContent = `${fireExtinguishedPct}%`;
-      document.getElementById("result-time-val").textContent = formattedTime;
+      document.getElementById("result-answering-duration").textContent = answeringDurationStr;
+      document.getElementById("result-last-session-time").textContent = lastSessionTimestampStr;
 
       const remainingAttempts = MAX_ALLOWED_ATTEMPTS - currentAttemptNumber;
       const hintEl = document.getElementById("result-next-attempt-hint");
@@ -1614,19 +1572,19 @@
 
       const recordItem = {
         id: "REC_" + Date.now(),
-        timestamp: getMalaysianTimestamp(), // FORMAT MASA MALAYSIA
+        lastSessionTimestamp: lastSessionTimestampStr, // Sesi Terakhir (Format Malaysia)
         studentName: currentStudent,
         className: currentClass,
         attemptNumber: currentAttemptNumber,
         score: sessionScore,
         totalQuestions: 10,
         extinguishedPct: fireExtinguishedPct,
+        answeringDuration: answeringDurationStr,       // Masa Menjawab (Durasi)
         durationSeconds: sessionDuration,
-        formattedTime: formattedTime,
         replayData: sessionReplayEvents
       };
 
-      // Simpan & kemas kini (murid kekal 1 baris)
+      // Simpan & kemas kini: Rekod murid kekal 1 baris
       saveAttemptRecord(recordItem);
       syncRecordToGoogleSheet(recordItem);
       updateTop3HeroesBanner();
@@ -1637,15 +1595,11 @@
     function loadGlobalQuestionsProgress() {
       const saved = localStorage.getItem("RBT_SOLVED_110_QUESTIONS");
       if (saved) {
-        try {
-          answeredGlobalQuestions = new Set(JSON.parse(saved));
-        } catch(e){}
+        try { answeredGlobalQuestions = new Set(JSON.parse(saved)); } catch(e){}
       }
       const savedStudents = localStorage.getItem("RBT_UNIQUE_STUDENTS");
       if (savedStudents) {
-        try {
-          uniqueParticipants = new Set(JSON.parse(savedStudents));
-        } catch(e){}
+        try { uniqueParticipants = new Set(JSON.parse(savedStudents)); } catch(e){}
       }
       updateGlobalFireUI();
     }
@@ -1670,7 +1624,7 @@
 
       let rawRemainingFire = Math.max(0, Math.round(((totalQuestionsCount - solvedCount) / totalQuestionsCount) * 100));
 
-      // SYARAT KHAS: Api TIDAK AKAN padan selagi minimum 15 murid unik belum cukup
+      // SYARAT KHAS: Api TIDAK AKAN padam selagi minimum 15 murid unik belum cukup
       if (studentCount < reqStudents && rawRemainingFire === 0) {
         rawRemainingFire = 10;
       }
@@ -1686,12 +1640,10 @@
         textEl.className = "text-sm sm:text-base font-pixel font-bold text-green-400";
         adjustFireVisualIntensity(0);
       } else {
-        // Api di skrin kekal membakar selagi api global belum 0%
         adjustFireVisualIntensity(rawRemainingFire);
       }
     }
 
-    /* KEMAS KINI REKOD: MURID KEKAL 1 BARIS (TIADA DUPLIKASI) */
     function saveAttemptRecord(record) {
       const studentKey = record.studentName.trim().toUpperCase();
       const existingIdx = leaderboardRecords.findIndex(r => r.studentName.trim().toUpperCase() === studentKey);
@@ -1703,12 +1655,12 @@
         leaderboardRecords[existingIdx] = {
           ...existing,
           id: record.id,
-          timestamp: record.timestamp,
+          lastSessionTimestamp: record.lastSessionTimestamp,
           attemptNumber: record.attemptNumber,
           score: isBetter ? record.score : existing.score,
           extinguishedPct: isBetter ? record.extinguishedPct : existing.extinguishedPct,
+          answeringDuration: isBetter ? record.answeringDuration : existing.answeringDuration,
           durationSeconds: isBetter ? record.durationSeconds : existing.durationSeconds,
-          formattedTime: isBetter ? record.formattedTime : existing.formattedTime,
           replayData: record.replayData
         };
       } else {
@@ -1724,7 +1676,6 @@
       if (local) {
         try {
           const raw = JSON.parse(local);
-          // Pastikan hanya 1 baris untuk setiap murid
           const map = {};
           raw.forEach(r => {
             const k = r.studentName.trim().toUpperCase();
@@ -1823,16 +1774,19 @@
         else if (idx === 2) rankBadge = "🥉 3";
 
         const attNumber = rec.attemptNumber || 1;
+        const answeringDur = rec.answeringDuration || rec.formattedTime || "00:00";
+        const lastSession = rec.lastSessionTimestamp || rec.timestamp || "-";
 
         tr.innerHTML = `
-          <td class="p-3 font-pixel text-yellow-400 font-bold">${rankBadge}</td>
-          <td class="p-3 text-white font-medium">${rec.studentName}</td>
-          <td class="p-3 text-gray-400 font-mono">${rec.className}</td>
-          <td class="p-3 text-center text-cyan-300 font-pixel text-[10px]">#${attNumber}/4</td>
-          <td class="p-3 text-center text-green-400 font-bold font-pixel">${rec.score}/10</td>
-          <td class="p-3 text-center text-cyan-400 font-pixel">${rec.extinguishedPct}%</td>
-          <td class="p-3 text-center text-gray-300 font-mono">${rec.formattedTime}</td>
-          <td class="p-3 text-center">
+          <td class="p-2.5 font-pixel text-yellow-400 font-bold">${rankBadge}</td>
+          <td class="p-2.5 text-white font-medium">${rec.studentName}</td>
+          <td class="p-2.5 text-gray-400 font-mono">${rec.className}</td>
+          <td class="p-2.5 text-center text-cyan-300 font-pixel text-[10px]">#${attNumber}/4</td>
+          <td class="p-2.5 text-center text-green-400 font-bold font-pixel">${rec.score}/10</td>
+          <td class="p-2.5 text-center text-cyan-400 font-pixel">${rec.extinguishedPct}%</td>
+          <td class="p-2.5 text-center text-yellow-300 font-mono">${answeringDur}</td>
+          <td class="p-2.5 text-center text-gray-300 font-mono text-[11px]">${lastSession}</td>
+          <td class="p-2.5 text-center">
             <button onclick="openReplayModal('${rec.id}')" class="px-2.5 py-1 bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-500 hover:to-orange-500 text-white rounded font-pixel text-[10px] shadow transition flex items-center justify-center gap-1 mx-auto">
               <span>▶</span> PLAY
             </button>
@@ -1912,8 +1866,9 @@
       isReplayPlaying = true;
 
       const attText = record.attemptNumber ? `Percubaan #${record.attemptNumber}/4` : `Sesi`;
+      const durText = record.answeringDuration || record.formattedTime || "00:00";
       document.getElementById("replay-header-info").textContent = 
-        `Rakaman: ${record.studentName} (${record.className}) | ${attText} | Skor: ${record.score}/10 | Masa: ${record.formattedTime}`;
+        `Rakaman: ${record.studentName} (${record.className}) | ${attText} | Skor: ${record.score}/10 | Masa Menjawab: ${durText}`;
       document.getElementById("replay-modal").classList.remove("hidden");
 
       renderReplayStep(0);
@@ -2040,9 +1995,7 @@
     }
 
     async function confirmResetGame() {
-      if (!confirm("ADAKAH ANDA PASTI? Semua data murid, ranking dan soalan akan dikosongkan semula!")) {
-        return;
-      }
+      if (!confirm("ADAKAH ANDA PASTI? Semua data murid, ranking dan soalan akan dikosongkan semula!")) return;
 
       localStorage.removeItem("RBT_SOLVED_110_QUESTIONS");
       localStorage.removeItem("RBT_UNIQUE_STUDENTS");
