@@ -132,7 +132,6 @@
     <!-- VIEW 1: HOME (ARAHAN TEPAT, PADAT & RINGKAS) -->
     <section id="view-home" class="view-panel transition-opacity duration-300 space-y-6">
 
-      <!-- PANDUAN RINGKAS OPERASI -->
       <div class="bg-gradient-to-r from-gray-900 via-red-950/40 to-gray-900 border-2 border-orange-600/70 rounded-2xl p-5 sm:p-6 shadow-2xl backdrop-blur-md">
         <div class="flex items-center gap-3 mb-3">
           <span class="text-2xl sm:text-3xl">📜</span>
@@ -142,7 +141,6 @@
           </div>
         </div>
 
-        <!-- 4 KAD ARAHAN TEPAT & PADAT -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 my-3 text-xs">
           <div class="bg-black/60 p-3 rounded-xl border border-orange-500/30">
             <div class="font-pixel text-orange-400 mb-1 text-[11px]">1. KUMPUL MARKAH /40</div>
@@ -154,7 +152,7 @@
           <div class="bg-black/60 p-3 rounded-xl border border-yellow-500/30">
             <div class="font-pixel text-yellow-400 mb-1 text-[11px]">2. SYARAT API 0%</div>
             <p class="text-gray-300 text-[11px] leading-relaxed">
-              Kebakaran padam 100% apabila <strong>kesemua 110 soalan</strong> pernah dijawab tepat DAN minimum <strong>15 anggota berbeza</strong> telah menyertai operasi.
+              Kebakaran padam 100% apabila <strong>kesemua 110 soalan</strong> pernah dijawab tepat DAN minimum <strong>15 anggota berbeza</strong> telah menyertai operasi[cite: 1, 2].
             </p>
           </div>
 
@@ -173,7 +171,6 @@
           </div>
         </div>
 
-        <!-- 4 PERINGKAT KEMUSNAHAN BANGUNAN MENGIKUT JADUAL MASA -->
         <div class="mt-4 pt-3 border-t border-gray-800">
           <div class="text-[11px] font-pixel text-yellow-300 mb-2">TAHAP KEMUSNAHAN BENGKEL MENGIKUT MASA:</div>
           <div class="grid grid-cols-2 lg:grid-cols-4 gap-2 text-[10px] font-mono">
@@ -347,7 +344,7 @@
       </div>
     </section>
 
-    <!-- VIEW 4: RANKING KESELURUHAN (TIADA LAGI RAKAMAN) -->
+    <!-- VIEW 4: RANKING KESELURUHAN -->
     <section id="view-leaderboard" class="view-panel hidden transition-opacity duration-300">
       <div class="max-w-5xl mx-auto bg-gray-900/95 border-2 border-orange-600/80 rounded-2xl p-5 sm:p-7 shadow-2xl backdrop-blur-md">
         
@@ -614,8 +611,6 @@
         { id: 60, bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF", q: "Kaedah berstruktur mencari punca utama kemusnahan litar pintas sehingga terbakar dalam teori inventif ialah?", options: ["Analisis berantai punca dan kesan (CECA)", "Percambahan fikiran", "Analisis warna", "Ujian berat"], ans: 0, exp: "CECA menjejak punca masalah secara rantaian logik sehingga punca akar." }
       ];
 
-      for (let i = 0; i < rawBank.length; i++) QUESTION_BANK.push(rawBank[i]);
-
       const extraQuestions = [
         { id: 61, bab: "BAB 2.2 MEKANIKAL", q: "Apakah jenis minyak pelincir yang digunakan pada engsel mekanikal jentera bomba untuk mengurangkan geseran?", options: ["Gris pelincir tahan haba", "Air garam", "Minyak masak", "Asid bateri"], ans: 0, exp: "Gris pelincir mengurangkan geseran dan haus pada komponen logam mekanikal." },
         { id: 62, bab: "BAB 2.3 ELEKTRIK", q: "Apakah warna piawai penebat wayar hidup (Live wire) mengikut piawaian pendawaian elektrik Malaysia?", options: ["Perang (Brown)", "Biru (Blue)", "Hijau-Kuning", "Hitam"], ans: 0, exp: "Wayar hidup berkod warna perang mengikut piawaian IEC." },
@@ -669,8 +664,27 @@
         { id: 110, bab: "BAB 1 INVENTIF", q: "Bahan busa pemadam kebakaran (firefighting foam) mengandungi gelembung buih yang ringan dan terapung di atas minyak. Sifat ini mengurangkan parameter apa?", options: ["Ketumpatan bahan pemadam berbanding minyak petrol", "Suhu bilik", "Daya geseran", "Graviti"], ans: 0, exp: "Ketumpatan buih yang lebih rendah membolehkannya terapung dan menutup lapisan minyak." }
       ];
 
-      for (let i = 0; i < rawBank.length; i++) QUESTION_BANK.push(rawBank[i]);
-      for (let j = 0; j < extraQuestions.length; j++) QUESTION_BANK.push(extraQuestions[j]);
+      // GABUNGKAN SEMUA SOALAN & SUSUN SEMULA JAWAPAN SUPAYA BERTERABUR SEIMBANG (A, B, C & D)
+      const allRaw = [...rawBank, ...extraQuestions];
+
+      // Corak taburan seimbang 25% setiap pilihan A (0), B (1), C (2), D (3)
+      const balancedPattern = [1, 3, 0, 2, 2, 0, 3, 1, 3, 2, 0, 1, 0, 3, 1, 2, 2, 1, 0, 3];
+
+      allRaw.forEach((item, index) => {
+        const correctText = item.options[item.ans];
+        const incorrectOptions = item.options.filter((_, idx) => idx !== item.ans);
+        
+        // Tetapkan indeks baharu secara berselang-seli
+        const targetIndex = balancedPattern[item.id % balancedPattern.length];
+        
+        const newOptions = [...incorrectOptions];
+        newOptions.splice(targetIndex, 0, correctText);
+        
+        item.options = newOptions;
+        item.ans = targetIndex; // Indeks jawapan tepat kini berterabur antara A, B, C & D
+        
+        QUESTION_BANK.push(item);
+      });
     })();
 
     let currentClass = "";
@@ -740,7 +754,6 @@
       document.getElementById("audio-toggle-btn").textContent = audioEnabled ? "🔊" : "🔇";
     }
 
-    /* FORMAT MASA MALAYSIA (DD/MM/YYYY, HH:MM:SS PG/PTG/MLM) */
     function getMalaysianTimestamp() {
       const now = new Date();
       return now.toLocaleString('ms-MY', {
@@ -781,7 +794,6 @@
       localStorage.setItem("RBT_STUDENT_CUMULATIVE_SCORES", JSON.stringify(studentCumulativeScores));
     }
 
-    /* KIRAAN PERATUS API GLOBAL TERPADAM (BERDASARKAN SEMUA SYARAT) */
     function getGlobalExtinguishedPct() {
       const totalQuestionsCount = 110;
       const solvedCount = answeredGlobalQuestions.size;
@@ -790,12 +802,10 @@
 
       let rawRemainingFire = Math.max(0, Math.round(((totalQuestionsCount - solvedCount) / totalQuestionsCount) * 100));
 
-      // Jika syarat 15 orang murid belum cukup, api kekal sekurang-kurangnya 10%
       if (studentCount < reqStudents && rawRemainingFire === 0) {
         rawRemainingFire = 10;
       }
 
-      // Peratus yang berjaya dipadamkan = 100% - Baki Api
       return Math.max(0, 100 - rawRemainingFire);
     }
 
@@ -865,7 +875,6 @@
         timeFraction = (effectiveHour - 9.0) / 15.0;
       }
 
-      // Default: 50vh, membesar hingga 92vh menghampiri tengah malam
       const currentHeightVh = 50 + (timeFraction * 42); 
       const currentWidthVw = Math.min(100, 75 + (timeFraction * 25));
 
@@ -963,7 +972,6 @@
       fireIntervalTime = spd === "slow" ? 100 : 60;
     }
 
-    /* API HANYA PADAM JIKA BAKI API GLOBAL = 0% */
     function adjustFireVisualIntensity(globalRemainingPercent) {
       const isCompletelyExtinguished = (globalRemainingPercent <= 0 && uniqueParticipants.size >= 15 && answeredGlobalQuestions.size >= 110);
       
@@ -1177,7 +1185,6 @@
         optContainer.appendChild(btn);
       });
 
-      // Tatal terus ke soalan baru secara automatik
       const quizCard = document.getElementById("view-quiz");
       if (quizCard) {
         const headerOffset = 115;
@@ -1284,7 +1291,6 @@
       const currentAttemptNumber = previousAttempts + 1;
       studentAttemptsMap[studentKey] = currentAttemptNumber;
 
-      // Kira markah kumulatif (maksimum 40)
       const prevScore = studentCumulativeScores[studentKey] || 0;
       const cumulativeScore = Math.min(40, prevScore + sessionScore);
       studentCumulativeScores[studentKey] = cumulativeScore;
@@ -1317,9 +1323,9 @@
         studentName: currentStudent,
         className: currentClass,
         attemptNumber: currentAttemptNumber,
-        score: cumulativeScore, // Markah kumulatif /40
+        score: cumulativeScore,
         totalQuestions: 40,
-        extinguishedPct: globalExtinguishedPct, // % Api Global Terpadam
+        extinguishedPct: globalExtinguishedPct,
         answeringDuration: answeringDurationStr,
         durationSeconds: sessionDuration
       };
@@ -1327,7 +1333,7 @@
       saveAttemptRecord(recordItem);
       syncRecordToGoogleSheet(recordItem);
       updateTop3HeroesBanner();
-      updateGlobalFireUI(); // Kemas kini status api global
+      updateGlobalFireUI();
 
       navigateView("result");
     }
@@ -1383,7 +1389,6 @@
       }
     }
 
-    /* REKOD MURID KEKAL 1 BARIS */
     function saveAttemptRecord(record) {
       const studentKey = record.studentName.trim().toUpperCase();
       const existingIdx = leaderboardRecords.findIndex(r => r.studentName.trim().toUpperCase() === studentKey);
@@ -1394,7 +1399,7 @@
           id: record.id,
           lastSessionTimestamp: record.lastSessionTimestamp,
           attemptNumber: record.attemptNumber,
-          score: record.score, // Skor terkumpul /40
+          score: record.score,
           extinguishedPct: record.extinguishedPct,
           answeringDuration: record.answeringDuration,
           durationSeconds: record.durationSeconds
@@ -1456,7 +1461,6 @@
             if (!map[k] || r.score > map[k].score) {
               map[k] = r;
             }
-            // Segerak markah kumulatif tempatan
             studentCumulativeScores[k] = Math.max(studentCumulativeScores[k] || 0, r.score);
             studentAttemptsMap[k] = Math.max(studentAttemptsMap[k] || 0, r.attemptNumber || 1);
           });
