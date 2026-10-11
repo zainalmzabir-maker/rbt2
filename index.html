@@ -65,10 +65,14 @@
       animation: question-appear 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
-    /* Kecerunan larut lembut di puncak api 60vh */
+    /* Kecerunan larut lembut di puncak 60vh & sempadan kiri agar sifar api di garisan pemisah */
     .raging-inferno-fade {
-      mask-image: linear-gradient(to top, rgba(0,0,0,1) 58%, rgba(0,0,0,0.72) 80%, transparent 100%);
-      -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 58%, rgba(0,0,0,0.72) 80%, transparent 100%);
+      mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 6%, rgba(0,0,0,1) 14%),
+                  linear-gradient(to top, rgba(0,0,0,1) 52%, rgba(0,0,0,0.7) 78%, transparent 100%);
+      mask-composite: intersect;
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 6%, rgba(0,0,0,1) 14%),
+                          linear-gradient(to top, rgba(0,0,0,1) 52%, rgba(0,0,0,0.7) 78%, transparent 100%);
+      -webkit-mask-composite: source-in;
     }
   </style>
 </head>
@@ -163,7 +167,7 @@
           <div class="bg-black/60 p-3 rounded-xl border border-red-500/30">
             <div class="font-pixel text-red-400 mb-1 text-[11px]">4. API 70% HORIZONTAL</div>
             <p class="text-gray-300 text-[11px] leading-relaxed">
-              Api marak meliputi 70% lebar kanan dan menjulang 60% vertikal skrin. 30% bahagian kiri kekal lapang agar soalan sentiasa mudah dibaca!
+              Api marak meliputi 70% lebar kanan dan menjulang 60% vertikal skrin. 30% bahagian kiri kekal bebas agar soalan sentiasa mudah dibaca!
             </p>
           </div>
         </div>
@@ -316,7 +320,7 @@
             <div class="text-[9px] font-pixel text-gray-400 mb-1">SUMBANGAN UNIK</div>
             <div class="text-xl sm:text-2xl font-pixel text-cyan-400" id="result-extinguish-val">0%</div>
           </div>
-          <div class="bg-black/60 p-3.5 rounded-xl border border-gray-800">
+          <div class="bg-black/60 p-3.5 rounded-xl border border-green-400 mb-1">
             <div class="text-[9px] font-pixel text-green-400 mb-1">MASA MENJAWAB</div>
             <div class="text-xl sm:text-2xl font-pixel text-green-400" id="result-answering-duration">00:00</div>
           </div>
@@ -442,6 +446,7 @@
   <!-- ========================================================================= -->
   <!-- KAWASAN API INFERNO MENJULANG MARAK (TEPAT 70% HORIZONTAL & 60% VERTIKAL)  -->
   <!-- Tepat 70vw di sebelah kanan (right-0 w-[70vw]), 30% kiri skrin 100% bebas  -->
+  <!-- Dilengkapi masking gradien lembut dan sifar api tepat pada sempadan        -->
   <!-- ========================================================================= -->
   <div id="fire-overlay-wrapper" class="fixed bottom-9 right-0 w-[70vw] h-[60vh] pointer-events-none z-[9990] overflow-hidden select-none raging-inferno-fade">
     <canvas id="fireCanvas" class="w-full h-full block filter drop-shadow-[0_-12px_24px_rgba(255,69,0,0.7)]"></canvas>
@@ -452,7 +457,6 @@
 
   <!-- ========================================================================= -->
   <!-- BOMBA SEMEKAR: TERLETAK DI ATAS BAR LABEL (bottom-10) DI BAWAH KIRI        -->
-  <!-- Bebas frame kotak, jernih & kemas                                         -->
   <!-- ========================================================================= -->
   <div class="fixed bottom-10 left-2 sm:left-4 z-[9995] pointer-events-auto flex items-end gap-1.5 sm:gap-2.5 select-none drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)]">
     
@@ -502,7 +506,7 @@
     </div>
   </div>
 
-  <!-- BAR LABEL PALING BAWAH (SEBARIS DI DASAR SKRIN: bottom-0 h-9) -->
+  <!-- BAR LABEL PALING BAWAH (bottom-0 h-9) -->
   <div class="fixed bottom-0 left-0 right-0 h-9 z-[9999] pointer-events-auto flex items-center justify-between sm:justify-center gap-2 sm:gap-6 bg-black/95 backdrop-blur-md border-t border-orange-500/60 px-3 text-[8.5px] sm:text-[9.5px] font-pixel shadow-2xl">
     <div class="flex items-center gap-1.5 text-red-400 shrink-0">
       <span>🔥</span>
@@ -614,10 +618,7 @@
         { id: 57, bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF", q: "Rantai tayar jentera bomba hanya dipasang semasa melalui jalan becak kebakaran hutan. Ini menggunakan prinsip?", options: ["Pemisahan ruang dan keadaan", "Pemisahan graviti", "Pemisahan halaju", "Pemisahan daya"], ans: 0, exp: "Pemisahan mengikut keadaan zon operasi memudahkan adaptasi fungsi." },
         { id: 58, bab: "BAB 2.3 REKA BENTUK ELEKTRIK", q: "Komponen elektrik yang menyimpan cas elektrik dan menstabilkan lonjakan voltan dalam enjin jentera bomba ialah?", options: ["Kapasitor", "Perintang", "Suis togel", "Fius"], ans: 0, exp: "Kapasitor menyimpan dan meratakan turun-naik voltan litar elektrik." },
         { id: 59, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Suis mikro dipasang pada pintu petak peralatan bomba untuk menghidupkan lampu apabila pintu dibuka. Suis ini digerakkan oleh?", options: ["Sentuhan mekanikal fizikal", "Sensor suhu", "Sensor cahaya", "Magnet jauh"], ans: 0, exp: "Suis mikro beroperasi secara sentuhan mekanikal pada tuas kecilnya." },
-        { id: 60, bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF", q: "Kaedah berstruktur mencari punca utama kemusnahan litar pintas sehingga terbakar dalam teori inventif ialah?", options: ["Analisis berantai punca dan kesan (CECA)", "Percambahan fikiran", "Analisis warna", "Ujian berat"], ans: 0, exp: "CECA menjejak punca masalah secara rantaian logik sehingga punca akar." }
-      ];
-
-      const extraQuestions = [
+        { id: 60, bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF", q: "Kaedah berstruktur mencari punca utama kemusnahan litar pintas sehingga terbakar dalam teori inventif ialah?", options: ["Analisis berantai punca dan kesan (CECA)", "Percambahan fikiran", "Analisis warna", "Ujian berat"], ans: 0, exp: "CECA menjejak punca masalah secara rantaian logik sehingga punca akar." },
         { id: 61, bab: "BAB 2.2 MEKANIKAL", q: "Apakah jenis minyak pelincir yang digunakan pada engsel mekanikal jentera bomba untuk mengurangkan geseran?", options: ["Gris pelincir tahan haba", "Air garam", "Minyak masak", "Asid bateri"], ans: 0, exp: "Gris pelincir mengurangkan geseran dan haus pada komponen logam mekanikal." },
         { id: 62, bab: "BAB 2.3 ELEKTRIK", q: "Apakah warna piawai penebat wayar hidup (Live wire) mengikut piawaian pendawaian elektrik Malaysia?", options: ["Perang (Brown)", "Biru (Blue)", "Hijau-Kuning", "Hitam"], ans: 0, exp: "Wayar hidup berkod warna perang mengikut piawaian IEC." },
         { id: 63, bab: "BAB 2.3 ELEKTRIK", q: "Wayar bumi (Earth wire) berkod warna hijau berbelang kuning berfungsi untuk?", options: ["Mengalirkan arus bocor terus ke bumi bagi mencegah kejutan dan kebakaran", "Membekalkan voltan 240V", "Memanaskan litar", "Menyambung siren"], ans: 0, exp: "Wayar bumi menyalurkan arus bocor ke bumi demi keselamatan." },
@@ -670,10 +671,9 @@
         { id: 110, bab: "BAB 1 INVENTIF", q: "Bahan busa pemadam kebakaran (firefighting foam) mengandungi gelembung buih yang ringan dan terapung di atas minyak. Sifat ini mengurangkan parameter apa?", options: ["Ketumpatan bahan pemadam berbanding minyak petrol", "Suhu bilik", "Daya geseran", "Graviti"], ans: 0, exp: "Ketumpatan buih yang lebih rendah membolehkannya terapung dan menutup lapisan minyak." }
       ];
 
-      const allRaw = [...rawBank, ...extraQuestions];
       const balancedPattern = [1, 3, 0, 2, 2, 0, 3, 1, 3, 2, 0, 1, 0, 3, 1, 2, 2, 1, 0, 3];
 
-      allRaw.forEach((item) => {
+      rawBank.forEach((item) => {
         const correctText = item.options[item.ans];
         const incorrectOptions = item.options.filter((_, idx) => idx !== item.ans);
         const targetIndex = balancedPattern[item.id % balancedPattern.length];
@@ -859,12 +859,14 @@
       container.innerHTML = html;
     }
 
-    /* ENJIN API MARAK & BERBAHAYA (KANAN 70%, 100% BEBAS DI KIRI) */
+    /* ========================================================================= */
+    /* ENJIN API MARAK LENGKAP 70% LEBAR SKRIN DENGAN SEMPADAN SIFAR API        */
+    /* ========================================================================= */
     const fireCanvas = document.getElementById("fireCanvas");
     const fireCtx = fireCanvas.getContext("2d");
 
-    const fireWidth = 200;
-    const fireHeight = 100;
+    const fireWidth = 240;
+    const fireHeight = 110;
     let firePixels = [];
     let fireEmbers = [];
     let fireBaseIntensity = 36;
@@ -889,12 +891,12 @@
         fireCanvas.height = fireHeight;
         firePixels = new Array(fireWidth * fireHeight).fill(0);
         fireEmbers = [];
-        for (let e = 0; e < 35; e++) {
+        for (let e = 0; e < 40; e++) {
           fireEmbers.push({
-            x: (fireWidth * 0.25) + Math.random() * (fireWidth * 0.72),
+            x: (fireWidth * 0.08) + Math.random() * (fireWidth * 0.90),
             y: Math.random() * fireHeight,
-            vy: 0.5 + Math.random() * 1.3,
-            vx: (Math.random() - 0.5) * 0.5,
+            vy: 0.6 + Math.random() * 1.4,
+            vx: (Math.random() - 0.4) * 0.4,
             life: Math.random() * 1.0
           });
         }
@@ -908,17 +910,18 @@
       try {
         const maxCol = firePalette.length - 1;
         const baseVal = Math.min(maxCol, Math.max(0, Math.floor((fireBaseIntensity / 36) * maxCol)));
-        const rampStart = fireWidth * 0.18;
-        
+        // 8% peralihan lembut di sempadan kiri bagi menjamin sempadan sifar api
+        const borderFadeWidth = Math.floor(fireWidth * 0.08);
+
         for (let x = 0; x < fireWidth; x++) {
-          if (x <= rampStart) {
+          if (x === 0) {
+            // Sempadan paling kiri mutlak tiada api
             firePixels[(fireHeight - 1) * fireWidth + x] = 0;
           } else {
-            const progress = (x - rampStart) / (fireWidth - rampStart);
-            const taper = Math.min(1.0, Math.pow(progress, 1.6));
-            const wave = Math.sin(x * 0.16 + Date.now() * 0.005) * 3;
+            const borderTaper = x < borderFadeWidth ? Math.pow(x / borderFadeWidth, 1.8) : 1.0;
+            const wave = Math.sin(x * 0.14 + Date.now() * 0.005) * 3;
             const jitter = (Math.random() - 0.5) * 4;
-            let intensity = Math.floor((baseVal + wave + jitter) * taper);
+            let intensity = Math.floor((baseVal + wave + jitter) * borderTaper);
 
             firePixels[(fireHeight - 1) * fireWidth + x] = Math.max(0, Math.min(maxCol, intensity));
           }
@@ -930,7 +933,6 @@
       try {
         const maxCol = firePalette.length - 1;
         const decayBase = fireSpeedSetting === "slow" ? 2.0 : 2.5;
-        const rampStart = Math.floor(fireWidth * 0.18);
 
         for (let x = 0; x < fireWidth; x++) {
           for (let y = 1; y < fireHeight; y++) {
@@ -944,7 +946,8 @@
               const decay = Math.floor(Math.random() * decayBase);
               const toX = x + wind;
 
-              if (toX <= rampStart) {
+              // Jangan biarkan api meresap keluar ke sempadan kiri (x <= 0)
+              if (toX <= 0) {
                 firePixels[fromIdx - fireWidth] = 0;
               } else {
                 const toIdx = fromIdx - fireWidth + wind;
@@ -956,10 +959,9 @@
           }
         }
 
+        // Pastikan garisan sempadan x=0 sentiasa kekal sifar mutlak
         for (let y = 0; y < fireHeight; y++) {
-          for (let x = 0; x <= rampStart; x++) {
-            firePixels[y * fireWidth + x] = 0;
-          }
+          firePixels[y * fireWidth] = 0;
         }
 
         fireEmbers.forEach(emb => {
@@ -967,10 +969,11 @@
           emb.x += emb.vx + (Math.random() - 0.5) * 0.3;
           emb.life -= 0.018;
 
-          if (emb.y <= 0 || emb.life <= 0 || emb.x <= rampStart + 8) {
+          // Hapus percikan api jika melepasi sempadan kiri (x <= fireWidth * 0.05)
+          if (emb.y <= 0 || emb.life <= 0 || emb.x <= (fireWidth * 0.05)) {
             emb.y = fireHeight - 5 - Math.random() * 10;
-            emb.x = (fireWidth * 0.35) + Math.random() * (fireWidth * 0.62);
-            emb.vy = 0.5 + Math.random() * 1.3;
+            emb.x = (fireWidth * 0.08) + Math.random() * (fireWidth * 0.90);
+            emb.vy = 0.6 + Math.random() * 1.4;
             emb.life = 0.8 + Math.random() * 0.4;
           }
         });
@@ -982,7 +985,7 @@
         const imgData = fireCtx.createImageData(fireWidth, fireHeight);
         const data = imgData.data;
         const maxCol = firePalette.length - 1;
-        const hFadeWidth = fireWidth * 0.28;
+        const borderFadeWidth = fireWidth * 0.08;
 
         for (let y = 0; y < fireHeight; y++) {
           for (let x = 0; x < fireWidth; x++) {
@@ -991,22 +994,20 @@
             const color = firePalette[intensity] || [0, 0, 0];
             const offset = idx * 4;
 
-            let hFade = 1.0;
-            if (x < hFadeWidth) {
-              hFade = Math.pow(x / hFadeWidth, 2);
-            }
+            // Kecerunan alpha memastikan tepi sempadan larut licin tanpa sebarang garis tajam
+            const edgeAlpha = x < borderFadeWidth ? Math.pow(x / borderFadeWidth, 1.5) : 1.0;
 
             data[offset] = color[0];
             data[offset + 1] = color[1];
             data[offset + 2] = color[2];
-            data[offset + 3] = intensity === 0 ? 0 : Math.floor(Math.min(220, 25 + intensity * 7) * hFade);
+            data[offset + 3] = intensity === 0 ? 0 : Math.floor(Math.min(235, 25 + intensity * 7) * edgeAlpha);
           }
         }
 
         fireEmbers.forEach(emb => {
           const ex = Math.floor(emb.x);
           const ey = Math.floor(emb.y);
-          if (ex >= Math.floor(fireWidth * 0.22) && ex < fireWidth && ey >= 0 && ey < fireHeight) {
+          if (ex >= Math.floor(fireWidth * 0.06) && ex < fireWidth && ey >= 0 && ey < fireHeight) {
             const off = (ey * fireWidth + ex) * 4;
             data[off] = 255;
             data[off + 1] = 230;
@@ -1108,7 +1109,7 @@
       requestAnimationFrame(updateWaterParticles);
     }
 
-    /* NAVIGASI BEBAS KONFLIK CSS */
+    /* NAVIGASI VIEW */
     function navigateView(viewName) {
       try {
         const views = ["home", "quiz", "result", "leaderboard"];
@@ -1388,7 +1389,6 @@
       const currentAttemptNumber = previousAttempts + 1;
       studentAttemptsMap[studentKey] = currentAttemptNumber;
 
-      // Gabungkan soalan unik tanpa pertindihan
       const prevSolved = studentSolvedQuestionsMap[studentKey] || [];
       const combinedSolved = Array.from(new Set([...prevSolved, ...sessionCorrectQuestionIds]));
       studentSolvedQuestionsMap[studentKey] = combinedSolved;
@@ -1559,7 +1559,6 @@
       }
     }
 
-    /* PENYELARASAN DENGAN PENCEGAHAN CACHE KETAT (SINGLE SOURCE OF TRUTH) */
     async function fetchLeaderboardData() {
       try {
         const res = await fetch(`${GAS_WEBAPP_URL}?action=get_leaderboard&t=${Date.now()}`, {
@@ -1570,7 +1569,7 @@
           const map = {};
           studentCumulativeScores = {};
           studentAttemptsMap = {};
-          studentSolvedQuestionsMap = {}; // Reset sepenuhnya mengikut pangkalan data
+          studentSolvedQuestionsMap = {};
 
           (data.records || []).forEach(r => {
             if (r && r.studentName) {
@@ -1677,7 +1676,7 @@
       }
     }
 
-    /* PENGURUSAN MODAL ADMIN BEBAS KONFLIK */
+    /* PENGURUSAN MODAL ADMIN */
     function openAdminModal() {
       const m = document.getElementById("admin-modal");
       if (m) {
