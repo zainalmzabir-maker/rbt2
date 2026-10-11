@@ -60,11 +60,11 @@
 
     /* Kecerunan lembut melarutkan api ke dalam isi kandungan web */
     .seamless-fire-overlay {
-      mask-image: linear-gradient(to top, rgba(0,0,0,1) 40%, rgba(0,0,0,0.85) 70%, transparent 100%),
-                  linear-gradient(to left, rgba(0,0,0,1) 50%, rgba(0,0,0,0.75) 80%, transparent 100%);
+      mask-image: linear-gradient(to top, rgba(0,0,0,1) 40%, rgba(0,0,0,0.85) 75%, transparent 100%),
+                  linear-gradient(to left, rgba(0,0,0,1) 45%, rgba(0,0,0,0.75) 85%, transparent 100%);
       mask-composite: intersect;
-      -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 40%, rgba(0,0,0,0.85) 70%, transparent 100%),
-                          linear-gradient(to left, rgba(0,0,0,1) 50%, rgba(0,0,0,0.75) 80%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 40%, rgba(0,0,0,0.85) 75%, transparent 100%),
+                          linear-gradient(to left, rgba(0,0,0,1) 45%, rgba(0,0,0,0.75) 85%, transparent 100%);
       -webkit-mask-composite: source-in;
     }
   </style>
@@ -165,7 +165,7 @@
                 <span>2️⃣</span> SYARAT 15 ANGGOTA
               </div>
               <p class="text-gray-300 leading-relaxed text-[11px]">
-                Operasi memerlukan gandingan pasukan! Api <strong>tidak akan mencecah 0%</strong> melainkan sekurang-kurangnya <strong>15 orang murid berbeza</strong> telah menyertai operasi pemadaman.
+                Operasi memerlukan gandingan pasukan! Api <strong>tidak akan mencecah 0%</strong> melainkan sekurang-kurangnya <strong>15 orang murid berbeza</strong> telah menyertai operasi pemadaman[cite: 1, 2].
               </p>
             </div>
           </div>
@@ -193,18 +193,15 @@
           </div>
         </div>
 
-        <!-- 4 PERINGKAT KEMUSNAHAN BANGUNAN & DEMO INTERAKTIF -->
+        <!-- 4 PERINGKAT KEMUSNAHAN BANGUNAN MENGIKUT MASA -->
         <div class="mt-5 pt-4 border-t border-gray-800">
           <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
             <div>
               <h3 class="text-xs font-pixel text-yellow-300 flex items-center gap-2">
-                <span>🏢</span> 4 TAHAP KEMUSNAHAN BANGUNAN BERDASARKAN JADUAL MASA
+                <span>🏢</span> 4 TAHAP KEMUSNAHAN BANGUNAN MENGIKUT JADUAL MASA
               </h3>
-              <p class="text-[11px] text-gray-400 font-mono">Api akan merebak mengikut peringkat masa sekiranya tidak dipadamkan segera:</p>
+              <p class="text-[11px] text-gray-400 font-mono">Semakin hampir waktu tamat tengah malam, api merebak menjulang memenuhi hampir keseluruhan skrin:</p>
             </div>
-            <span class="text-[10px] font-pixel text-orange-400 bg-orange-950/60 px-2.5 py-1 rounded border border-orange-500/40">
-              UJI DEMO ANIMASI DI BAWAH 👇
-            </span>
           </div>
 
           <div class="grid grid-cols-2 lg:grid-cols-4 gap-2.5 mb-4">
@@ -233,27 +230,20 @@
             </button>
           </div>
 
-          <!-- KOTAK SIMULASI PREVIEW BANGUNAN & DEMO SYARAT -->
+          <!-- KOTAK PREVIEW STATUS STRUKTUR BANGUNAN -->
           <div class="bg-black/80 rounded-xl p-4 border border-gray-700 flex flex-col md:flex-row items-center justify-between gap-4">
             <div class="w-full md:w-1/2 flex flex-col items-center justify-center p-3 bg-gray-950 rounded-lg border border-gray-800">
               <div id="building-demo-container" class="w-48 h-32 flex items-center justify-center"></div>
-              <span id="demo-stage-label" class="mt-2 text-xs font-pixel text-yellow-400 text-center">DEMO TAHAP 1: KEMUSNAHAN KECIL</span>
+              <span id="demo-stage-label" class="mt-2 text-xs font-pixel text-yellow-400 text-center">TAHAP 1: KEMUSNAHAN KECIL</span>
             </div>
             <div class="w-full md:w-1/2 text-xs text-gray-300 space-y-2">
-              <div class="font-pixel text-[11px] text-cyan-300">DEMO INTERAKTIF SYARAT PEMADAMAN:</div>
+              <div class="font-pixel text-[11px] text-orange-400">STATUS STRUKTUR BENGKEL RBT:</div>
               <p id="demo-stage-desc" class="leading-relaxed font-mono">
-                Peringkat awal kebakaran bengkel RBT. Setiap anggota BOMBA SEMEKAR boleh menyertai sehingga 4 kali untuk menyiram air secara berulang!
+                Peringkat awal kebakaran bengkel RBT. Semburan air bomba mampu menyelamatkan peralatan teknologi pembuatan dan komponen elektrik sebelum api marak ke sistem pendawaian!
               </p>
-              
-              <div class="flex flex-wrap gap-2 pt-1">
-                <button type="button" onclick="triggerWaterSpray(75)" class="px-3 py-1.5 bg-cyan-700 hover:bg-cyan-600 text-white rounded font-pixel text-[10px] transition">
-                  💦 TEST SEMBURAN AIR BOMBA
-                </button>
-                <button type="button" onclick="simulateMultiAttemptDemo()" class="px-3 py-1.5 bg-green-700 hover:bg-green-600 text-white rounded font-pixel text-[10px] transition">
-                  🔄 DEMO BANTUAN 4 KALI PERCUBAAN
-                </button>
+              <div class="p-2.5 bg-gray-900/90 rounded border border-gray-700 text-[11px] text-gray-300 font-mono">
+                ⚠️ <strong class="text-yellow-400">AMARAN MASA:</strong> Secara default, api membakar separuh webapp (50%). Jika operasi tidak diselesaikan sebelum tengah malam, lidah api akan membesar menjulang hingga menutupi 90%+ halaman web!
               </div>
-              <div id="demo-attempt-feedback" class="text-[10px] text-yellow-400 font-mono hidden pt-1"></div>
             </div>
           </div>
         </div>
@@ -592,6 +582,18 @@
           <div>Purata Percubaan Setiap Murid: <strong id="admin-avg-attempts" class="text-yellow-400">0</strong></div>
         </div>
 
+        <!-- Tetapan Simulasi Ketinggian Api Mengikut Masa -->
+        <div class="bg-black/60 p-3 rounded-xl border border-gray-800 text-xs space-y-2">
+          <div class="font-pixel text-[10px] text-orange-400">UJIAN MASA API (OVERRIDE SIMULASI):</div>
+          <div class="grid grid-cols-2 gap-2 font-mono text-[10px]">
+            <button type="button" onclick="setSimulatedTime(9)" class="p-1.5 bg-gray-800 hover:bg-gray-700 border border-gray-600 rounded text-yellow-300">09:00 Pagi (50% Skrin)</button>
+            <button type="button" onclick="setSimulatedTime(14)" class="p-1.5 bg-gray-800 hover:bg-gray-700 border border-gray-600 rounded text-yellow-300">02:00 Ptg (65% Skrin)</button>
+            <button type="button" onclick="setSimulatedTime(18)" class="p-1.5 bg-gray-800 hover:bg-gray-700 border border-gray-600 rounded text-yellow-300">06:00 Ptg (75% Skrin)</button>
+            <button type="button" onclick="setSimulatedTime(23.5)" class="p-1.5 bg-gray-800 hover:bg-gray-700 border border-gray-600 rounded text-red-400">11:30 Mlm (92% Penuh)</button>
+          </div>
+          <button type="button" onclick="setSimulatedTime(null)" class="w-full py-1 bg-gray-800 border border-gray-600 text-cyan-300 rounded font-pixel text-[9px]">GUNA MASA SEBENAR SISTEM</button>
+        </div>
+
         <div class="pt-2 border-t border-gray-800">
           <div class="font-pixel text-[10px] text-red-400 mb-2">RESET KESELURUHAN PERMAINAN:</div>
           <button type="button" onclick="confirmResetGame()" class="w-full py-3 bg-red-950 border-2 border-red-600 hover:bg-red-800 text-red-200 font-pixel text-xs rounded-xl shadow transition">
@@ -605,19 +607,19 @@
 
   <!-- ========================================================================= -->
   <!-- LAPISAN PALING ATAS (OVERLAY): API MENJULANG DI BAWAH KANAN (z-[9990])   -->
-  <!-- Menutup terus isi kandungan webapp secara semula jadi & tanpa sempadan    -->
+  <!-- DEFAULT: MEMBAKAR SEPARUH (50vh) & MENUTUP ISI WEBPAGE SECARA SEMULA JADI -->
+  <!-- SEMAKIN HAMPIR KE MASA TAMAT (24:00), MEMBESAR HINGGA 92vh (HAMPIR PENUH) -->
   <!-- ========================================================================= -->
-  <div class="fixed bottom-0 right-0 w-full sm:w-4/5 md:w-3/4 lg:w-2/3 h-80 sm:h-96 pointer-events-none z-[9990] overflow-hidden select-none seamless-fire-overlay">
+  <div id="fire-overlay-wrapper" class="fixed bottom-0 right-0 w-full sm:w-[85vw] md:w-[75vw] pointer-events-none z-[9990] overflow-hidden select-none seamless-fire-overlay transition-all duration-1000" style="height: 50vh;">
     <canvas id="fireCanvas" class="w-full h-full opacity-90"></canvas>
   </div>
 
   <!-- KANVAS PANCUTAN AIR MERENTASI SKRIN DARI KIRI KE KANAN (z-[9995]) -->
-  <canvas id="waterCanvas" class="fixed bottom-0 left-0 w-full h-72 sm:h-80 pointer-events-none z-[9995]"></canvas>
+  <canvas id="waterCanvas" class="fixed bottom-0 left-0 w-full h-full pointer-events-none z-[9995]"></canvas>
 
   <!-- ========================================================================= -->
   <!-- BOMBA SEMEKAR: TERLETAK DI HADAPAN SEKALI DI BAWAH KIRI (z-[9999])       -->
   <!-- TIADA FRAME / KOTAK DI BELAKANG (TRANSPARENT DIRECT ON SCREEN)            -->
-  <!-- Bersaiz kecil dan berpiksel kemas                                         -->
   <!-- ========================================================================= -->
   <div class="fixed bottom-2 left-2 sm:left-4 z-[9999] pointer-events-auto flex items-end gap-1.5 sm:gap-2.5 select-none drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
     
@@ -677,7 +679,7 @@
 
   </div>
 
-  <!-- PENGATUR KELAJUAN API DI SUDUT KANAN ATAS (z-[9999]) -->
+  <!-- PENGATUR KELAJUAN API DI SUDUT KANAN BAWAH (z-[9999]) -->
   <div class="fixed bottom-2 right-2 z-[9999] pointer-events-auto flex items-center gap-1.5 bg-black/75 backdrop-blur-sm border border-gray-700 rounded-lg px-2 py-1 text-[8.5px] font-pixel text-gray-400 shadow-xl">
     <span>API:</span>
     <button onclick="setFireSpeed('slow')" class="text-yellow-400 hover:underline">SANTAI</button>
@@ -888,6 +890,7 @@
     let answeredGlobalQuestions = new Set();
     let uniqueParticipants = new Set();
     let leaderboardRecords = [];
+    let simulatedHourOverride = null;
 
     let audioCtx = null;
     let audioEnabled = true;
@@ -1087,22 +1090,48 @@
       desc.textContent = stageInfo[stageNum].desc;
     }
 
-    let demoAttemptStep = 0;
-    function simulateMultiAttemptDemo() {
-      demoAttemptStep = (demoAttemptStep % MAX_ALLOWED_ATTEMPTS) + 1;
-      triggerWaterSpray(40 + (demoAttemptStep * 12));
-      const feedback = document.getElementById("demo-attempt-feedback");
-      feedback.classList.remove("hidden");
-      
-      const remaining = MAX_ALLOWED_ATTEMPTS - demoAttemptStep;
-      feedback.innerHTML = `
-        🎯 <strong>Simulasi Percubaan Ke-${demoAttemptStep} / 4:</strong> Anggota BOMBA SEMEKAR berjaya menyiram air ke arah api di kanan! 
-        ${remaining > 0 ? `(Baki ${remaining} kali lagi boleh membantu)` : `<span class="text-red-400 font-bold">(Had 4 kali maksimum dicapai bagi anggota ini!)</span>`}
-      `;
+    /* ========================================================================= */
+    /* LOGIK PERTUMBUHAN API MENGIKUT MASA (DEFAULT 50vh -> 92vh PADA AKHIR MASA)*/
+    /* ========================================================================= */
+    function updateFireProgressionBasedOnTime() {
+      const wrapper = document.getElementById("fire-overlay-wrapper");
+      if (!wrapper) return;
+
+      let effectiveHour;
+      if (simulatedHourOverride !== null) {
+        effectiveHour = simulatedHourOverride;
+      } else {
+        const now = new Date();
+        effectiveHour = now.getHours() + (now.getMinutes() / 60);
+      }
+
+      // Waktu operasi: 9.00 Pagi (9.0) hingga 12.00 Tengah Malam (24.0)
+      let timeFraction = 0;
+      if (effectiveHour <= 9.0) {
+        timeFraction = 0;
+      } else if (effectiveHour >= 24.0) {
+        timeFraction = 1.0;
+      } else {
+        timeFraction = (effectiveHour - 9.0) / 15.0; // 15 jam tempoh operasi
+      }
+
+      // Default: 50vh (separuh webapp). Semakin ke tengah malam, membesar ke 92vh (hampir penuh)
+      const currentHeightVh = 50 + (timeFraction * 42); 
+      // Lebar juga berkembang dari 75vw ke 100vw
+      const currentWidthVw = Math.min(100, 75 + (timeFraction * 25));
+
+      wrapper.style.height = `${currentHeightVh}vh`;
+      wrapper.style.width = `${currentWidthVw}vw`;
+    }
+
+    function setSimulatedTime(hour) {
+      simulatedHourOverride = hour;
+      updateFireProgressionBasedOnTime();
+      alert(hour === null ? "Mod masa dikembalikan ke jam sebenar komputer." : `Simulasi masa ditetapkan ke jam: ${hour}:00`);
     }
 
     /* ========================================================================= */
-    /* SIMULASI API PIKSEL HALUS (FINE-PIXEL) MENJULANG DI BAWAH KANAN (TOP LAYER) */
+    /* SIMULASI API PIKSEL HALUS (FINE-PIXEL) MENJULANG DI BAWAH KANAN           */
     /* ========================================================================= */
     const fireCanvas = document.getElementById("fireCanvas");
     const fireCtx = fireCanvas.getContext("2d");
@@ -1209,7 +1238,7 @@
 
     function resizeWaterCanvas() {
       waterCanvas.width = window.innerWidth;
-      waterCanvas.height = waterCanvas.offsetHeight || 300;
+      waterCanvas.height = window.innerHeight;
     }
     window.addEventListener("resize", resizeWaterCanvas);
 
@@ -1218,7 +1247,7 @@
       const nozzleEl = document.getElementById("nozzle-tip");
       const rect = nozzleEl ? nozzleEl.getBoundingClientRect() : null;
       const startX = rect ? rect.right : 120;
-      const startY = rect ? (rect.top - (window.innerHeight - waterCanvas.height)) : (waterCanvas.height - 30);
+      const startY = rect ? rect.top : (window.innerHeight - 30);
 
       for (let i = 0; i < 95; i++) {
         setTimeout(() => {
@@ -1949,6 +1978,10 @@
       requestAnimationFrame(fireAnimationLoop);
       resizeWaterCanvas();
       requestAnimationFrame(updateWaterParticles);
+
+      // Mulakan kemas kini dinamik ketinggian api mengikut masa
+      updateFireProgressionBasedOnTime();
+      setInterval(updateFireProgressionBasedOnTime, 60000); // Semak setiap 1 minit
 
       previewStage(1);
 
