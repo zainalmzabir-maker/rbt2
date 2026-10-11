@@ -26,12 +26,12 @@
     .font-retro { font-family: var(--retro-font); }
 
     .crt-overlay {
-      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.22) 50%);
       background-size: 100% 4px;
       pointer-events: none;
     }
 
-    /* Rendering piksel yang halus dan tajam */
+    /* Rendering piksel yang sangat halus dan tajam */
     canvas {
       image-rendering: pixelated;
       image-rendering: crisp-edges;
@@ -43,8 +43,8 @@
     ::-webkit-scrollbar-thumb:hover { background: #ff6b4a; }
 
     @keyframes siren-blink {
-      0%, 100% { opacity: 1; filter: drop-shadow(0 0 12px #ff0044); }
-      50% { opacity: 0.2; filter: drop-shadow(0 0 3px #00d4ff); }
+      0%, 100% { opacity: 1; filter: drop-shadow(0 0 10px #ff0044); }
+      50% { opacity: 0.2; filter: drop-shadow(0 0 2px #00d4ff); }
     }
     .siren-active {
       animation: siren-blink 0.5s infinite;
@@ -58,21 +58,21 @@
       animation: pulse-flame 1.4s ease-in-out infinite;
     }
 
-    /* Api bebas tanpa sempadan kotak - kecerunan larut lembut */
+    /* Kecerunan lembut melarutkan api ke dalam isi kandungan web */
     .seamless-fire-overlay {
-      mask-image: linear-gradient(to top, rgba(0,0,0,1) 35%, rgba(0,0,0,0.85) 65%, transparent 100%),
-                  linear-gradient(to left, rgba(0,0,0,1) 45%, rgba(0,0,0,0.8) 75%, transparent 100%);
+      mask-image: linear-gradient(to top, rgba(0,0,0,1) 40%, rgba(0,0,0,0.85) 70%, transparent 100%),
+                  linear-gradient(to left, rgba(0,0,0,1) 50%, rgba(0,0,0,0.75) 80%, transparent 100%);
       mask-composite: intersect;
-      -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 35%, rgba(0,0,0,0.85) 65%, transparent 100%),
-                          linear-gradient(to left, rgba(0,0,0,1) 45%, rgba(0,0,0,0.8) 75%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 40%, rgba(0,0,0,0.85) 70%, transparent 100%),
+                          linear-gradient(to left, rgba(0,0,0,1) 50%, rgba(0,0,0,0.75) 80%, transparent 100%);
       -webkit-mask-composite: source-in;
     }
   </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between relative selection:bg-orange-600 selection:text-white pb-64">
+<body class="min-h-screen flex flex-col justify-between relative selection:bg-orange-600 selection:text-white pb-60">
 
-  <!-- Lapisan Scanlines CRT -->
-  <div class="fixed inset-0 crt-overlay z-30 pointer-events-none opacity-20"></div>
+  <!-- Lapisan Scanlines CRT Halus -->
+  <div class="fixed inset-0 crt-overlay z-20 pointer-events-none opacity-20"></div>
 
   <!-- HEADER UTAMA & STATUS MISI GLOBAL -->
   <header class="bg-gray-900/95 backdrop-blur border-b-2 border-orange-600/80 sticky top-0 z-30 px-3 sm:px-4 py-2.5 shadow-2xl">
@@ -131,7 +131,7 @@
   </section>
 
   <!-- KANDUNGAN UTAMA (VIEW CONTAINER) -->
-  <main class="max-w-6xl w-full mx-auto p-3 sm:p-4 relative z-20">
+  <main class="max-w-6xl w-full mx-auto p-3 sm:p-4 relative z-10">
 
     <!-- VIEW 1: HOME (ARAHAN, 4 SYARAT, 4 PERINGKAT KEMUSNAHAN & DAFTAR MURID) -->
     <section id="view-home" class="view-panel transition-opacity duration-300 space-y-6">
@@ -207,7 +207,6 @@
             </span>
           </div>
 
-          <!-- Kad 4 Peringkat Masa -->
           <div class="grid grid-cols-2 lg:grid-cols-4 gap-2.5 mb-4">
             <button type="button" onclick="previewStage(1)" class="stage-card p-3 rounded-xl border-2 border-green-600/60 bg-green-950/20 hover:bg-green-900/30 text-left transition">
               <div class="text-[10px] font-pixel text-green-400 mb-1">TAHAP 1: KECIL</div>
@@ -247,7 +246,7 @@
               </p>
               
               <div class="flex flex-wrap gap-2 pt-1">
-                <button type="button" onclick="triggerWaterSpray(70)" class="px-3 py-1.5 bg-cyan-700 hover:bg-cyan-600 text-white rounded font-pixel text-[10px] transition">
+                <button type="button" onclick="triggerWaterSpray(75)" class="px-3 py-1.5 bg-cyan-700 hover:bg-cyan-600 text-white rounded font-pixel text-[10px] transition">
                   💦 TEST SEMBURAN AIR BOMBA
                 </button>
                 <button type="button" onclick="simulateMultiAttemptDemo()" class="px-3 py-1.5 bg-green-700 hover:bg-green-600 text-white rounded font-pixel text-[10px] transition">
@@ -473,7 +472,6 @@
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-        <!-- Tetingkap 1: Soalan & Jawapan Murid -->
         <div class="bg-black/90 border border-gray-700 rounded-xl p-4 flex flex-col justify-between shadow-inner">
           <div>
             <div class="flex items-center justify-between text-xs font-pixel mb-2">
@@ -494,7 +492,6 @@
           </div>
         </div>
 
-        <!-- Tetingkap 2: Simulasi Tapak & Animasi Semburan -->
         <div class="bg-gradient-to-b from-gray-950 to-black border border-gray-700 rounded-xl p-4 flex flex-col justify-between relative overflow-hidden shadow-inner">
           <div class="flex items-center justify-between text-xs font-pixel mb-2 z-10">
             <span class="text-yellow-400">SIMULASI TAPAK KEBAKARAN</span>
@@ -607,28 +604,30 @@
   </div>
 
   <!-- ========================================================================= -->
-  <!-- LAPISAN PALING ATAS (OVERLAY): API MENJULANG DI BAWAH KANAN (TIADA SEMPADAN) -->
+  <!-- LAPISAN PALING ATAS (OVERLAY): API MENJULANG DI BAWAH KANAN (z-[9990])   -->
+  <!-- Menutup terus isi kandungan webapp secara semula jadi & tanpa sempadan    -->
   <!-- ========================================================================= -->
-  <div class="fixed bottom-0 right-0 w-full sm:w-3/4 md:w-3/5 lg:w-1/2 h-80 sm:h-96 pointer-events-none z-45 overflow-hidden select-none seamless-fire-overlay">
-    <!-- Kanvas Api Halus Menjulang Membakar Webpage -->
+  <div class="fixed bottom-0 right-0 w-full sm:w-4/5 md:w-3/4 lg:w-2/3 h-80 sm:h-96 pointer-events-none z-[9990] overflow-hidden select-none seamless-fire-overlay">
     <canvas id="fireCanvas" class="w-full h-full opacity-90"></canvas>
   </div>
 
-  <!-- KANVAS PANCUTAN AIR MERENTASI SKRIN DARI KIRI KE KANAN -->
-  <canvas id="waterCanvas" class="fixed bottom-0 left-0 w-full h-72 sm:h-80 pointer-events-none z-48"></canvas>
+  <!-- KANVAS PANCUTAN AIR MERENTASI SKRIN DARI KIRI KE KANAN (z-[9995]) -->
+  <canvas id="waterCanvas" class="fixed bottom-0 left-0 w-full h-72 sm:h-80 pointer-events-none z-[9995]"></canvas>
 
   <!-- ========================================================================= -->
-  <!-- BOMBA SEMEKAR: TERLETAK DI HADAPAN SEKALI DI SEBELAH BAWAH KIRI (z-50) -->
+  <!-- BOMBA SEMEKAR: TERLETAK DI HADAPAN SEKALI DI BAWAH KIRI (z-[9999])       -->
+  <!-- TIADA FRAME / KOTAK DI BELAKANG (TRANSPARENT DIRECT ON SCREEN)            -->
+  <!-- Bersaiz kecil dan berpiksel kemas                                         -->
   <!-- ========================================================================= -->
-  <div class="fixed bottom-3 left-3 sm:left-6 z-50 pointer-events-auto flex items-end gap-2.5 sm:gap-4 bg-gray-950/95 border-2 border-yellow-400 p-2.5 sm:p-3.5 rounded-2xl shadow-[0_0_35px_rgba(255,165,0,0.5)] backdrop-blur-md">
+  <div class="fixed bottom-2 left-2 sm:left-4 z-[9999] pointer-events-auto flex items-end gap-1.5 sm:gap-2.5 select-none drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
     
-    <!-- Jentera Bomba Pixel Art dengan Tulisan "BOMBA SEMEKAR" -->
-    <div class="relative drop-shadow-2xl">
-      <!-- Lampu Siren Kelip -->
-      <div class="absolute -top-3 left-9 w-3.5 h-2.5 bg-red-500 rounded-sm siren-active"></div>
-      <div class="absolute -top-3 left-14 w-3.5 h-2.5 bg-cyan-400 rounded-sm siren-active" style="animation-delay: 0.25s;"></div>
+    <!-- Jentera Bomba Pixel Halus (Saiz Kecil & Kemas Tanpa Frame) -->
+    <div class="relative">
+      <!-- Lampu Siren Kelip Mini -->
+      <div class="absolute -top-2 left-6 w-2.5 h-2 bg-red-500 rounded-sm siren-active"></div>
+      <div class="absolute -top-2 left-10 w-2.5 h-2 bg-cyan-400 rounded-sm siren-active" style="animation-delay: 0.25s;"></div>
 
-      <svg width="170" height="80" viewBox="0 0 140 70" class="w-36 sm:w-48 h-auto drop-shadow-md">
+      <svg width="125" height="60" viewBox="0 0 140 70" class="w-24 sm:w-32 h-auto">
         <!-- Badan Jentera Merah -->
         <rect x="5" y="20" width="130" height="35" fill="#c92a2a" />
         <rect x="5" y="10" width="60" height="15" fill="#e03131" />
@@ -639,7 +638,7 @@
         <!-- Jalur Kuning Bomba -->
         <rect x="5" y="42" width="130" height="6" fill="#ffd43b" />
         <!-- NAMA RASMI BOMBA SEMEKAR -->
-        <text x="32" y="38" fill="#ffffff" font-size="6" font-weight="bold" font-family="'Press Start 2P', monospace">BOMBA SEMEKAR</text>
+        <text x="32" y="38" fill="#ffffff" font-size="6.5" font-weight="bold" font-family="'Press Start 2P', monospace">BOMBA SEMEKAR</text>
         <rect x="2" y="38" width="4" height="14" fill="#ced4da" />
         <rect x="2" y="32" width="4" height="5" fill="#ffe066" />
         <!-- Roda Jentera -->
@@ -650,9 +649,9 @@
       </svg>
     </div>
 
-    <!-- Anggota Bomba Memegang Nozel Hos -->
-    <div class="relative drop-shadow-xl mb-1">
-      <svg width="48" height="64" viewBox="0 0 45 60" class="w-10 sm:w-14 h-auto">
+    <!-- Anggota Bomba Pixel Halus (Saiz Kecil) Memegang Nozel Hos -->
+    <div class="relative mb-0.5">
+      <svg width="34" height="46" viewBox="0 0 45 60" class="w-7 sm:w-9 h-auto">
         <rect x="16" y="6" width="16" height="8" fill="#fab005" />
         <rect x="14" y="12" width="20" height="3" fill="#f59f00" />
         <rect x="17" y="15" width="12" height="8" fill="#ffd8a8" />
@@ -667,26 +666,23 @@
         <rect x="24" y="52" width="9" height="5" fill="#000000" />
         <path d="M 0 52 Q 15 54 36 29" fill="none" stroke="#ffe066" stroke-width="3" />
       </svg>
-      <div id="nozzle-tip" class="absolute top-[26px] right-0 w-1 h-1"></div>
+      <div id="nozzle-tip" class="absolute top-[20px] right-0 w-1 h-1"></div>
     </div>
 
-    <!-- Papan Maklumat & Status Unit BOMBA SEMEKAR -->
-    <div class="hidden sm:flex flex-col border-l border-gray-700 pl-3">
-      <div class="flex items-center gap-1.5">
-        <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-        <span class="text-[9px] font-pixel text-yellow-400">PASUKAN: BOMBA SEMEKAR</span>
-      </div>
-      <span class="text-[11px] font-mono text-cyan-300" id="firefighter-speech">Sedia menyembur air ke arah kebakaran di kanan!</span>
+    <!-- Kapsyen Mini BOMBA SEMEKAR (Lutsinar Padat & Ringkas) -->
+    <div class="hidden sm:flex flex-col bg-black/60 backdrop-blur-sm px-2 py-0.5 rounded border border-orange-500/40 text-[9px] mb-1">
+      <span class="font-pixel text-yellow-400">BOMBA SEMEKAR</span>
+      <span class="font-mono text-cyan-300" id="firefighter-speech">Menyiram api di kanan!</span>
     </div>
 
   </div>
 
-  <!-- PENGATUR KELAJUAN API DI SUDUT KANAN ATAS API -->
-  <div class="fixed bottom-2 right-3 z-50 pointer-events-auto flex items-center gap-2 bg-gray-950/90 border border-gray-700 rounded-xl px-2.5 py-1 text-[9px] font-pixel text-gray-400 shadow-xl">
-    <span>KELAJUAN API:</span>
+  <!-- PENGATUR KELAJUAN API DI SUDUT KANAN ATAS (z-[9999]) -->
+  <div class="fixed bottom-2 right-2 z-[9999] pointer-events-auto flex items-center gap-1.5 bg-black/75 backdrop-blur-sm border border-gray-700 rounded-lg px-2 py-1 text-[8.5px] font-pixel text-gray-400 shadow-xl">
+    <span>API:</span>
     <button onclick="setFireSpeed('slow')" class="text-yellow-400 hover:underline">SANTAI</button>
     <span>|</span>
-    <button onclick="setFireSpeed('normal')" class="text-orange-400 hover:underline">SEDERHANA</button>
+    <button onclick="setFireSpeed('normal')" class="text-orange-400 hover:underline">LAJU</button>
   </div>
 
   <!-- JAVASCRIPT: LOGIK APLIKASI, 110 SOALAN & HERO BOMBA -->
@@ -870,6 +866,10 @@
         { id: 109, bab: "BAB 2.2 MEKANIKAL", q: "Tali dawai keluli (steel wire rope) pada takal bomba dipilih berbanding tali kapas kerana?", options: ["Mempunyai kekuatan tegangan yang sangat tinggi dan tahan haba geseran", "Mudah putus", "Boleh terapung", "Sangat lembut"], ans: 0, exp: "Dawai keluli menampung daya tegangan bebanan berat semasa operasi mengangkat." },
         { id: 110, bab: "BAB 1 INVENTIF", q: "Bahan busa pemadam kebakaran (firefighting foam) mengandungi gelembung buih yang ringan dan terapung di atas minyak. Sifat ini mengurangkan parameter apa?", options: ["Ketumpatan bahan pemadam berbanding minyak petrol", "Suhu bilik", "Daya geseran", "Graviti"], ans: 0, exp: "Ketumpatan buih yang lebih rendah membolehkannya terapung dan menutup lapisan minyak." }
       ];
+
+      for (let i = 0; i < rawBank.length; i++) {
+        QUESTION_BANK.push(rawBank[i]);
+      }
 
       for (let j = 0; j < extraQuestions.length; j++) {
         QUESTION_BANK.push(extraQuestions[j]);
@@ -1102,14 +1102,13 @@
     }
 
     /* ========================================================================= */
-    /* SIMULASI API PIKSEL HALUS (FINE-PIXEL) MENJULANG DI SEBELAH BAWAH KANAN   */
+    /* SIMULASI API PIKSEL HALUS (FINE-PIXEL) MENJULANG DI BAWAH KANAN (TOP LAYER) */
     /* ========================================================================= */
     const fireCanvas = document.getElementById("fireCanvas");
     const fireCtx = fireCanvas.getContext("2d");
 
-    // Resolusi piksel diperhalus daripada 140x44 kepada 280x90
-    let fireWidth = 280;
-    let fireHeight = 90;
+    let fireWidth = 320;
+    let fireHeight = 100;
     let firePixels = [];
     let fireBaseIntensity = 35;
     let fireSpeedSetting = "slow";
@@ -1131,13 +1130,10 @@
       repopulateFireBase();
     }
 
-    /* Pangkalan api: tertumpu dan membara di sebelah kanan, melarut secara semula jadi ke kiri */
     function repopulateFireBase() {
       for (let x = 0; x < fireWidth; x++) {
-        // Tapering: Api bermula dari kira-kira 25% lebar dan memuncak ke kanan 100%
-        let taperRatio = Math.max(0, (x - (fireWidth * 0.20)) / (fireWidth * 0.80));
+        let taperRatio = Math.max(0, (x - (fireWidth * 0.15)) / (fireWidth * 0.85));
         let intensity = Math.floor(fireBaseIntensity * taperRatio);
-        // Sedikit rawak organik pada pangkalan api
         if (intensity > 0) {
           intensity = Math.max(0, intensity - Math.floor(Math.random() * 3));
         }
@@ -1155,7 +1151,6 @@
             firePixels[fromIdx - fireWidth] = 0;
           } else {
             const rand = Math.floor(Math.random() * decayFactor);
-            // Angin lembut meniup api sedikit ke arah kiri (arah semburan)
             const windDrift = Math.random() > 0.6 ? 1 : 0;
             const toIdx = (fromIdx - fireWidth - rand - windDrift);
             if (toIdx >= 0) {
@@ -1180,8 +1175,7 @@
         data[offset] = color[0];
         data[offset + 1] = color[1];
         data[offset + 2] = color[2];
-        // Lutsinar sempurna jika tiada api, dan separa lutsinar organik pada bara sejuk
-        data[offset + 3] = intensity === 0 ? 0 : Math.min(240, intensity * 7 + 40);
+        data[offset + 3] = intensity === 0 ? 0 : Math.min(240, intensity * 7 + 35);
       }
       fireCtx.putImageData(imgData, 0, 0);
     }
@@ -1208,9 +1202,7 @@
       }
     }
 
-    /* ========================================================================= */
-    /* PANCUTAN AIR MERENTASI DARI NOZEL (KIRI) KE ARAH KEBAKARAN (KANAN)       */
-    /* ========================================================================= */
+    /* PANCUTAN AIR MERENTASI DARI NOZEL (KIRI) KE ARAH KEBAKARAN (KANAN) */
     const waterCanvas = document.getElementById("waterCanvas");
     const waterCtx = waterCanvas.getContext("2d");
     let waterParticles = [];
@@ -1225,14 +1217,12 @@
       playWaterSound();
       const nozzleEl = document.getElementById("nozzle-tip");
       const rect = nozzleEl ? nozzleEl.getBoundingClientRect() : null;
-      const startX = rect ? rect.right : 180;
-      const startY = rect ? (rect.top - (window.innerHeight - waterCanvas.height)) : (waterCanvas.height - 40);
+      const startX = rect ? rect.right : 120;
+      const startY = rect ? (rect.top - (window.innerHeight - waterCanvas.height)) : (waterCanvas.height - 30);
 
-      // Pancutan zarah melengkung tinggi dari kiri menghala ke kanan (ke arah api)
       for (let i = 0; i < 95; i++) {
         setTimeout(() => {
           for (let p = 0; p < 4; p++) {
-            // Sudut dongak pancutan melengkung ke kanan atas lalu jatuh ke api
             const angle = -0.42 + (Math.random() * 0.14);
             const speed = 16 + Math.random() * 11;
             waterParticles.push({
@@ -1260,7 +1250,6 @@
         p.life -= 0.018;
 
         if (p.life <= 0 || p.y >= waterCanvas.height) {
-          // Kesan wap putih apabila titisan air mencecah zon api di kanan
           waterCtx.fillStyle = 'rgba(255, 255, 255, 0.45)';
           waterCtx.fillRect(p.x, waterCanvas.height - 14, p.size * 2, p.size);
           waterParticles.splice(i, 1);
@@ -1448,14 +1437,13 @@
         answeredGlobalQuestions.add(qData.id);
         saveGlobalQuestionsProgress();
 
-        // Semburkan air ke arah api di sebelah kanan
         triggerWaterSpray(75);
-        document.getElementById("firefighter-speech").textContent = "BOMBA SEMEKAR: Semburan air tepat ke punca api di sebelah kanan!";
+        document.getElementById("firefighter-speech").textContent = "BOMBA SEMEKAR: Semburan tepat ke api di kanan!";
       } else {
         playTone(180, "sawtooth", 0.4, 0.25);
         buttons[selectedIndex].classList.remove("border-gray-700", "bg-gray-800/90");
         buttons[selectedIndex].classList.add("border-red-500", "bg-red-950/60");
-        document.getElementById("firefighter-speech").textContent = "BOMBA SEMEKAR: Awas! Jawapan tidak tepat. Api di sebelah kanan semakin marak!";
+        document.getElementById("firefighter-speech").textContent = "BOMBA SEMEKAR: Awas! Api di kanan semakin marak!";
       }
 
       updateSessionFireGauge();
