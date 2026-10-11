@@ -65,10 +65,10 @@
       animation: question-appear 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
-    /* Kecerunan larut atas api: stabil pada semua pelayar web */
+    /* Kecerunan larut lembut di puncak api */
     .raging-inferno-fade {
-      mask-image: linear-gradient(to top, rgba(0,0,0,1) 55%, rgba(0,0,0,0.8) 80%, transparent 100%);
-      -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 55%, rgba(0,0,0,0.8) 80%, transparent 100%);
+      mask-image: linear-gradient(to top, rgba(0,0,0,0.95) 50%, rgba(0,0,0,0.65) 75%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.95) 50%, rgba(0,0,0,0.65) 75%, transparent 100%);
     }
   </style>
 </head>
@@ -161,9 +161,9 @@
           </div>
 
           <div class="bg-black/60 p-3 rounded-xl border border-red-500/30">
-            <div class="font-pixel text-red-400 mb-1 text-[11px]">4. API INFERNO 55%</div>
+            <div class="font-pixel text-red-400 mb-1 text-[11px]">4. API MERBAHAYA</div>
             <p class="text-gray-300 text-[11px] leading-relaxed">
-              Api marak menjulang setinggi 70% dan memenuhi 55% ruang kanan skrin. Teks tetap boleh dibaca dan ditatal ke atas/bawah dengan selesa!
+              Api marak membakar di sebelah kanan skrin dengan alunan semula jadi. Teks kekal jelas dibaca dan ditatal ke atas/bawah dengan selesa!
             </p>
           </div>
         </div>
@@ -392,7 +392,7 @@
 
   </main>
 
-  <!-- MODAL ADMIN (DISEMBUNYIKAN SECARA EKSPLISIT MELALUI INLINE STYLE AGAR TIDAK MENGHALANG KLIK) -->
+  <!-- MODAL ADMIN -->
   <div id="admin-modal" style="display: none;" class="fixed inset-0 bg-black/90 z-[10000] flex items-center justify-center p-3 backdrop-blur-sm">
     <div class="bg-gray-900 border-2 border-red-500 rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
       <button onclick="closeAdminModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white font-pixel text-sm">
@@ -440,19 +440,19 @@
   </div>
 
   <!-- ========================================================================= -->
-  <!-- KAWASAN API INFERNO MENJULANG MARAK (TEPAT 55% HORIZONTAL & 70% VERTIKAL)  -->
-  <!-- Tepat 55vw lebar kanan & 70vh tinggi, bebas sekatan klik (pointer-events-none)-->
+  <!-- KAWASAN API INFERNO MENJULANG MARAK (TIADA KELIPAN / TIADA POTONGAN LURUS)  -->
+  <!-- Kontena w-full merentasi skrin, pangkalan api larut secara organik ke kiri -->
   <!-- ========================================================================= -->
-  <div id="fire-overlay-wrapper" class="fixed bottom-9 right-0 w-[55vw] h-[70vh] pointer-events-none z-[9990] overflow-hidden select-none raging-inferno-fade drop-shadow-[0_-12px_28px_rgba(255,69,0,0.8)]">
+  <div id="fire-overlay-wrapper" class="fixed bottom-9 left-0 right-0 w-full h-[42vh] sm:h-[46vh] pointer-events-none z-[9990] overflow-hidden select-none raging-inferno-fade drop-shadow-[0_-10px_24px_rgba(255,69,0,0.65)]">
     <canvas id="fireCanvas" class="w-full h-full block"></canvas>
   </div>
 
   <!-- KANVAS PANCUTAN AIR MERENTASI SKRIN DARI KIRI KE KANAN (z-[9992]) -->
-  <canvas id="waterCanvas" class="fixed bottom-9 left-0 w-full h-[70vh] pointer-events-none z-[9992]"></canvas>
+  <canvas id="waterCanvas" class="fixed bottom-9 left-0 w-full h-[46vh] pointer-events-none z-[9992]"></canvas>
 
   <!-- ========================================================================= -->
   <!-- BOMBA SEMEKAR: TERLETAK DI ATAS BAR LABEL (bottom-10) DI BAWAH KIRI        -->
-  <!-- Bebas frame kotak di belakang, jernih & kemas                             -->
+  <!-- Bebas frame kotak, kemas & tidak menghalang pemandangan                   -->
   <!-- ========================================================================= -->
   <div class="fixed bottom-10 left-2 sm:left-4 z-[9995] pointer-events-auto flex items-end gap-1.5 sm:gap-2.5 select-none drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)]">
     
@@ -854,28 +854,28 @@
     }
 
     /* ========================================================================= */
-    /* ENJIN API INFERNO RAGING (MARAK, PADAT & MENJULANG LIAR)                   */
+    /* ENJIN API INFERNO RAGING (PANGKALAN LARUT LEMBUT & TIDAK TERPOTONG)       */
     /* ========================================================================= */
     const fireCanvas = document.getElementById("fireCanvas");
     const fireCtx = fireCanvas.getContext("2d");
 
-    const fireWidth = 160;
-    const fireHeight = 110;
+    const fireWidth = 240;
+    const fireHeight = 90;
     let firePixels = [];
     let fireEmbers = [];
     let fireBaseIntensity = 36;
     let fireSpeedSetting = "slow";
-    let fireIntervalTime = 65;
+    let fireIntervalTime = 60;
     let lastFireTick = 0;
 
     const firePalette = [
-      [0, 0, 0],       [25, 4, 4],     [50, 7, 7],     [75, 10, 8],
-      [105, 15, 8],    [135, 20, 8],   [165, 28, 8],   [195, 36, 8],
-      [220, 48, 8],    [235, 62, 8],   [245, 78, 10],  [255, 96, 12],
-      [255, 115, 14],  [255, 134, 18], [255, 152, 22], [255, 170, 26],
-      [255, 186, 32],  [255, 202, 38], [255, 216, 45], [255, 228, 54],
-      [255, 238, 65],  [255, 244, 80], [255, 248, 100],[255, 250, 125],
-      [255, 252, 155], [255, 253, 185],[255, 254, 215],[255, 255, 240],
+      [0, 0, 0],       [30, 4, 4],     [60, 7, 7],     [90, 10, 8],
+      [120, 15, 8],    [150, 22, 8],   [180, 30, 8],   [210, 40, 8],
+      [230, 52, 8],    [245, 68, 8],   [255, 85, 10],  [255, 105, 12],
+      [255, 125, 14],  [255, 145, 18], [255, 165, 22], [255, 180, 26],
+      [255, 195, 32],  [255, 210, 40], [255, 222, 48], [255, 232, 58],
+      [255, 240, 70],  [255, 246, 85], [255, 250, 105],[255, 252, 130],
+      [255, 253, 160], [255, 254, 190],[255, 255, 220],[255, 255, 245],
       [255, 255, 255]
     ];
 
@@ -884,12 +884,12 @@
       fireCanvas.height = fireHeight;
       firePixels = new Array(fireWidth * fireHeight).fill(0);
       fireEmbers = [];
-      for (let e = 0; e < 45; e++) {
+      for (let e = 0; e < 35; e++) {
         fireEmbers.push({
-          x: Math.random() * fireWidth,
+          x: (fireWidth * 0.5) + Math.random() * (fireWidth * 0.5),
           y: Math.random() * fireHeight,
-          vy: 0.6 + Math.random() * 1.6,
-          vx: (Math.random() - 0.5) * 0.8,
+          vy: 0.5 + Math.random() * 1.2,
+          vx: (Math.random() - 0.5) * 0.6,
           life: Math.random() * 1.0
         });
       }
@@ -901,12 +901,16 @@
       const baseVal = Math.min(maxCol, Math.max(0, Math.floor((fireBaseIntensity / 36) * maxCol)));
       
       for (let x = 0; x < fireWidth; x++) {
-        const wave = Math.sin(x * 0.12 + Date.now() * 0.005) * 4;
-        const jitter = (Math.random() - 0.5) * 6;
-        let intensity = Math.floor(baseVal + wave + jitter);
-        
-        const taper = Math.min(1.0, (x / fireWidth) * 1.35);
-        intensity = Math.floor(intensity * taper);
+        // Tapering organik: 45% di sebelah kiri adalah sifar api, melarut secara lembut (smoothstep) ke kanan
+        let taper = 0;
+        if (x > fireWidth * 0.44) {
+          const t = (x - fireWidth * 0.44) / (fireWidth * 0.56);
+          taper = t * t * (3 - 2 * t); // smoothstep curve
+        }
+
+        const wave = Math.sin(x * 0.15 + Date.now() * 0.005) * 3;
+        const jitter = (Math.random() - 0.5) * 4;
+        let intensity = Math.floor((baseVal + wave + jitter) * taper);
 
         firePixels[(fireHeight - 1) * fireWidth + x] = Math.max(0, Math.min(maxCol, intensity));
       }
@@ -914,7 +918,8 @@
 
     function updateFireSpread() {
       const maxCol = firePalette.length - 1;
-      const decayBase = fireSpeedSetting === "slow" ? 1.4 : 1.8;
+      // Penyejukan haba yang kemas & sederhana agar api tidak menutup teks secara keterlaluan
+      const decayBase = fireSpeedSetting === "slow" ? 2.1 : 2.6;
 
       for (let x = 0; x < fireWidth; x++) {
         for (let y = 1; y < fireHeight; y++) {
@@ -937,13 +942,13 @@
 
       fireEmbers.forEach(emb => {
         emb.y -= emb.vy;
-        emb.x += emb.vx + (Math.random() - 0.5) * 0.4;
-        emb.life -= 0.015;
+        emb.x += emb.vx + (Math.random() - 0.5) * 0.3;
+        emb.life -= 0.018;
 
         if (emb.y <= 0 || emb.life <= 0) {
           emb.y = fireHeight - 5 - Math.random() * 10;
-          emb.x = (fireWidth * 0.3) + Math.random() * (fireWidth * 0.7);
-          emb.vy = 0.6 + Math.random() * 1.6;
+          emb.x = (fireWidth * 0.48) + Math.random() * (fireWidth * 0.52);
+          emb.vy = 0.5 + Math.random() * 1.3;
           emb.life = 0.8 + Math.random() * 0.4;
         }
       });
@@ -962,7 +967,8 @@
         data[offset] = color[0];
         data[offset + 1] = color[1];
         data[offset + 2] = color[2];
-        data[offset + 3] = intensity === 0 ? 0 : 255;
+        // Ketelusan lembut (semi-transparent) supaya teks di belakang api kekal terbaca
+        data[offset + 3] = intensity === 0 ? 0 : Math.min(180, 25 + intensity * 6);
       }
 
       fireEmbers.forEach(emb => {
@@ -973,7 +979,7 @@
           data[off] = 255;
           data[off + 1] = 230;
           data[off + 2] = 120;
-          data[off + 3] = Math.floor(emb.life * 255);
+          data[off + 3] = Math.floor(emb.life * 210);
         }
       });
 
@@ -992,7 +998,7 @@
 
     function setFireSpeed(spd) {
       fireSpeedSetting = spd;
-      fireIntervalTime = spd === "slow" ? 65 : 40;
+      fireIntervalTime = spd === "slow" ? 60 : 38;
     }
 
     function adjustFireVisualIntensity(globalRemainingPercent) {
@@ -1002,7 +1008,7 @@
         fireBaseIntensity = 0;
         firePixels.fill(0);
       } else {
-        fireBaseIntensity = Math.max(22, Math.floor((globalRemainingPercent / 100) * 36));
+        fireBaseIntensity = Math.max(20, Math.floor((globalRemainingPercent / 100) * 36));
       }
     }
 
@@ -1013,7 +1019,7 @@
 
     function resizeWaterCanvas() {
       waterCanvas.width = window.innerWidth;
-      waterCanvas.height = window.innerHeight * 0.7;
+      waterCanvas.height = window.innerHeight * 0.46;
     }
     window.addEventListener("resize", resizeWaterCanvas);
 
@@ -1609,7 +1615,7 @@
       });
     }
 
-    /* PENGURUSAN MODAL ADMIN TANPA SEBARANG HALANGAN KLIK */
+    /* PENGURUSAN MODAL ADMIN */
     function openAdminModal() {
       const m = document.getElementById("admin-modal");
       m.style.display = "flex";
