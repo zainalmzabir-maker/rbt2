@@ -1,0 +1,1778 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bomba RBT Tingkatan 2 - Misi Padam Kebakaran</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: VT323 & Press Start 2P untuk retro pixel look -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&family=VT323&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --pixel-font: 'Press Start 2P', monospace;
+      --mono-font: 'Share Tech Mono', monospace;
+      --retro-font: 'VT323', monospace;
+    }
+    body {
+      font-family: var(--mono-font);
+      background-color: #0b0c10;
+      color: #e0e6ed;
+      overflow-x: hidden;
+    }
+    .font-pixel { font-family: var(--pixel-font); }
+    .font-retro { font-family: var(--retro-font); }
+    
+    /* CRT Scanlines Subtle Effect */
+    .crt-overlay {
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+      background-size: 100% 4px;
+      pointer-events: none;
+    }
+
+    /* Pixel art crisp rendering */
+    canvas {
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #11141c; }
+    ::-webkit-scrollbar-thumb { background: #d9480f; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #ff6b4a; }
+
+    /* Keyframes for fire engine lights */
+    @keyframes siren-blink {
+      0%, 100% { opacity: 1; filter: drop-shadow(0 0 10px #ff0055); }
+      50% { opacity: 0.2; filter: drop-shadow(0 0 2px #00e5ff); }
+    }
+    .siren-active {
+      animation: siren-blink 0.6s infinite;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between relative selection:bg-orange-600 selection:text-white">
+
+  <!-- Scanline Layer -->
+  <div class="fixed inset-0 crt-overlay z-40 pointer-events-none opacity-40"></div>
+
+  <!-- TOP HEADER / NAV BAR -->
+  <header class="bg-gray-900/90 backdrop-blur border-b-2 border-orange-600/70 sticky top-0 z-30 px-4 py-3 shadow-2xl">
+    <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-lg bg-orange-600 flex items-center justify-center text-2xl shadow-lg shadow-orange-600/40 border border-yellow-400">
+          🚒
+        </div>
+        <div>
+          <h1 class="text-xs sm:text-sm font-pixel text-yellow-400 tracking-wider">MISI BOMBA RBT TINGKATAN 2</h1>
+          <p class="text-xs text-orange-300 font-retro tracking-wider text-base">OPERASI PEMADAMAN KEBAKARAN BERSAMA PASUKAN 2S1 & 2S2</p>
+        </div>
+      </div>
+
+      <!-- GLOBAL MISSION INDICATOR (60 QUESTIONS PROGRESS) -->
+      <div class="flex items-center gap-4 bg-black/60 border border-orange-500/40 rounded-lg px-3 py-1.5 shadow-inner">
+        <div class="text-right">
+          <div class="text-[10px] text-gray-400 font-pixel">BAKI API GLOBAL</div>
+          <div class="text-base sm:text-lg font-pixel font-bold text-red-500" id="global-fire-text">100%</div>
+        </div>
+        <div class="w-24 sm:w-32 bg-gray-800 h-3.5 rounded-full overflow-hidden border border-red-700/60 p-0.5">
+          <div id="global-fire-bar" class="h-full bg-gradient-to-r from-yellow-500 via-orange-500 to-red-600 rounded-full transition-all duration-700" style="width: 100%;"></div>
+        </div>
+      </div>
+
+      <!-- NAV BUTTONS -->
+      <div class="flex items-center gap-2">
+        <button onclick="navigateView('home')" class="px-3 py-1.5 bg-gray-800 hover:bg-gray-700 border border-gray-600 rounded text-xs font-pixel text-gray-200 transition">
+          UTAMA
+        </button>
+        <button onclick="navigateView('leaderboard')" class="px-3 py-1.5 bg-orange-700 hover:bg-orange-600 border border-yellow-500 rounded text-xs font-pixel text-yellow-300 transition shadow">
+          RANKING 🏆
+        </button>
+        <button onclick="toggleAudio()" id="audio-toggle-btn" class="px-2.5 py-1.5 bg-gray-800 hover:bg-gray-700 border border-gray-600 rounded text-xs text-yellow-400" title="Bunyi Muzik / Kesan">
+          🔊
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER (PAGE VIEWS) -->
+  <main class="flex-1 max-w-6xl w-full mx-auto p-4 relative z-20 pb-64">
+
+    <!-- VIEW 1: HOME / PILIH MURID -->
+    <section id="view-home" class="view-panel transition-opacity duration-300">
+      <div class="max-w-2xl mx-auto bg-gray-900/90 border-2 border-orange-600/80 rounded-2xl p-6 sm:p-8 shadow-2xl backdrop-blur-md">
+        <div class="text-center mb-6">
+          <span class="inline-block px-3 py-1 bg-red-950 border border-red-500 text-red-400 text-xs font-pixel rounded-full mb-3 animate-pulse">
+            🚨 AMARAN: KEBAKARAN TINGGI DIZONKAN
+          </span>
+          <h2 class="text-xl sm:text-2xl font-pixel text-yellow-400 mb-2">DAFTAR KELUAR BOMBA</h2>
+          <p class="text-gray-300 text-sm leading-relaxed">
+            Pilih kelas dan nama anda untuk memulakan jentera pemadam api. Selesaikan <strong class="text-orange-400">10 soalan RBT Tingkatan 2</strong> secara tepat untuk menyembur air dan memadamkan kebakaran!
+          </p>
+        </div>
+
+        <div class="space-y-4">
+          <!-- Pilih Kelas -->
+          <div>
+            <label class="block text-xs font-pixel text-orange-300 mb-2">1. PILIH KELAS</label>
+            <div class="grid grid-cols-2 gap-3">
+              <button type="button" onclick="selectClass('2S1')" id="btn-class-2s1" class="class-btn p-3 bg-gray-800 border-2 border-gray-700 hover:border-orange-500 rounded-xl font-pixel text-sm text-center transition flex items-center justify-center gap-2">
+                <span>📚</span> KELAS 2S1
+              </button>
+              <button type="button" onclick="selectClass('2S2')" id="btn-class-2s2" class="class-btn p-3 bg-gray-800 border-2 border-gray-700 hover:border-orange-500 rounded-xl font-pixel text-sm text-center transition flex items-center justify-center gap-2">
+                <span>📘</span> KELAS 2S2
+              </button>
+            </div>
+          </div>
+
+          <!-- Pilih Murid -->
+          <div id="student-select-container" class="opacity-50 pointer-events-none transition">
+            <label class="block text-xs font-pixel text-orange-300 mb-2">2. PILIH NAMA ANGGOTA (MURID)</label>
+            <select id="student-name-dropdown" class="w-full bg-gray-800 border-2 border-gray-600 focus:border-yellow-400 text-white rounded-xl p-3 text-sm font-mono outline-none">
+              <option value="">-- Sila Pilih Nama Anda --</option>
+            </select>
+          </div>
+
+          <!-- Konfigurasi URL Google Script (Pilihan / Tersedia) -->
+          <div class="pt-2">
+            <details class="text-xs text-gray-400 cursor-pointer">
+              <summary class="hover:text-yellow-400">⚙️ Tetapan Pautan Google Sheet Web App (Apps Script)</summary>
+              <div class="mt-2 p-3 bg-black/60 rounded border border-gray-700 space-y-2">
+                <p>Masukkan Web App URL Google Script anda untuk menyimpan data rekod ke Google Sheets secara awan:</p>
+                <input type="text" id="gas-url-input" placeholder="https://script.google.com/macros/s/.../exec" class="w-full bg-gray-900 border border-gray-600 text-xs p-2 rounded text-green-400">
+                <div class="flex justify-between items-center text-[11px] text-gray-400">
+                  <span>*Jika dikosongkan, data disimpan terus di storan pelayar (LocalStorage).</span>
+                  <button type="button" onclick="saveGasUrl()" class="px-2 py-1 bg-orange-600 text-white rounded hover:bg-orange-500 font-pixel text-[10px]">SIMPAN</button>
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <!-- Butang Mula -->
+          <button id="btn-start-quiz" onclick="startQuizSession()" disabled class="w-full mt-4 py-4 bg-gradient-to-r from-red-600 via-orange-600 to-yellow-600 hover:from-red-500 hover:to-yellow-500 disabled:opacity-40 disabled:cursor-not-allowed text-black font-pixel font-bold text-sm sm:text-base rounded-xl shadow-lg shadow-orange-700/50 transform active:scale-95 transition border-2 border-yellow-300">
+            🔥 MULAKAN MISI PEMADAMAN API!
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 2: QUIZ / MISI PEMADAMAN -->
+    <section id="view-quiz" class="view-panel hidden transition-opacity duration-300">
+      <div class="max-w-3xl mx-auto bg-gray-900/95 border-2 border-orange-500/80 rounded-2xl p-5 sm:p-7 shadow-2xl backdrop-blur-md">
+        
+        <!-- Status Bar Sesi -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-gray-700/80 mb-5">
+          <div class="flex items-center gap-2">
+            <div class="px-2.5 py-1 bg-yellow-500/20 border border-yellow-400 text-yellow-300 rounded font-pixel text-xs" id="quiz-student-badge">
+              ANOMALI
+            </div>
+            <div class="px-2 py-1 bg-gray-800 border border-gray-600 text-gray-300 rounded font-pixel text-xs" id="quiz-class-badge">
+              2S1
+            </div>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="text-xs font-pixel text-gray-400">SOALAN: <span class="text-yellow-400" id="quiz-progress-text">1/10</span></span>
+            <span class="text-xs font-pixel text-orange-400">SKOR: <span class="text-green-400" id="quiz-score-text">0</span></span>
+          </div>
+        </div>
+
+        <!-- Tolok Baki Kebakaran Sesi Ini -->
+        <div class="mb-5 bg-black/60 p-3 rounded-xl border border-red-900/60">
+          <div class="flex justify-between items-center text-xs font-pixel mb-1.5">
+            <span class="text-red-400 flex items-center gap-1.5">
+              <span class="animate-pulse">🔥</span> BAKI KEBAKARAN SESI INI:
+            </span>
+            <span class="text-yellow-400" id="session-fire-pct">100%</span>
+          </div>
+          <div class="w-full bg-gray-800 h-4 rounded-full overflow-hidden border border-red-600/70 p-0.5">
+            <div id="session-fire-bar" class="h-full bg-gradient-to-r from-green-500 via-yellow-500 to-red-600 rounded-full transition-all duration-700" style="width: 100%;"></div>
+          </div>
+        </div>
+
+        <!-- Kotak Soalan -->
+        <div class="mb-6">
+          <div class="inline-block px-3 py-1 bg-orange-950/70 border border-orange-500/50 rounded-full text-[11px] font-pixel text-orange-300 mb-3" id="quiz-chapter-tag">
+            BAB 2.2 REKA BENTUK MEKANIKAL
+          </div>
+          <h3 class="text-base sm:text-lg text-white font-medium leading-relaxed" id="quiz-question-text">
+            Memuatkan soalan...
+          </h3>
+        </div>
+
+        <!-- Pilihan Jawapan -->
+        <div class="grid grid-cols-1 gap-3 mb-6" id="quiz-options-container">
+          <!-- Options populated by JS -->
+        </div>
+
+        <!-- Ruang Maklum Balas / Penerangan RBT -->
+        <div id="quiz-explanation-box" class="hidden p-4 rounded-xl border mb-6 text-sm transition">
+          <div class="font-pixel text-xs mb-1" id="quiz-feedback-title">TEPAT! AIR DISURAMKAN!</div>
+          <p class="text-gray-200" id="quiz-feedback-desc"></p>
+        </div>
+
+        <!-- Butang Seterusnya -->
+        <div class="flex justify-end">
+          <button id="btn-next-question" onclick="nextQuestion()" disabled class="px-6 py-3 bg-gray-800 text-gray-500 font-pixel text-xs rounded-xl border border-gray-700 disabled:opacity-40 disabled:cursor-not-allowed transition hover:bg-orange-600 hover:text-white hover:border-yellow-400">
+            SOALAN SETERUSNYA ➔
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- VIEW 3: SESI TAMAT / KEPUTUSAN -->
+    <section id="view-result" class="view-panel hidden transition-opacity duration-300">
+      <div class="max-w-2xl mx-auto bg-gray-900/95 border-2 border-yellow-500/80 rounded-2xl p-6 sm:p-8 text-center shadow-2xl backdrop-blur-md">
+        <div class="text-4xl mb-2">🎉</div>
+        <h2 class="text-xl sm:text-2xl font-pixel text-yellow-400 mb-1">MISI SELESAI!</h2>
+        <p class="text-sm text-gray-300 mb-6 font-mono" id="result-summary-name">Anggota: -</p>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-6">
+          <div class="bg-black/60 p-4 rounded-xl border border-gray-800">
+            <div class="text-[10px] font-pixel text-gray-400 mb-1">SKOR AKHIR</div>
+            <div class="text-2xl font-pixel text-yellow-400" id="result-score-val">0/10</div>
+          </div>
+          <div class="bg-black/60 p-4 rounded-xl border border-gray-800">
+            <div class="text-[10px] font-pixel text-gray-400 mb-1">API TERPADAM</div>
+            <div class="text-2xl font-pixel text-cyan-400" id="result-extinguish-val">0%</div>
+          </div>
+          <div class="bg-black/60 p-4 rounded-xl border border-gray-800 col-span-2 sm:col-span-1">
+            <div class="text-[10px] font-pixel text-gray-400 mb-1">MASA DIAMBIL</div>
+            <div class="text-2xl font-pixel text-green-400" id="result-time-val">00:00</div>
+          </div>
+        </div>
+
+        <p class="text-sm text-gray-300 mb-6 leading-relaxed" id="result-encouragement-msg">
+          Syabas atas usaha pemadaman anda! Setiap jawapan tepat anda telah membantu memadamkan kebakaran.
+        </p>
+
+        <div class="flex flex-wrap justify-center gap-3">
+          <button onclick="navigateView('home')" class="px-5 py-3 bg-gray-800 hover:bg-gray-700 border border-gray-600 rounded-xl font-pixel text-xs text-white transition">
+            🔄 SESI BARU
+          </button>
+          <button onclick="navigateView('leaderboard')" class="px-5 py-3 bg-orange-600 hover:bg-orange-500 border border-yellow-400 rounded-xl font-pixel text-xs text-yellow-200 transition shadow-lg">
+            🏆 LIHAT RANKING
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 4: RANKING & PEMAIN REPLAY USAHA PEMADAMAN -->
+    <section id="view-leaderboard" class="view-panel hidden transition-opacity duration-300">
+      <div class="max-w-4xl mx-auto bg-gray-900/95 border-2 border-orange-600/80 rounded-2xl p-5 sm:p-7 shadow-2xl backdrop-blur-md">
+        
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-6 pb-4 border-b border-gray-800">
+          <div>
+            <h2 class="text-lg sm:text-xl font-pixel text-yellow-400 flex items-center gap-2">
+              🏆 PAPAN KECEMERLANGAN OPERASI BOMBA
+            </h2>
+            <p class="text-xs text-gray-400 font-mono mt-1">Ranking semasa murid mengikut skor & peratusan pemadaman api</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <select id="leaderboard-filter-class" onchange="renderLeaderboardTable()" class="bg-gray-800 border border-gray-600 text-yellow-300 rounded px-3 py-1.5 text-xs font-pixel outline-none">
+              <option value="ALL">SEMUA KELAS</option>
+              <option value="2S1">KELAS 2S1</option>
+              <option value="2S2">KELAS 2S2</option>
+            </select>
+            <button onclick="fetchLeaderboardData()" class="p-2 bg-gray-800 hover:bg-gray-700 border border-gray-600 text-yellow-400 rounded text-xs" title="Segarkan Data">
+              🔄
+            </button>
+          </div>
+        </div>
+
+        <!-- Jadual Ranking -->
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs font-mono">
+            <thead>
+              <tr class="bg-black/60 text-orange-400 font-pixel text-[10px] border-b border-gray-800">
+                <th class="p-3">KED</th>
+                <th class="p-3">NAMA MURID</th>
+                <th class="p-3">KELAS</th>
+                <th class="p-3 text-center">SKOR</th>
+                <th class="p-3 text-center">API PADAM</th>
+                <th class="p-3 text-center">MASA</th>
+                <th class="p-3 text-center">RAKAMAN USAHA</th>
+              </tr>
+            </thead>
+            <tbody id="leaderboard-tbody" class="divide-y divide-gray-800/80">
+              <!-- Baris dimuatkan secara dinamik -->
+            </tbody>
+          </table>
+        </div>
+
+        <div id="leaderboard-empty" class="text-center py-8 text-gray-500 font-pixel text-xs hidden">
+          Belum ada rekod operasi direkodkan. Jadilah yang pertama memadamkan kebakaran!
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- REPLAY THEATER MODAL (USAHA PEMADAMAN BOLEH DIMAINKAN SEMULA) -->
+  <div id="replay-modal" class="fixed inset-0 bg-black/85 z-50 flex items-center justify-center p-3 hidden backdrop-blur-sm">
+    <div class="bg-gray-900 border-2 border-yellow-400 rounded-2xl max-w-2xl w-full p-5 sm:p-6 shadow-2xl relative">
+      <button onclick="closeReplayModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white font-pixel text-sm">
+        ✖
+      </button>
+
+      <div class="flex items-center gap-2 mb-3">
+        <span class="text-red-500 text-xl">🎬</span>
+        <h3 class="font-pixel text-sm sm:text-base text-yellow-400">RAKAMAN TAYANGAN USAHA PEMADAMAN</h3>
+      </div>
+      
+      <p class="text-xs text-gray-300 font-mono mb-4" id="replay-header-info">
+        Memainkan semula sesi: -
+      </p>
+
+      <!-- Replay Stage Card -->
+      <div class="bg-black/80 rounded-xl p-4 border border-gray-700 mb-4 min-h-[160px] flex flex-col justify-between">
+        <div>
+          <div class="flex justify-between items-center text-xs font-pixel text-gray-400 mb-2">
+            <span id="replay-step-tag">SOALAN 1 / 10</span>
+            <span id="replay-status-badge" class="px-2 py-0.5 rounded text-[10px]">STATUS</span>
+          </div>
+          <div class="text-sm font-medium text-white mb-2" id="replay-question-text">
+            -
+          </div>
+          <div class="text-xs text-gray-300 font-mono" id="replay-chosen-text">
+            Jawapan Murid: -
+          </div>
+        </div>
+
+        <div class="mt-4 pt-3 border-t border-gray-800 flex justify-between items-center text-xs">
+          <span class="text-cyan-400 font-pixel text-[11px]" id="replay-action-log">💦 Pancutan air bertekanan tinggi diaktifkan!</span>
+          <span class="text-yellow-400 font-pixel text-[11px]" id="replay-fire-rem">Baki Api: 90%</span>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="flex items-center justify-between gap-3">
+        <div class="text-xs font-pixel text-gray-400" id="replay-counter-text">1 / 10</div>
+        <div class="flex items-center gap-2">
+          <button onclick="toggleReplayPlay()" id="btn-replay-play" class="px-4 py-2 bg-yellow-500 hover:bg-yellow-400 text-black font-pixel text-xs rounded transition flex items-center gap-1">
+            <span>⏸</span> JEDA
+          </button>
+          <button onclick="stepReplayNext()" class="px-4 py-2 bg-gray-800 hover:bg-gray-700 border border-gray-600 text-white font-pixel text-xs rounded transition">
+            LANGKAH ➔
+          </button>
+          <button onclick="restartReplay()" class="px-3 py-2 bg-gray-800 hover:bg-gray-700 border border-gray-600 text-yellow-400 font-pixel text-xs rounded transition">
+            🔄
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM FIXED STAGE: RETRO FIRE, FIRE TRUCK, FIREFIGHTER & WATER SPRAY -->
+  <!-- Kelihatan pada mana-mana page secara kekal -->
+  <div class="fixed bottom-0 left-0 right-0 h-52 sm:h-60 pointer-events-none z-30 overflow-hidden select-none">
+    
+    <!-- Retouch Gradient Horizon -->
+    <div class="absolute inset-0 bg-gradient-to-t from-transparent via-[#0b0c10]/40 to-transparent"></div>
+
+    <!-- CANVAS 1: FIRE ANIMATION (ACCESSIBLY SLOWER & HORIZONTALLY FULL) -->
+    <canvas id="fireCanvas" class="absolute bottom-0 left-0 w-full h-44 sm:h-48 z-10 opacity-95"></canvas>
+
+    <!-- CANVAS 2: WATER SPRAY STREAM (SIRAMAN AIR BOMBA) -->
+    <canvas id="waterCanvas" class="absolute bottom-0 left-0 w-full h-52 sm:h-60 z-20"></canvas>
+
+    <!-- PIXEL ART SPRITES: FIRE ENGINE & FIREFIGHTERS -->
+    <div class="absolute bottom-2 left-3 sm:left-10 z-25 flex items-end gap-3 pointer-events-auto">
+      
+      <!-- Jentera Bomba Pixel (SVG Scaled Pixel Graphics) -->
+      <div class="relative drop-shadow-2xl">
+        <!-- Lampu Siren Kelip -->
+        <div class="absolute -top-3 left-10 w-3 h-2 bg-red-500 rounded-sm siren-active"></div>
+        <div class="absolute -top-3 left-14 w-3 h-2 bg-cyan-400 rounded-sm siren-active" style="animation-delay: 0.3s;"></div>
+
+        <!-- SVG Jentera Bomba Pixel Art 8-bit -->
+        <svg width="140" height="70" viewBox="0 0 140 70" class="w-28 sm:w-36 h-auto drop-shadow-md">
+          <!-- Badan Utama Trak Merah -->
+          <rect x="5" y="20" width="130" height="35" fill="#c92a2a" />
+          <rect x="5" y="10" width="60" height="15" fill="#e03131" />
+          <rect x="65" y="15" width="70" height="8" fill="#adb5bd" /> <!-- Tangga atas -->
+          <!-- Cermin Hadapan & Tingkap -->
+          <rect x="10" y="24" width="22" height="16" fill="#74c0fc" />
+          <rect x="36" y="24" width="18" height="16" fill="#4dabf7" />
+          <!-- Jalur Kuning Bomba -->
+          <rect x="5" y="42" width="130" height="6" fill="#ffd43b" />
+          <text x="65" y="40" fill="#ffffff" font-size="7" font-weight="bold" font-family="monospace">BOMBA 999</text>
+          <!-- Gril & Lampu Hadapan -->
+          <rect x="2" y="38" width="4" height="14" fill="#ced4da" />
+          <rect x="2" y="32" width="4" height="5" fill="#ffe066" />
+          <!-- Roda Pixel -->
+          <circle cx="30" cy="56" r="10" fill="#212529" stroke="#495057" stroke-width="3" />
+          <circle cx="30" cy="56" r="4" fill="#dee2e6" />
+          <circle cx="105" cy="56" r="10" fill="#212529" stroke="#495057" stroke-width="3" />
+          <circle cx="105" cy="56" r="4" fill="#dee2e6" />
+        </svg>
+      </div>
+
+      <!-- Anggota Bomba Pixel Art Memegang Hos -->
+      <div class="relative drop-shadow-xl -ml-2 mb-1">
+        <svg width="45" height="60" viewBox="0 0 45 60" class="w-9 sm:w-11 h-auto">
+          <!-- Topi Keledar Bomba Kuning -->
+          <rect x="16" y="6" width="16" height="8" fill="#fab005" />
+          <rect x="14" y="12" width="20" height="3" fill="#f59f00" />
+          <!-- Muka & Visor -->
+          <rect x="17" y="15" width="12" height="8" fill="#ffd8a8" />
+          <rect x="20" y="17" width="9" height="3" fill="#212529" />
+          <!-- Baju Seragam Bomba Jingga Gelap & Jalur Pantulan -->
+          <rect x="14" y="23" width="18" height="18" fill="#d9480f" />
+          <rect x="14" y="28" width="18" height="3" fill="#94d82d" />
+          <!-- Tangan Memegang Nozel Hos -->
+          <rect x="26" y="27" width="14" height="6" fill="#d9480f" />
+          <rect x="36" y="25" width="7" height="8" fill="#868e96" /> <!-- Nozel Besi -->
+          <!-- Seluar & But Hitam -->
+          <rect x="15" y="41" width="7" height="12" fill="#212529" />
+          <rect x="24" y="41" width="7" height="12" fill="#212529" />
+          <rect x="14" y="52" width="9" height="5" fill="#000000" />
+          <rect x="24" y="52" width="9" height="5" fill="#000000" />
+          <!-- Hos Getah Menghala ke Trak -->
+          <path d="M 0 52 Q 15 54 36 29" fill="none" stroke="#ffe066" stroke-width="3" />
+        </svg>
+        <!-- Titik Pemicu Semburan Air Bomba (Marker Koordinat) -->
+        <div id="nozzle-tip" class="absolute top-[26px] right-0 w-1 h-1"></div>
+      </div>
+
+      <!-- Kotak Kapsyen Status Bomba -->
+      <div class="hidden md:flex flex-col bg-black/80 border border-yellow-500/50 rounded px-2.5 py-1 mb-2">
+        <span class="text-[9px] font-pixel text-yellow-400">PASUKAN OPERASI KECEMASAN</span>
+        <span class="text-[11px] font-mono text-cyan-300" id="firefighter-speech">Sedia menerima jawapan tepat untuk menyiram!</span>
+      </div>
+
+    </div>
+
+    <!-- HUD PENGATUR KELAJUAN API & PINTU KAWALAN -->
+    <div class="absolute bottom-2 right-3 z-30 pointer-events-auto flex items-center gap-2 bg-black/80 border border-gray-800 rounded px-2.5 py-1 text-[10px] font-pixel text-gray-400">
+      <span>KELAJUAN API:</span>
+      <button onclick="setFireSpeed('slow')" class="text-yellow-400 hover:underline">SANTAI (PERLAHAN)</button>
+      <span>|</span>
+      <button onclick="setFireSpeed('normal')" class="text-orange-400 hover:underline">SEDERHANA</button>
+    </div>
+
+  </div>
+
+  <!-- JAVASCRIPT: LOGIK KESELURUHAN SISTEM -->
+  <script>
+    /* =====================================================================
+       1. DATA SENARAI MURID (2S1 & 2S2) DARI SUMBER RASMI IMEJ
+       ===================================================================== */
+    const STUDENTS_DATA = {
+      "2S1": [
+        "AFIF ZUFAYRI BIN NAZARUDIN",
+        "ALYAANA NABIHAH BINTI ALIZAL",
+        "CHIU YU YANG",
+        "DAING MUHAMAD IRFAN WAFIY BIN MOHD ESKANDAR",
+        "MARCO EE PIAO YONG",
+        "MUHAMMAD ADAM IRFAN BIN MOHD SAMSOL",
+        "MUHAMMAD FAHIM ZAFRI BIN ZAIDE",
+        "MUHAMMAD HAFIZUL RAIZAM BIN KAMAL",
+        "MUHAMMAD HARIZZUDIN BIN IBRAHIM",
+        "MUHAMMAD YUSRI DANIAL BIN NOOR HADI",
+        "NUR BATRISYA BINTI MOHD ZAILI",
+        "NUR DAMIA DAYANA BINTI HAFIZUL",
+        "NUR NAZIHA AISYA BINTI MOHD AKHBAR",
+        "NUR SYAFIQAH BINTI ANWAR",
+        "NUR YASMIN THURAIYA MAHATA BINTI ABDUL RAHMAN",
+        "NURAMYLIA NATASYA BINTI ABDULLAH",
+        "NURSHAZWINA BINTI ZEFFRY ZUL",
+        "PAVAANA A/P A PARAMESVARAN",
+        "PUTERI IRIS ZAHIRAH BINTI ISMAIL",
+        "QASEH NAURA AUNI BATRISYAH BINTI EDI NOOR FADLI",
+        "SITI NUR ZULAIKA BINTI MOHD ROZI",
+        "UMMU SALAMAH BINTI ROHIZAD"
+      ],
+      "2S2": [
+        "ABDUL AL MUZHAFFAR BIN ABD KADIR",
+        "AQIL NAUFAL BIN MOHD ASRI",
+        "CHONG YIN EN",
+        "DHIKSHAA A/P SUKUMARAN",
+        "GOH YU LING",
+        "MOHAMMAD HAKIMI BIN ABDULLAH",
+        "MOHAMMAD KHAMARUL ASRAF BIN ROSLY",
+        "MUHAMMAD ASHRAF DANISH BIN HAIROL",
+        "MUHAMMAD AZIEM MUNIR BIN MINHED",
+        "MUHAMMAD DANISH FITRI BIN NORAISHAM",
+        "MUHAMMAD HAFIEQ DANIEL BIN MOHD NOR",
+        "MUHAMMAD HARIZ HAQIMIE BIN YUSOF",
+        "MUHAMMAD HAZWAN WAFIY BIN MOHD SAUFI",
+        "MUHAMMAD ILMAN HAZIQ BIN AKHMAL HISAM",
+        "MUHAMMAD KAUSAR BIN MOHD IZZUAN",
+        "MUHAMMAD QAISKU FIQRY BIN MOHD FAUZI",
+        "MUHAMMAD RAIHAN BIN MOHD FAIZAL",
+        "MUHAMMAD RIZQI RAMADHAN BIN MUJIKO",
+        "MUHAMMAD SHAHLEEZAN BIN ABDULLAH",
+        "MUHAMMAD SHAHRIZWAN BIN ABDULLAH",
+        "NUR QAMARINA BINTI ABDULLAH",
+        "PUTRI AYU NAJIHA BINTI MOHD FADLY",
+        "TAN YING RU",
+        "TAN ZI SHAN",
+        "WONG LI XIAN",
+        "WONG YEE TING"
+      ]
+    };
+
+    /* =====================================================================
+       2. BANK SOALAN LENGKAP: 60 SOALAN RBT TINGKATAN 2 BERKAITAN KEBAKARAN
+       ===================================================================== */
+    const QUESTION_BANK = [
+      {
+        id: 1,
+        bab: "BAB 2.2 REKA BENTUK MEKANIKAL",
+        q: "Tangga jentera penyelamat bomba rosak semasa operasi kebakaran. Mekanisme perlu memanjangkan tangga secara lurus dan tepat dari putaran motor elektrik. Apakah sistem gear yang paling tepat untuk menggantikan komponen tersebut?",
+        options: ["Gear taji (Spur gear)", "Gear rak dan pinan (Rack and pinion)", "Gear serong (Bevel gear)", "Gear heliks"],
+        ans: 1,
+        exp: "Gear rak dan pinan menukarkan pergerakan putaran daripada motor/pinan kepada pergerakan linear (lurus) untuk memanjangkan dan memendekkan tangga jentera bomba."
+      },
+      {
+        id: 2,
+        bab: "BAB 2.2 REKA BENTUK MEKANIKAL",
+        q: "Pam utama jentera bomba memerlukan pemindahan kuasa putaran pada sudut 90 darjah antara aci enjin dengan aci pam air. Gear manakah yang berfungsi memindahkan putaran pada sudut 90 darjah ini?",
+        options: ["Gear cacing (Worm gear)", "Gear taji", "Gear serong (Bevel gear)", "Tali sawat"],
+        ans: 2,
+        exp: "Gear serong (Bevel gear) direka khusus untuk memindahkan kuasa dan kelajuan antara dua aci yang bersilang pada sudut 90 darjah."
+      },
+      {
+        id: 3,
+        bab: "BAB 2.2 REKA BENTUK MEKANIKAL",
+        q: "Semasa operasi menyelamat mangsa kebakaran dari cerun curam, anggota bomba menggunakan sistem takal bergabung. Apakah fungsi utama takal dalam sistem ini?",
+        options: ["Meningkatkan kelajuan jatuh mangsa", "Mengurangkan daya yang diperlukan untuk mengangkat beban", "Mengunci pergerakan tali secara kekal", "Menghasilkan tenaga elektrik"],
+        ans: 1,
+        exp: "Sistem takal (pulley) mengurangkan beban dan daya yang diperlukan oleh anggota bomba untuk mengangkat atau menarik mangsa ke tempat selamat."
+      },
+      {
+        id: 4,
+        bab: "BAB 2.2 REKA BENTUK MEKANIKAL",
+        q: "Alat pemotong hidraulik bomba ('Jaws of Life') digunakan memotong besi pintu kenderaan terbakar. Komponen yang menyambungkan dua tuas pemotong untuk menghasilkan gerakan membuka dan menutup ialah?",
+        options: ["Gelongsor (Slider)", "Bindu (Chuck)", "Pautan (Linkage)", "Rantai (Chain)"],
+        ans: 2,
+        exp: "Pautan (Linkage) berfungsi menghubungkan komponen mekanikal untuk memindahkan daya dan menghasilkan pergerakan mencengkam/memotong."
+      },
+      {
+        id: 5,
+        bab: "BAB 2.2 REKA BENTUK MEKANIKAL",
+        q: "Kren jentera bomba memerlukan sistem gear yang tidak boleh berpusing secara songsang (tidak terlajak turun sendiri demi keselamatan) semasa menahan beban. Gear apakah ini?",
+        options: ["Gear cacing dan roda cacing (Worm gear)", "Gear dalaman", "Gear taji", "Gear heliks"],
+        ans: 0,
+        exp: "Gear cacing dan roda cacing mempunyai ciri penguncian kendiri (self-locking) di mana roda cacing tidak boleh memutarkan gear cacing secara songsang."
+      },
+      {
+        id: 6,
+        bab: "BAB 2.2 REKA BENTUK MEKANIKAL",
+        q: "Kipas pengalih udara asap tebal (smoke ejector) bomba dipacu oleh enjin motor pada jarak tertentu yang selari. Komponen mekanikal fleksibel manakah yang paling sesuai?",
+        options: ["Aci sesondol", "Tali sawat (Belt) dan takal", "Bindu", "Gear serong"],
+        ans: 1,
+        exp: "Tali sawat dan takal digunakan untuk memindahkan kuasa putaran antara dua aci selari yang berjarak jauh secara senyap dan lancar."
+      },
+      {
+        id: 7,
+        bab: "BAB 2.2 REKA BENTUK MEKANIKAL",
+        q: "Tuas pengapit hos bomba digunakan untuk menghentikan aliran air bertekanan tinggi dengan segera. Sistem mekanikal tuas terdiri daripada gabungan tiga elemen utama iaitu?",
+        options: ["Beban, Fulkrum, dan Daya", "Gear, Takal, dan Tali", "Voltan, Arus, dan Kuasa", "Input, Proses, dan Output"],
+        ans: 0,
+        exp: "Prinsip tuas (lever) asas melibatkan fulkrum (titik sokongan), daya (usaha anggota bomba), dan beban (tekanan hos)."
+      },
+      {
+        id: 8,
+        bab: "BAB 2.2 REKA BENTUK MEKANIKAL",
+        q: "Injap muncung (nozzle) penyembur air dibuka dan ditutup dengan menggelongsorkan pemegang lurus ke hadapan dan belakang. Komponen mekanikal tersebut dinamakan?",
+        options: ["Gelongsor (Slider)", "Sesondol (Cam)", "Aci engkol", "Takal"],
+        ans: 0,
+        exp: "Gelongsor (slider) mengurangkan geseran dan membolehkan pergerakan linear secara salingan untuk melaraskan bukaan injap."
+      },
+      {
+        id: 9,
+        bab: "BAB 2.2 REKA BENTUK MEKANIKAL",
+        q: "Anggota bomba perlu menukar mata gerudi pemecah dinding konkrit dengan cepat dan memegangnya dengan ketat. Bahagian pemegang mata gerudi tersebut dikenali sebagai?",
+        options: ["Bindu (Chuck)", "Gandar", "Engsel", "Penyambung T"],
+        ans: 0,
+        exp: "Bindu (chuck) berfungsi memegang atau mencengkam mata gerudi secara kukuh pada mesin gerudi berkuasa tinggi."
+      },
+      {
+        id: 10,
+        bab: "BAB 2.2 REKA BENTUK MEKANIKAL",
+        q: "Pam pemadam api jenis omboh memerlukan pergerakan putaran enjin ditukar kepada gerakan salingan naik dan turun omboh. Komponen manakah yang melaksanakan fungsi ini?",
+        options: ["Aci engkol (Crankshaft)", "Gear taji", "Rantai basikal", "Tali sawat"],
+        ans: 0,
+        exp: "Aci engkol (crankshaft) menukarkan pergerakan putaran daripada enjin kepada pergerakan salingan naik-turun pada omboh pam air."
+      },
+      {
+        id: 11,
+        bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF",
+        q: "Hos air bomba perlu panjang untuk memadamkan kebakaran di tingkat atas, tetapi perlu padat dan mudah disimpan dalam jentera bomba. Apakah prinsip inventif pemisahan masa yang paling tepat digunakan?",
+        options: ["Penyarangan (Nested doll)", "Pembedilan (Pneumatics)", "Kualiti setempat", "Tindakan berkala"],
+        ans: 0,
+        exp: "Prinsip Penyarangan (Nested doll / konsep gulungan padat) membolehkan hos dimasukkan atau digulung rapat semasa simpanan dan dipanjangkan semasa guna."
+      },
+      {
+        id: 12,
+        bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF",
+        q: "Baju perlindungan bomba mestilah tebal untuk menahan haba kebakaran marak, tetapi perlu nipis agar anggota bomba bebas bergerak pantas. Apakah percanggahan fizikal yang wujud?",
+        options: ["Panas lawan sejuk", "Tebal lawan nipis", "Berat lawan ringan", "Tinggi lawan rendah"],
+        ans: 1,
+        exp: "Percanggahan fizikal parameter geometri pakaian tersebut ialah 'Tebal lawan Nipis'."
+      },
+      {
+        id: 13,
+        bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF",
+        q: "Air tidak boleh disiram terus ke atas kebakaran minyak petrol kerana ketumpatan minyak lebih rendah. Pasukan bomba menggunakan lapisan buih foam khas sebagai perantara untuk memisahkan oksigen dari api. Apakah prinsip inventif ini?",
+        options: ["Perantara (Intermediary)", "Pemisahan ruang", "Pengembangan terma", "Pembuangan dan pemulihan"],
+        ans: 0,
+        exp: "Prinsip Perantara (Intermediary) menggunakan bahan ketiga (buih foam) bagi menghalang oksigen daripada bersentuh dengan bahan api."
+      },
+      {
+        id: 14,
+        bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF",
+        q: "Dalam analisis fungsi sistem penyembur air bomba, rantai hubungan fungsi menyatakan: 'Nozel memegang dan mengawal halaju -> Air'. Apakah komponen 'Objek' yang menerima kesan?",
+        options: ["Nozel", "Air", "Enjin bomba", "Tangan bomba"],
+        ans: 1,
+        exp: "Objek ialah bahan atau penerima kesan fungsi. Dalam hubungan ini, 'Air' menerima kesan kawalan halaju dan semburan daripada nozel."
+      },
+      {
+        id: 15,
+        bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF",
+        q: "Visor helmet bomba perlu lut sinar untuk penglihatan, tetapi perlu melindungi mata daripada sinaran inframerah haba api di bahagian luar. Berdasarkan pemisahan ruang, apakah prinsip inventif yang sesuai?",
+        options: ["Kualiti setempat (Local quality)", "Tindakan keterlaluan", "Tidak simetri", "Pengembangan"],
+        ans: 0,
+        exp: "Kualiti setempat (Local quality) menjadikan permukaan luar visor mempunyai lapisan pantulan haba emas/nikel sementara lapisan dalam kekal lut sinar."
+      },
+      {
+        id: 16,
+        bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF",
+        q: "Silinder gas oksigen anggota bomba perlu menampung tekanan tinggi tetapi tidak boleh terlalu berat membebani tulang belakang. Keluli ditukar kepada gentian karbon berstruktur komposit. Masalah ini diselesaikan melalui?",
+        options: ["Masalah bukan inventif", "Masalah inventif (kerana wujud kesan sampingan berat vs kekuatan)", "Percubaan rawak", "Analisis pasaran"],
+        ans: 1,
+        exp: "Masalah inventif ialah masalah yang mempunyai kesan sampingan (apabila silinder ditebalkan untuk tahan tekanan, ia menjadi terlalu berat)."
+      },
+      {
+        id: 17,
+        bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF",
+        q: "Pin picu pemadam api mudah alih menghalang semburan serbuk kimia secara tidak sengaja, dan hanya dilepaskan pada masa kecemasan. Kaedah pemisahan yang diaplikasikan ialah?",
+        options: ["Pemisahan masa", "Pemisahan ruang", "Pemisahan graviti", "Pemisahan bahan"],
+        ans: 0,
+        exp: "Pemisahan masa: Pin mengunci picu pada waktu biasa (waktu simpanan) dan dicabut hanya pada waktu kebakaran berlaku."
+      },
+      {
+        id: 18,
+        bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF",
+        q: "Meriam air jentera bomba bertekanan lampau boleh menyebabkan getaran mengejut pada bumbung jentera. Jurutera memasang injap pelepas awal untuk menstabilkan tekanan sebelum semburan penuh. Apakah prinsip inventif ini?",
+        options: ["Tindakan awal (Pre-action)", "Penyarangan", "Tekanan songsang", "Peralihan dimensi"],
+        ans: 0,
+        exp: "Prinsip Tindakan Awal (Pre-action) menyediakan tindakan kawalan kestabilan lebih awal sebelum tekanan puncak dikenakan."
+      },
+      {
+        id: 19,
+        bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF",
+        q: "Lampu suluh bomba digabungkan terus pada sisi topi keledar agar tangan anggota bomba bebas memegang hos dan kapak. Apakah prinsip inventif yang diaplikasikan?",
+        options: ["Penggabungan (Merging)", "Pengembangan terma", "Pemisahan haba", "Beban berpusat"],
+        ans: 0,
+        exp: "Prinsip Penggabungan (Merging) mencantumkan dua fungsi objek (topi keselamatan + sumber cahaya) menjadi satu unit padu."
+      },
+      {
+        id: 20,
+        bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF",
+        q: "Pintu rintangan api (fire door) perlu sentiasa terbuka untuk laluan harian tetapi tertutup rapat secara automatik semasa penggera kebakaran berbunyi. Ini diselesaikan menggunakan pemisahan?",
+        options: ["Pemisahan masa", "Pemisahan ruang", "Pemisahan suhu", "Pemisahan rintangan"],
+        ans: 0,
+        exp: "Pemisahan masa: Keadaan pintu dibuka pada waktu normal dan ditutup pada waktu kebakaran."
+      },
+      {
+        id: 21,
+        bab: "BAB 2.3 REKA BENTUK ELEKTRIK",
+        q: "Kebakaran bengkel sering berpunca daripada haba berlebihan akibat beban lampau elektrik. Formula manakah yang digunakan untuk mengira kuasa haba elektrik (P) jika Voltan (V) dan Arus (I) diketahui?",
+        options: ["P = V × I", "P = V / I", "P = I / V", "P = V + I"],
+        ans: 0,
+        exp: "Kuasa elektrik dikira melalui formula P = V × I (Kuasa dalam Watt = Voltan dalam Volt × Arus dalam Ampere)."
+      },
+      {
+        id: 22,
+        bab: "BAB 2.3 REKA BENTUK ELEKTRIK",
+        q: "Peranti keselamatan di papan agihan elektrik rumah yang akan memutuskan bekalan secara serta-merta sekiranya berlaku kebocoran arus ke bumi bagi mengelakkan kebakaran ialah?",
+        options: ["Pemutus Litar Arus Baki (RCCB / ELCB)", "Suis dua hala", "Palam 3 pin", "Diod"],
+        ans: 0,
+        exp: "RCCB (Residual Current Circuit Breaker) / ELCB berfungsi memutuskan litar serta-merta apabila mengesan kebocoran arus ke bumi untuk mencegah renjatan dan kebakaran."
+      },
+      {
+        id: 23,
+        bab: "BAB 2.3 REKA BENTUK ELEKTRIK",
+        q: "Lampu limpah jentera bomba mempunyai rintangan 6 Ohm dan disambung kepada bekalan bateri 24 Volt. Mengikut Hukum Ohm (V = I × R), berapakah nilai arus (I) yang mengalir?",
+        options: ["4 Ampere", "144 Ampere", "18 Ampere", "0.25 Ampere"],
+        ans: 0,
+        exp: "I = V / R = 24V / 6Ω = 4 Ampere."
+      },
+      {
+        id: 24,
+        bab: "BAB 2.3 REKA BENTUK ELEKTRIK",
+        q: "Sebuah pam elektrik mini pemadam api beroperasi pada voltan 240V dan menggunakan arus 4.2A. Apakah nilai kadaran fius yang paling selamat dan sesuai untuk dipasang pada palam pam tersebut?",
+        options: ["Fius 3A", "Fius 5A (atau 13A mengikut piawaian terdekat yang lebih tinggi)", "Fius 30A", "Fius 1A"],
+        ans: 1,
+        exp: "Kadaran fius mestilah sedikit lebih tinggi daripada arus operasi biasa (4.2A) supaya tidak putus semasa permulaan tetapi memutuskan litar jika arus litar pintas berlaku (misalnya fius 5A / 13A)."
+      },
+      {
+        id: 25,
+        bab: "BAB 2.3 REKA BENTUK ELEKTRIK",
+        q: "Lampu tanda laluan kecemasan kebakaran bangunan dipasang dalam sambungan litar selari. Mengapakah litar selari dipilih?",
+        options: ["Jika satu lampu rosak, lampu yang lain tetap menyala", "Arus elektrik akan berkurang menjadi sifar", "Hanya memerlukan satu wayar sahaja", "Voltan pada setiap lampu menjadi rendah"],
+        ans: 0,
+        exp: "Kelebihan utama litar selari ialah setiap beban mendapat voltan penuh dan jika satu mentol rosak terbakar, laluan litar lain tidak terputus."
+      },
+      {
+        id: 26,
+        bab: "BAB 2.3 REKA BENTUK ELEKTRIK",
+        q: "Kabel pendawaian penggera kebakaran diperbuat daripada teras kuprum berpenebat tahan haba. Dalam elemen sistem elektrik, kabel ini berperanan sebagai?",
+        options: ["Medium", "Sumber", "Beban", "Kawalan"],
+        ans: 0,
+        exp: "Medium ialah laluan atau perantara yang mengalirkan arus elektrik antara punca sumber kepada beban (iaitu wayar / kabel)."
+      },
+      {
+        id: 27,
+        bab: "BAB 2.3 REKA BENTUK ELEKTRIK",
+        q: "Dalam litar penggera kebakaran automatik, siren bunyi kecemasan yang menukarkan tenaga elektrik kepada tenaga bunyi dikategorikan sebagai?",
+        options: ["Beban", "Sumber", "Medium", "Kawalan"],
+        ans: 0,
+        exp: "Beban ialah sebarang peralatan atau peranti yang menggunakan tenaga elektrik dan menukarkannya kepada bentuk tenaga lain (seperti bunyi)."
+      },
+      {
+        id: 28,
+        bab: "BAB 2.3 REKA BENTUK ELEKTRIK",
+        q: "Suis keselamatan pemutus arus kecemasan (emergency isolation switch) bomba mestilah dipasang pada laluan wayar apakah untuk keselamatan mutlak?",
+        options: ["Wayar Hidup (Live wire)", "Wayar Bumi (Earth wire)", "Wayar Penebat Plastik", "Plat asas"],
+        ans: 0,
+        exp: "Suis mesti sentiasa dipasang pada Wayar Hidup (L) supaya apabila suis dimatikan, tiada arus bervoltan tinggi sampai ke perkakasan."
+      },
+      {
+        id: 29,
+        bab: "BAB 2.3 REKA BENTUK ELEKTRIK",
+        q: "Sebuah sistem pemanas kecemasan dikesan menggunakan voltan 12V dan menarik arus sebanyak 2A. Berapakah nilai rintangan elektrik alat tersebut?",
+        options: ["6 Ohm", "24 Ohm", "10 Ohm", "0.16 Ohm"],
+        ans: 0,
+        exp: "R = V / I = 12V / 2A = 6 Ohm."
+      },
+      {
+        id: 30,
+        bab: "BAB 2.3 REKA BENTUK ELEKTRIK",
+        q: "Mengapakah memasang terlalu banyak peralatan berkuasa tinggi pada satu soket sambungan penyesuai (adapter) boleh memulakan kebakaran?",
+        options: ["Arus berlebihan mengalir melebihi had lalu menghasilkan haba lampau yang mencairkan penebat", "Voltan bertukar menjadi sifar", "Beban menjadi sejuk beku", "Rintangan wayar lenyap serta merta"],
+        ans: 0,
+        exp: "Beban lampau (overloading) menyebabkan arus kumulatif terlalu tinggi melepasi had kabel, menghasilkan haba keterlaluan dan mencetuskan kebakaran."
+      },
+      {
+        id: 31,
+        bab: "BAB 2.4 REKA BENTUK ELEKTRONIK",
+        q: "Sistem pencegahan kebakaran pintar menggunakan peranti yang peka terhadap sinaran cahaya inframerah dari lidah api. Apakah penderia (sensor) tersebut?",
+        options: ["Penderia Nyalaan (Flame Sensor)", "Penderia Ultrasonik", "Penderia Hujan", "Penderia Sentuh"],
+        ans: 0,
+        exp: "Penderia nyalaan (Flame sensor) direka khas untuk mengesan gelombang cahaya inframerah yang dipancarkan oleh api kebakaran."
+      },
+      {
+        id: 32,
+        bab: "BAB 2.4 REKA BENTUK ELEKTRONIK",
+        q: "Alat pengesan asap (smoke detector) di siling menghantar isyarat elektrik kepada mikropengawal apabila zarah asap dikesan. Dalam sistem mikropengawal, sensor asap berfungsi sebagai?",
+        options: ["Peranti Input", "Peranti Output", "Peranti Proses", "Peranti Paparan"],
+        ans: 0,
+        exp: "Penderia (sensor) menerima perubahan fizikal persekitaran dan menghantar isyarat masuk ke mikropengawal, menjadikannya peranti input."
+      },
+      {
+        id: 33,
+        bab: "BAB 2.4 REKA BENTUK ELEKTRONIK",
+        q: "Mikropengawal 5V DC perlu menghidupkan pam penyembur air bomba bervoltan tinggi 240V AC. Apakah komponen suis elektronik pengasing yang digunakan?",
+        options: ["Geganti (Relay)", "Kapasitor", "Perintang tetap", "Diod pemancar cahaya (LED)"],
+        ans: 0,
+        exp: "Geganti (Relay) bertindak sebagai suis elektromekanikal yang membolehkan litar kawalan voltan rendah (5V) mengawal litar kuasa voltan tinggi (240V)."
+      },
+      {
+        id: 34,
+        bab: "BAB 2.4 REKA BENTUK ELEKTRONIK",
+        q: "Papan litar elektronik yang mengandungi CPU terbenam, memori RAM, ROM, dan port I/O untuk mengawal robot pemadam api dikenali sebagai?",
+        options: ["Mikropengawal (Microcontroller)", "Mikropemproses (Microprocessor tanpa port)", "Transistor tunggal", "Bateri asid"],
+        ans: 0,
+        exp: "Mikropengawal (seperti cip pada Arduino) mengintegrasikan CPU, RAM, ROM, pemasa dan port I/O dalam satu litar bersepadu tunggal."
+      },
+      {
+        id: 35,
+        bab: "BAB 2.4 REKA BENTUK ELEKTRONIK",
+        q: "Dalam carta alir pengaturcaraan sistem penggera bomba: 'JIKA Sensor_Asap == 1, MAKA hidupkan Buzzer dan LED'. Apakah blok kawalan struktur yang digunakan?",
+        options: ["Struktur kawalan pilihan (IF-THEN)", "Struktur jujukan sahaja", "Struktur henti kekal", "Pemalar"],
+        ans: 0,
+        exp: "Struktur kawalan pilihan (decision / IF-THEN) menguji syarat pengesanan asap sebelum menentukan output siren dan lampu kecemasan diaktifkan."
+      },
+      {
+        id: 36,
+        bab: "BAB 2.4 REKA BENTUK ELEKTRONIK",
+        q: "Untuk mengesan kenaikan suhu mendadak di bilik server sebelum kebakaran merebak, penderia manakah yang paling tepat dipasang?",
+        options: ["Penderia Suhu (Thermistor / LM35 / DHT11)", "LDR (Penderia Cahaya)", "Penderia Sentuhan", "Buzzer"],
+        ans: 0,
+        exp: "Penderia suhu mengesan perubahan darjah kepanasan persekitaran bagi memberi amaran awal kebakaran elektrik."
+      },
+      {
+        id: 37,
+        bab: "BAB 2.4 REKA BENTUK ELEKTRONIK",
+        q: "Komponen output elektronik yang menukarkan isyarat frekuensi mikropengawal kepada bunyi amaran bernada tinggi untuk evakuasi bomba ialah?",
+        options: ["Buzzer Piezoelektrik", "LDR", "Motor Servo", "Diod Zener"],
+        ans: 0,
+        exp: "Buzzer piezoelektrik menukarkan denyutan isyarat elektrik kepada getaran bunyi amaran kecemasan yang kuat."
+      },
+      {
+        id: 38,
+        bab: "BAB 2.4 REKA BENTUK ELEKTRONIK",
+        q: "Lampu penunjuk zon kebakaran pada panel kawalan bomba menggunakan LED merah. Apakah kelebihan utama LED berbanding mentol filamen biasa?",
+        options: ["Jimat tenaga, tahan lama dan tidak mudah putus akibat getaran", "Menghasilkan haba yang sangat panas", "Memerlukan voltan 1000V", "Boleh berfungsi tanpa elektrik"],
+        ans: 0,
+        exp: "LED (Light Emitting Diode) sangat cekap tenaga, jangka hayat panjang, dan tahan lasak terhadap getaran kecemasan."
+      },
+      {
+        id: 39,
+        bab: "BAB 2.4 REKA BENTUK ELEKTRONIK",
+        q: "Pasukan bomba menggunakan penderia inframerah pasif (PIR) semasa operasi mencari mangsa dalam bangunan gelap. Penderia PIR mengesan perubahan apa?",
+        options: ["Sinaran inframerah haba daripada pergerakan tubuh manusia", "Gelombang radio jarak jauh", "Kandungan oksigen udara", "Bunyi jeritan"],
+        ans: 0,
+        exp: "PIR (Passive Infrared Sensor) mengesan perubahan pancaran radiasi inframerah haba yang dipancarkan oleh pergerakan badan mangsa hidup."
+      },
+      {
+        id: 40,
+        bab: "BAB 2.4 REKA BENTUK ELEKTRONIK",
+        q: "Lampu kecemasan tangga keselamatan menyala secara automatik apabila bekalan elektrik terputus dan keadaan persekitaran menjadi gelap. Komponen pengesan tahap kegelapan ialah?",
+        options: ["Perintang Peka Cahaya (LDR)", "Geganti", "Penderia Kelembapan", "Transistor NPN"],
+        ans: 0,
+        exp: "LDR (Light Dependent Resistor) mengubah nilai rintangannya berdasarkan keamatan cahaya, membolehkan lampu kecemasan diaktifkan ketika gelap."
+      },
+      {
+        id: 41,
+        bab: "BAB 2.1 TEKNOLOGI PEMBUATAN",
+        q: "Muncung pancutan air bomba (hose nozzle) diperbuat daripada aloi tembaga pepejal berongga melalui penuangan logam lebur ke dalam acuan pasir. Kaedah pembuatan ini dikenali sebagai?",
+        options: ["Kaedah Tuangan (Casting)", "Kaedah Sambungan Gam", "Kaedah Pembungkusan", "Penyaduran"],
+        ans: 0,
+        exp: "Kaedah tuangan (casting) melibatkan penuangan cecair bahan ke dalam acuan bagi membentuk produk berongga berketahanan tinggi."
+      },
+      {
+        id: 42,
+        bab: "BAB 2.1 TEKNOLOGI PEMBUATAN",
+        q: "Topi keledar anggota bomba diperbuat daripada bahan komposit resin epoksi dan gentian kaca (fiberglass). Apakah sifat utama bahan pembuatan ini?",
+        options: ["Sangat kukuh, ringan, dan mempunyai rintangan haba tinggi", "Lembut dan mudah cair", "Murah tetapi mudah hancur", "Menyerap air dengan cepat"],
+        ans: 0,
+        exp: "Komposit resin epoksi bersama gentian kaca menawarkan kekuatan impak mekanikal yang hebat, ringan, serta tahan api dan haba."
+      },
+      {
+        id: 43,
+        bab: "BAB 2.1 TEKNOLOGI PEMBUATAN",
+        q: "Pereka bentuk peralatan bomba membina model prototaip pantas nozel baharu lapis demi lapis menggunakan filamen plastik pencetak 3D. Kaedah moden ini tergolong dalam?",
+        options: ["Pembuatan aditif (Additive manufacturing)", "Pembuatan tolakkan (Subtractive)", "Penyepuhlindapan", "Tuangan konvensional"],
+        ans: 0,
+        exp: "Pencetak 3D (3D Printing) ialah kaedah pembuatan aditif di mana bahan ditambah lapis demi lapis berdasarkan reka bentuk berbantu komputer (CAD)."
+      },
+      {
+        id: 44,
+        bab: "BAB 2.1 TEKNOLOGI PEMBUATAN",
+        q: "Untuk menghasilkan replika pemegang hos pemadam api daripada bahan resin epoksi, jenis acuan manakah yang paling fleksibel dan mudah ditanggalkan tanpa merosakkan produk?",
+        options: ["Acuan getah silikon (Silicone mold)", "Acuan batu bata", "Acuan kaca", "Acuan kertas"],
+        ans: 0,
+        exp: "Acuan silikon bersifat anjal, tidak melekat pada resin, dan sangat mudah untuk proses menanggalkan produk (demolding)."
+      },
+      {
+        id: 45,
+        bab: "BAB 2.1 TEKNOLOGI PEMBUATAN",
+        q: "Kerangka logam jentera bomba disembur dengan cat salutan serbuk (powder coating) dan lapisan lakuer. Apakah tujuan utama kemasan ini selain daripada nilai estetika?",
+        options: ["Mencegah pengaratan dan kakisan akibat pendedahan air", "Menambah berat jentera sebanyak dua kali ganda", "Menjadikan badan jentera lut sinar", "Menghasilkan bunyi siren"],
+        ans: 0,
+        exp: "Tujuan utama kemasan pada logam jentera bomba ialah melindungi permukaan daripada pengoksidaan, karat, dan kakisan air bomba."
+      },
+      {
+        id: 46,
+        bab: "BAB 2.1 TEKNOLOGI PEMBUATAN",
+        q: "Mengapakah fabrikasi panel keluli jentera bomba moden menggunakan mesin pemotong laser CNC berbanding gergaji besi tangan konvensional?",
+        options: ["Pemotongan lebih pantas, jitu, kemas, dan ralat minimum", "Mesin manual menghasilkan reka bentuk yang lebih bulat", "Pemotong laser tidak memerlukan tenaga elektrik", "Besi menjadi lembut seperti kain"],
+        ans: 0,
+        exp: "Kaedah pembuatan moden CNC menawarkan ketepatan berulang (presisi), kepantasan, dan kemasan tepi yang sempurna tanpa pembaziran bahan."
+      },
+      {
+        id: 47,
+        bab: "BAB 2.1 TEKNOLOGI PEMBUATAN",
+        q: "Bahan cantuman dua bahagian yang mengandungi resin dan pengeras (hardener) digunakan untuk menampal keretakan tangki air jentera bomba secara kekal. Bahan tersebut ialah?",
+        options: ["Gam Epoksi (Epoxy adhesive)", "Pita selofan", "Kanji ubi", "Dawai kokot"],
+        ans: 0,
+        exp: "Pelekat epoksi terdiri daripada resin dan pengeras yang mengeras melalui tindak balas kimia serta kalis air dan haba."
+      },
+      {
+        id: 48,
+        bab: "BAB 2.1 TEKNOLOGI PEMBUATAN",
+        q: "Blok injap tekanan tinggi pam bomba dimesin daripada satu blok aluminium padu dengan membuang bahagian yang tidak diperlukan menggunakan mesin larik/kisar. Kaedah ini dinamakan?",
+        options: ["Pembuatan tolakkan (Subtractive manufacturing)", "Pembuatan aditif", "Tuangan tuang", "Penyemburan"],
+        ans: 0,
+        exp: "Pembuatan tolakkan (subtractive) menghasilkan bentuk dengan membuang atau memotong lebihan bahan daripada satu blok asas."
+      },
+      {
+        id: 49,
+        bab: "BAB 2.5 REKA BENTUK AKUAPONIK",
+        q: "Pam air tenggelam (submersible pump) yang digunakan dalam sistem takungan bantuan bomba berfungsi atas prinsip yang sama seperti akuaponik, iaitu?",
+        options: ["Mengalirkan dan memindahkan air bertekanan ke tempat sasaran", "Menyejukkan udara bilik", "Menapis udara daripada habuk", "Menghasilkan baja tanaman"],
+        ans: 0,
+        exp: "Fungsi utama pam air dalam sistem perpaipan ialah memindahkan cecair dari takungan ke saluran keluar dengan tekanan berterusan."
+      },
+      {
+        id: 50,
+        bab: "BAB 2.5 REKA BENTUK AKUAPONIK",
+        q: "Paip penyalur air sistem pemercik bomba automatik (sprinkler) menggunakan rangkaian penyambung siku (elbow) dan tee (T). Mengapakah sambungan paip mesti disapu glu PVC dengan sempurna?",
+        options: ["Mengelakkan kebocoran tekanan air semasa pemadaman", "Supaya paip boleh dibuka setiap jam", "Untuk menambah berat bangunan", "Supaya air bertukar menjadi wap sejuk"],
+        ans: 0,
+        exp: "Glu PVC memastikan penyambungan paip kedap tekanan tinggi agar kuasa semburan maksimum sampai ke nozel pemercik tanpa bocor."
+      },
+      {
+        id: 51,
+        bab: "BAB 2.5 REKA BENTUK AKUAPONIK",
+        q: "Prinsip sifon loceng (bell siphon) mengalirkan air keluar secara automatik apabila paras maksimum tercapai. Dalam tangki air jentera bomba, paip limpahan (overflow pipe) berfungsi untuk?",
+        options: ["Mengeluarkan air berlebihan bagi mengelakkan tekanan tangki melimpah", "Menyerap udara panas dari luar", "Menyimpan serbuk kimia", "Memanaskan air tangki"],
+        ans: 0,
+        exp: "Paip limpahan (overflow) bertindak sebagai keselamatan hidraulik untuk membuang lebihan air semasa proses mengisi tangki dari pili bomba."
+      },
+      {
+        id: 52,
+        bab: "BAB 2.6 REKA BENTUK MAKANAN",
+        q: "Pasukan bomba operasi memadam kebakaran hutan tebal memerlukan makanan ransum kecemasan yang tahan lama, ringan, dan sedia dimakan tanpa dimasak. Bentuk pembungkusan manakah yang paling sesuai?",
+        options: ["Bungkusan beg retort vakum kedap udara (Retort pouch)", "Mangkuk polistirena terbuka", "Bungkus daun pisang", "Kotak kertas biasa"],
+        ans: 0,
+        exp: "Beg kantung retort (Retort pouch) disterilkan pada suhu tinggi, tahan lasak, ringan, kedap udara dan mengekalkan kesegaran makanan untuk operasi kecemasan."
+      },
+      {
+        id: 53,
+        bab: "BAB 2.6 REKA BENTUK MAKANAN",
+        q: "Pembungkusan pek makanan tenaga (energy bar) anggota bomba mengandungi lapisan kerajang aluminium (aluminium foil). Apakah fungsi utama bahan ini?",
+        options: ["Menghalang cahaya, kelembapan, haba, dan oksigen daripada merosakkan makanan", "Menjadikan bungkusan bercahaya dalam gelap", "Menambah perisa makanan", "Menyejukkan makanan menjadi ais"],
+        ans: 0,
+        exp: "Lapisan aluminium foil dalam laminasi pembungkusan bertindak sebagai penghalang sempurna terhadap wap air, udara, bakteria, dan sinaran matahari."
+      },
+      {
+        id: 54,
+        bab: "BAB 2.2 REKA BENTUK MEKANIKAL",
+        q: "Jentera bomba seberat 15 tan memerlukan sistem pemberhentian berkuasa tinggi di mana angkup menekan pad brek pada cakera berputar. Sistem ini memanfaatkan prinsip?",
+        options: ["Geseran melalui sistem hidraulik cecair", "Tali sawat getah", "Takal tunggal", "Tuas kelas pertama sahaja"],
+        ans: 0,
+        exp: "Brek cakera jentera bomba menukarkan tenaga kinetik kepada tenaga haba melalui geseran yang ditekan oleh tekanan bendalir hidraulik."
+      },
+      {
+        id: 55,
+        bab: "BAB 2.2 REKA BENTUK MEKANIKAL",
+        q: "Gelung penggulung hos bomba (hose reel drum) membolehkan hos sepanjang 30 meter digulung dengan pantas menggunakan pemegang berputar. Sistem mekanikal asas ini ialah?",
+        options: ["Roda dan gandar (Wheel and axle)", "Tuas kelas ketiga", "Baji", "Pancang"],
+        ans: 0,
+        exp: "Roda dan gandar memudahkan putaran gelung dram untuk menggulung hos yang berat dengan daya putaran tangan yang kecil."
+      },
+      {
+        id: 56,
+        bab: "BAB 2.4 REKA BENTUK ELEKTRONIK",
+        q: "Semasa mendiagnosis litar siren jentera bomba yang terputus, juruteknik merujuk kepada lukisan litar yang menggunakan simbol piawai komponen elektronik. Lukisan tersebut ialah?",
+        options: ["Lukisan skematik", "Lukisan bergambar", "Lukisan perspektif", "Lukisan isometrik"],
+        ans: 0,
+        exp: "Lukisan skematik menunjukkan susunan litar elektronik lengkap secara logik menggunakan simbol piawai antarabangsa bagi setiap komponen."
+      },
+      {
+        id: 57,
+        bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF",
+        q: "Tayar jentera bomba perlu mencengkam tanah berlumpur di laluan hutan kebakaran, tetapi tayar berduri merosakkan jalan tar berturap di bandar. Penyelesaian memasang rantai besi salji/lumpur hanya apabila berada di kawasan berlumpur menggunakan prinsip pemisahan?",
+        options: ["Pemisahan ruang dan keadaan", "Pemisahan graviti", "Pemisahan halaju", "Pemisahan daya"],
+        ans: 0,
+        exp: "Pemisahan mengikut ruang/keadaan (prinsip inventif kualiti setempat atau penyarangan) membolehkan cengkaman tambahan digunakan hanya di zon berkenaan."
+      },
+      {
+        id: 58,
+        bab: "BAB 2.3 REKA BENTUK ELEKTRIK",
+        q: "Komponen elektronik dalam litar pemula enjin pam bomba yang berfungsi menyimpan cas elektrik sementara waktu dan menstabilkan lonjakan voltan ialah?",
+        options: ["Kapasitor (Capacitor)", "Perintang", "Suis tekan", "Fius"],
+        ans: 0,
+        exp: "Kapasitor menyimpan tenaga elektrik dalam bentuk medan elektrostatik dan menapis voltan agar bekalan kepada komponen sensitif kekal stabil."
+      },
+      {
+        id: 59,
+        bab: "BAB 2.4 REKA BENTUK ELEKTRONIK",
+        q: "Suis keselamatan pada pintu kabin jentera bomba akan memutuskan litar lampu amaran apabila pintu ditutup rapat secara fizikal. Suis sentuh kecil ini dinamakan?",
+        options: ["Suis mikro (Micro switch)", "Suis toggle", "Suis togel kaki", "Perintang boleh laras"],
+        ans: 0,
+        exp: "Suis mikro (limit switch) bertindak balas secara mekanikal terhadap sentuhan fizikal pintu untuk membuka atau menutup litar suis keselamatan."
+      },
+      {
+        id: 60,
+        bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF",
+        q: "Penyiasat bomba mencari punca bagaimana litar pintas boleh merebak sehingga membakar keseluruhan struktur bangunan. Kaedah analisis berstruktur dalam teori inventif untuk mengesan punca asas masalah ialah?",
+        options: ["Analisis berantai punca dan kesan (Cause and Effect Chain Analysis)", "Percambahan fikiran rawak", "Analisis warna cat", "Ujian graviti"],
+        ans: 0,
+        exp: "Analisis berantai punca dan kesan (CECA) memetakan hubungan punca dan kesan secara sistematik sehingga menemui punca punca sebenar (root causes)."
+      }
+    ];
+
+    /* =====================================================================
+       3. SISTEM STATE & PENGURUSAN DATA (LOCAL & GOOGLE SHEETS)
+       ===================================================================== */
+    let currentClass = "";
+    let currentStudent = "";
+    let sessionQuestions = [];
+    let currentQuestionIdx = 0;
+    let sessionScore = 0;
+    let sessionDuration = 0;
+    let sessionTimerInterval = null;
+    let sessionReplayEvents = []; // Menyimpan setiap langkah usaha pemadaman
+    let answeredGlobalQuestions = new Set(); // ID soalan 1-60 yang telah berjaya dijawab tepat
+    let leaderboardRecords = [];
+
+    // URL Google Apps Script Web App
+    let gasWebAppUrl = localStorage.getItem("RBT_GAS_WEBAPP_URL") || "";
+
+    // Pilihan Audio Web Audio API
+    let audioCtx = null;
+    let audioEnabled = true;
+
+    function initAudio() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+    }
+
+    function playTone(freq, type, duration, vol=0.1) {
+      if (!audioEnabled) return;
+      try {
+        initAudio();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch(e) {}
+    }
+
+    function playWaterSound() {
+      if (!audioEnabled) return;
+      try {
+        initAudio();
+        // Synthesize rushing water noise
+        const bufferSize = audioCtx.sampleRate * 1.0;
+        const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+        const data = buffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+          data[i] = Math.random() * 2 - 1;
+        }
+        const noise = audioCtx.createBufferSource();
+        noise.buffer = buffer;
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = 'bandpass';
+        filter.frequency.value = 1000;
+        filter.Q.value = 3;
+        const gain = audioCtx.createGain();
+        gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+        gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 1.0);
+        noise.connect(filter);
+        filter.connect(gain);
+        gain.connect(audioCtx.destination);
+        noise.start();
+      } catch(e){}
+    }
+
+    function toggleAudio() {
+      audioEnabled = !audioEnabled;
+      document.getElementById("audio-toggle-btn").textContent = audioEnabled ? "🔊" : "🔇";
+    }
+
+    /* =====================================================================
+       4. ANIMASI API RETRO PIXEL ART (HORIZONTALLY FULL & ACCESSIBLY SLOWER)
+       ===================================================================== */
+    const fireCanvas = document.getElementById("fireCanvas");
+    const fireCtx = fireCanvas.getContext("2d");
+
+    let fireWidth = 140;   // Lebar matriks sel api
+    let fireHeight = 44;   // Ketinggian matriks sel api
+    let firePixels = [];
+    let fireBaseIntensity = 35; // 0 hingga 36 dalam palet DOOM
+    let fireSpeedSetting = "slow"; // "slow" atau "normal"
+    let fireIntervalTime = 95;     // Lebih perlahan & santai (aksesibel)
+    let lastFireTick = 0;
+
+    // Palet Warna Api Retro DOOM (37 Warna daripada gelap ke putih membara)
+    const firePalette = [
+      [7,7,7], [31,7,7], [47,15,7], [71,15,7], [87,23,7], [103,31,7],
+      [119,31,7], [143,39,7], [159,47,7], [175,63,7], [191,71,7], [199,71,7],
+      [223,79,7], [223,87,7], [223,87,7], [215,95,7], [215,95,7], [215,103,15],
+      [207,111,15], [207,119,15], [207,127,15], [207,135,23], [199,135,23], [199,143,23],
+      [199,151,31], [191,159,31], [191,159,31], [191,167,39], [191,167,39], [191,175,47],
+      [183,175,47], [183,183,47], [183,183,55], [207,207,111], [223,223,159], [239,239,199],
+      [255,255,255]
+    ];
+
+    function initFireMatrix() {
+      firePixels = new Array(fireWidth * fireHeight).fill(0);
+      // Nyalakan baris paling bawah
+      for (let x = 0; x < fireWidth; x++) {
+        firePixels[(fireHeight - 1) * fireWidth + x] = fireBaseIntensity;
+      }
+    }
+
+    function updateFireSpread() {
+      // Perambatan haba secara santai ke atas
+      const decayStep = fireSpeedSetting === "slow" ? 2 : 3;
+      for (let x = 0; x < fireWidth; x++) {
+        for (let y = 1; y < fireHeight; y++) {
+          const fromIdx = y * fireWidth + x;
+          const pixelValue = firePixels[fromIdx];
+          if (pixelValue === 0) {
+            firePixels[fromIdx - fireWidth] = 0;
+          } else {
+            const rand = Math.floor(Math.random() * decayStep);
+            const toIdx = (fromIdx - fireWidth - rand + 1);
+            if (toIdx >= 0) {
+              const decayVal = Math.floor(Math.random() * (fireSpeedSetting === "slow" ? 2 : 3));
+              firePixels[toIdx] = Math.max(0, pixelValue - (decayVal & 2));
+            }
+          }
+        }
+      }
+    }
+
+    function renderFireCanvas() {
+      fireCanvas.width = fireWidth;
+      fireCanvas.height = fireHeight;
+      const imgData = fireCtx.createImageData(fireWidth, fireHeight);
+      const data = imgData.data;
+
+      for (let i = 0; i < firePixels.length; i++) {
+        const intensity = firePixels[i];
+        const color = firePalette[intensity] || [0, 0, 0];
+        const offset = i * 4;
+        data[offset] = color[0];     // Red
+        data[offset + 1] = color[1]; // Green
+        data[offset + 2] = color[2]; // Blue
+        // Telus jika padam
+        data[offset + 3] = intensity === 0 ? 0 : 235;
+      }
+      fireCtx.putImageData(imgData, 0, 0);
+    }
+
+    function fireAnimationLoop(timestamp) {
+      if (timestamp - lastFireTick > fireIntervalTime) {
+        lastFireTick = timestamp;
+        updateFireSpread();
+        renderFireCanvas();
+      }
+      requestAnimationFrame(fireAnimationLoop);
+    }
+
+    function setFireSpeed(spd) {
+      fireSpeedSetting = spd;
+      fireIntervalTime = spd === "slow" ? 110 : 60;
+    }
+
+    // Melaraskan saiz dan intensiti api berdasarkan peratusan
+    function adjustFireVisualIntensity(remainingPercent) {
+      // remainingPercent: 0 hingga 100
+      fireBaseIntensity = Math.floor((remainingPercent / 100) * 36);
+      for (let x = 0; x < fireWidth; x++) {
+        firePixels[(fireHeight - 1) * fireWidth + x] = fireBaseIntensity;
+      }
+      // Jika 0%, padamkan serta merta
+      if (remainingPercent <= 0) {
+        firePixels.fill(0);
+      }
+    }
+
+    /* =====================================================================
+       5. ANIMASI PANCUTAN AIR BOMBA (WATER SPRAY & PARTICLES)
+       ===================================================================== */
+    const waterCanvas = document.getElementById("waterCanvas");
+    const waterCtx = waterCanvas.getContext("2d");
+
+    let waterParticles = [];
+    let isSprayingWater = false;
+    let waterTargetX = 0;
+
+    function resizeWaterCanvas() {
+      waterCanvas.width = window.innerWidth;
+      waterCanvas.height = waterCanvas.offsetHeight || 220;
+    }
+    window.addEventListener("resize", resizeWaterCanvas);
+
+    function triggerWaterSpray(targetScreenPercent = 60) {
+      isSprayingWater = true;
+      playWaterSound();
+      const nozzleEl = document.getElementById("nozzle-tip");
+      const rect = nozzleEl ? nozzleEl.getBoundingClientRect() : { left: 140, top: window.innerHeight - 80 };
+      const startX = rect.left + 5;
+      const startY = waterCanvas.height - 35;
+      waterTargetX = (window.innerWidth * (targetScreenPercent / 100));
+
+      // Hasilkan pancutan zarah air pixel berkelajuan tinggi
+      for (let i = 0; i < 90; i++) {
+        setTimeout(() => {
+          for (let p = 0; p < 4; p++) {
+            const angle = -0.38 + (Math.random() * 0.16); // Menembak melengkung ke kanan
+            const speed = 12 + Math.random() * 10;
+            waterParticles.push({
+              x: startX,
+              y: startY,
+              vx: Math.cos(angle) * speed,
+              vy: Math.sin(angle) * speed,
+              gravity: 0.35,
+              life: 1.0,
+              size: 3 + Math.random() * 4,
+              color: Math.random() > 0.4 ? '#38d9a9' : '#4dabf7'
+            });
+          }
+        }, i * 14);
+      }
+
+      // Hentikan pancutan selepas 1.6 saat
+      setTimeout(() => {
+        isSprayingWater = false;
+      }, 1600);
+    }
+
+    function updateWaterParticles() {
+      waterCtx.clearRect(0, 0, waterCanvas.width, waterCanvas.height);
+      for (let i = waterParticles.length - 1; i >= 0; i--) {
+        const p = waterParticles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += p.gravity;
+        p.life -= 0.02;
+
+        if (p.life <= 0 || p.y >= waterCanvas.height) {
+          // Bentuk kesan wap percikan air (steam/splash)
+          waterCtx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+          waterCtx.fillRect(p.x, waterCanvas.height - 12, p.size * 1.5, p.size);
+          waterParticles.splice(i, 1);
+        } else {
+          waterCtx.fillStyle = p.color;
+          waterCtx.fillRect(p.x, p.y, p.size, p.size);
+        }
+      }
+      requestAnimationFrame(updateWaterParticles);
+    }
+
+    /* =====================================================================
+       6. NAVIGASI PAPARAN (VIEW CONTROLLER)
+       ===================================================================== */
+    function navigateView(viewName) {
+      document.querySelectorAll(".view-panel").forEach(p => p.classList.add("hidden"));
+      const target = document.getElementById("view-" + viewName);
+      if (target) {
+        target.classList.remove("hidden");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+      if (viewName === "leaderboard") {
+        renderLeaderboardTable();
+      }
+    }
+
+    function selectClass(className) {
+      currentClass = className;
+      document.querySelectorAll(".class-btn").forEach(btn => {
+        btn.classList.remove("border-yellow-400", "bg-orange-950/80");
+        btn.classList.add("border-gray-700", "bg-gray-800");
+      });
+      const activeBtn = document.getElementById("btn-class-" + className.toLowerCase());
+      if (activeBtn) {
+        activeBtn.classList.remove("border-gray-700", "bg-gray-800");
+        activeBtn.classList.add("border-yellow-400", "bg-orange-950/80");
+      }
+
+      const dropdown = document.getElementById("student-name-dropdown");
+      dropdown.innerHTML = '<option value="">-- Sila Pilih Nama Anda --</option>';
+      const names = STUDENTS_DATA[className] || [];
+      names.forEach(name => {
+        const opt = document.createElement("option");
+        opt.value = name;
+        opt.textContent = name;
+        dropdown.appendChild(opt);
+      });
+
+      const container = document.getElementById("student-select-container");
+      container.classList.remove("opacity-50", "pointer-events-none");
+      checkStartButtonStatus();
+    }
+
+    document.getElementById("student-name-dropdown").addEventListener("change", function(e) {
+      currentStudent = e.target.value;
+      checkStartButtonStatus();
+    });
+
+    function checkStartButtonStatus() {
+      const btn = document.getElementById("btn-start-quiz");
+      if (currentClass && currentStudent) {
+        btn.disabled = false;
+      } else {
+        btn.disabled = true;
+      }
+    }
+
+    function saveGasUrl() {
+      const val = document.getElementById("gas-url-input").value.trim();
+      gasWebAppUrl = val;
+      localStorage.setItem("RBT_GAS_WEBAPP_URL", val);
+      alert("Pautan Google Apps Script disimpan!");
+    }
+
+    /* =====================================================================
+       7. LOGIK KUIZ & SESI RAWAK (10 SOALAN DARIPADA 60)
+       ===================================================================== */
+    function startQuizSession() {
+      initAudio();
+      // Pilih 10 soalan rawak tanpa ulangan daripada QUESTION_BANK (60 soalan)
+      const shuffled = [...QUESTION_BANK].sort(() => 0.5 - Math.random());
+      sessionQuestions = shuffled.slice(0, 10);
+      currentQuestionIdx = 0;
+      sessionScore = 0;
+      sessionDuration = 0;
+      sessionReplayEvents = [];
+
+      document.getElementById("quiz-student-badge").textContent = currentStudent;
+      document.getElementById("quiz-class-badge").textContent = currentClass;
+
+      // Mulakan pemasa
+      if (sessionTimerInterval) clearInterval(sessionTimerInterval);
+      sessionTimerInterval = setInterval(() => {
+        sessionDuration++;
+      }, 1000);
+
+      updateSessionFireGauge();
+      loadQuestionIndex(0);
+      navigateView("quiz");
+    }
+
+    function loadQuestionIndex(idx) {
+      const qData = sessionQuestions[idx];
+      document.getElementById("quiz-progress-text").textContent = `${idx + 1}/10`;
+      document.getElementById("quiz-score-text").textContent = sessionScore;
+      document.getElementById("quiz-chapter-tag").textContent = qData.bab;
+      document.getElementById("quiz-question-text").textContent = qData.q;
+
+      const optContainer = document.getElementById("quiz-options-container");
+      optContainer.innerHTML = "";
+
+      // Sembunyikan penjelasan soalan sebelumnya
+      const expBox = document.getElementById("quiz-explanation-box");
+      expBox.classList.add("hidden");
+      document.getElementById("btn-next-question").disabled = true;
+
+      const letters = ["A", "B", "C", "D"];
+      qData.options.forEach((optText, i) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "quiz-opt-btn w-full text-left p-3.5 sm:p-4 rounded-xl border-2 border-gray-700 bg-gray-800/90 hover:border-yellow-400 hover:bg-gray-700/80 transition flex items-start gap-3 group";
+        btn.innerHTML = `
+          <span class="w-7 h-7 rounded-lg bg-gray-900 border border-gray-600 group-hover:border-yellow-400 text-yellow-400 flex items-center justify-center font-pixel text-xs shrink-0">${letters[i]}</span>
+          <span class="text-sm text-gray-200 group-hover:text-white leading-snug pt-0.5">${optText}</span>
+        `;
+        btn.onclick = () => handleAnswerSelect(i);
+        optContainer.appendChild(btn);
+      });
+    }
+
+    function handleAnswerSelect(selectedIndex) {
+      // Kunci pilihan
+      document.querySelectorAll(".quiz-opt-btn").forEach(b => b.disabled = true);
+
+      const qData = sessionQuestions[currentQuestionIdx];
+      const isCorrect = (selectedIndex === qData.ans);
+      const buttons = document.querySelectorAll(".quiz-opt-btn");
+
+      if (isCorrect) {
+        sessionScore++;
+        playTone(660, "triangle", 0.2, 0.2);
+        buttons[selectedIndex].classList.remove("border-gray-700", "bg-gray-800/90");
+        buttons[selectedIndex].classList.add("border-green-500", "bg-green-950/60");
+
+        // Rekod soalan global yang berjaya dipadamkan
+        answeredGlobalQuestions.add(qData.id);
+        saveGlobalQuestionsProgress();
+
+        // Aktifkan siraman air bomba & redakan api
+        triggerWaterSpray(50 + (currentQuestionIdx * 4));
+        document.getElementById("firefighter-speech").textContent = "Bagus! Semburan air bertekanan tinggi berjaya dilancarkan!";
+      } else {
+        playTone(180, "sawtooth", 0.4, 0.25);
+        buttons[selectedIndex].classList.remove("border-gray-700", "bg-gray-800/90");
+        buttons[selectedIndex].classList.add("border-red-500", "bg-red-950/60");
+        // Tunjukkan jawapan yang betul
+        buttons[qData.ans].classList.add("border-green-500", "bg-green-950/40");
+        document.getElementById("firefighter-speech").textContent = "Awas! Jawapan tidak tepat. Suhu kebakaran meningkat!";
+      }
+
+      // Kemas kini tolok api sesi
+      updateSessionFireGauge();
+
+      // Rakam tindakan untuk ciri Play Replay
+      sessionReplayEvents.push({
+        step: currentQuestionIdx + 1,
+        questionId: qData.id,
+        questionText: qData.q,
+        bab: qData.bab,
+        chosenOptionText: qData.options[selectedIndex],
+        correctOptionText: qData.options[qData.ans],
+        isCorrect: isCorrect,
+        explanation: qData.exp,
+        remainingSessionFirePct: calculateCurrentSessionFirePct()
+      });
+
+      // Paparkan penerangan RBT
+      const expBox = document.getElementById("quiz-explanation-box");
+      const title = document.getElementById("quiz-feedback-title");
+      const desc = document.getElementById("quiz-feedback-desc");
+
+      expBox.classList.remove("hidden", "bg-green-950/40", "border-green-500", "bg-red-950/40", "border-red-500");
+      if (isCorrect) {
+        expBox.classList.add("bg-green-950/40", "border-green-500");
+        title.textContent = "✅ JAWAPAN TEPAT! SIRAMAN AIR BERJAYA!";
+        title.className = "font-pixel text-xs text-green-400 mb-1";
+      } else {
+        expBox.classList.add("bg-red-950/40", "border-red-500");
+        title.textContent = "❌ JAWAPAN KURANG TEPAT";
+        title.className = "font-pixel text-xs text-red-400 mb-1";
+      }
+      desc.textContent = qData.exp;
+
+      document.getElementById("btn-next-question").disabled = false;
+      document.getElementById("btn-next-question").classList.remove("bg-gray-800", "text-gray-500");
+      document.getElementById("btn-next-question").classList.add("bg-orange-600", "text-white");
+    }
+
+    function calculateCurrentSessionFirePct() {
+      // 10 soalan. Setiap soalan tepat memadamkan 10% api sesi
+      const remainingPct = Math.max(0, 100 - (sessionScore * 10));
+      return remainingPct;
+    }
+
+    function updateSessionFireGauge() {
+      const remaining = calculateCurrentSessionFirePct();
+      document.getElementById("session-fire-pct").textContent = remaining + "%";
+      document.getElementById("session-fire-bar").style.width = remaining + "%";
+      adjustFireVisualIntensity(remaining);
+    }
+
+    function nextQuestion() {
+      currentQuestionIdx++;
+      if (currentQuestionIdx < 10) {
+        loadQuestionIndex(currentQuestionIdx);
+      } else {
+        finishQuizSession();
+      }
+    }
+
+    function finishQuizSession() {
+      if (sessionTimerInterval) clearInterval(sessionTimerInterval);
+      const minutes = Math.floor(sessionDuration / 60);
+      const seconds = sessionDuration % 60;
+      const formattedTime = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+      const fireExtinguishedPct = sessionScore * 10;
+
+      document.getElementById("result-summary-name").textContent = `Anggota: ${currentStudent} (${currentClass})`;
+      document.getElementById("result-score-val").textContent = `${sessionScore}/10`;
+      document.getElementById("result-extinguish-val").textContent = `${fireExtinguishedPct}%`;
+      document.getElementById("result-time-val").textContent = formattedTime;
+
+      const recordItem = {
+        id: "REC_" + Date.now(),
+        timestamp: new Date().toLocaleString("ms-MY"),
+        studentName: currentStudent,
+        className: currentClass,
+        score: sessionScore,
+        totalQuestions: 10,
+        extinguishedPct: fireExtinguishedPct,
+        durationSeconds: sessionDuration,
+        formattedTime: formattedTime,
+        replayData: sessionReplayEvents
+      };
+
+      // Simpan rekod tempatan
+      saveAttemptRecord(recordItem);
+      // Hantar rekod ke Google Sheets secara automatik di latar belakang
+      syncRecordToGoogleSheet(recordItem);
+
+      navigateView("result");
+    }
+
+    /* =====================================================================
+       8. KEMAJUAN GLOBAL 60 SOALAN (UNTUK MEMADAMKAN KESELURUHAN KEBAKARAN)
+       ===================================================================== */
+    function loadGlobalQuestionsProgress() {
+      const saved = localStorage.getItem("RBT_SOLVED_60_QUESTIONS");
+      if (saved) {
+        try {
+          const arr = JSON.parse(saved);
+          answeredGlobalQuestions = new Set(arr);
+        } catch(e){}
+      }
+      updateGlobalFireUI();
+    }
+
+    function saveGlobalQuestionsProgress() {
+      const arr = Array.from(answeredGlobalQuestions);
+      localStorage.setItem("RBT_SOLVED_60_QUESTIONS", JSON.stringify(arr));
+      updateGlobalFireUI();
+    }
+
+    function updateGlobalFireUI() {
+      const totalCount = 60;
+      const solvedCount = answeredGlobalQuestions.size;
+      const remainingGlobalFire = Math.max(0, Math.round(((totalCount - solvedCount) / totalCount) * 100));
+
+      const textEl = document.getElementById("global-fire-text");
+      const barEl = document.getElementById("global-fire-bar");
+
+      if (textEl) textEl.textContent = remainingGlobalFire + "%";
+      if (barEl) barEl.style.width = remainingGlobalFire + "%";
+
+      if (remainingGlobalFire <= 0) {
+        textEl.textContent = "0% (TERPADAM SEPENUHNYA!)";
+        textEl.className = "text-base sm:text-lg font-pixel font-bold text-green-400";
+      }
+    }
+
+    /* =====================================================================
+       9. PENGURUSAN REKOD & GOOGLE SHEETS API
+       ===================================================================== */
+    function saveAttemptRecord(record) {
+      leaderboardRecords.unshift(record);
+      localStorage.setItem("RBT_LEADERBOARD_DATA", JSON.stringify(leaderboardRecords));
+    }
+
+    function loadLocalLeaderboard() {
+      const local = localStorage.getItem("RBT_LEADERBOARD_DATA");
+      if (local) {
+        try {
+          leaderboardRecords = JSON.parse(local);
+        } catch(e){
+          leaderboardRecords = [];
+        }
+      }
+      renderLeaderboardTable();
+    }
+
+    async function syncRecordToGoogleSheet(record) {
+      if (!gasWebAppUrl) return;
+      try {
+        const payload = {
+          action: "save_attempt",
+          record: record,
+          solvedQuestionIds: Array.from(answeredGlobalQuestions)
+        };
+        await fetch(gasWebAppUrl, {
+          method: "POST",
+          mode: "no-cors", // Standard CORS workaround for Apps Script POST
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+      } catch(err) {
+        console.warn("Gagal menyegerakkan dengan Google Sheets:", err);
+      }
+    }
+
+    async function fetchLeaderboardData() {
+      if (!gasWebAppUrl) {
+        renderLeaderboardTable();
+        return;
+      }
+      try {
+        const res = await fetch(`${gasWebAppUrl}?action=get_leaderboard`);
+        const data = await res.json();
+        if (data && data.records) {
+          leaderboardRecords = data.records;
+          localStorage.setItem("RBT_LEADERBOARD_DATA", JSON.stringify(leaderboardRecords));
+        }
+        if (data && data.solvedQuestionIds) {
+          answeredGlobalQuestions = new Set(data.solvedQuestionIds);
+          saveGlobalQuestionsProgress();
+        }
+        renderLeaderboardTable();
+      } catch(err) {
+        console.warn("Gagal memuat turun data Google Sheet, menggunakan data tempatan.", err);
+        renderLeaderboardTable();
+      }
+    }
+
+    function renderLeaderboardTable() {
+      const filterClass = document.getElementById("leaderboard-filter-class").value;
+      const tbody = document.getElementById("leaderboard-tbody");
+      const emptyEl = document.getElementById("leaderboard-empty");
+      tbody.innerHTML = "";
+
+      let list = [...leaderboardRecords];
+      if (filterClass !== "ALL") {
+        list = list.filter(r => r.className === filterClass);
+      }
+
+      // Susun ranking: Skor tertinggi > Peratus pemadaman > Masa paling pantas
+      list.sort((a, b) => {
+        if (b.score !== a.score) return b.score - a.score;
+        return a.durationSeconds - b.durationSeconds;
+      });
+
+      if (list.length === 0) {
+        emptyEl.classList.remove("hidden");
+        return;
+      } else {
+        emptyEl.classList.add("hidden");
+      }
+
+      list.forEach((rec, idx) => {
+        const tr = document.createElement("tr");
+        tr.className = "hover:bg-gray-800/50 transition border-b border-gray-800";
+        
+        let rankBadge = `${idx + 1}`;
+        if (idx === 0) rankBadge = "🥇 1";
+        else if (idx === 1) rankBadge = "🥈 2";
+        else if (idx === 2) rankBadge = "🥉 3";
+
+        tr.innerHTML = `
+          <td class="p-3 font-pixel text-yellow-400 font-bold">${rankBadge}</td>
+          <td class="p-3 text-white font-medium">${rec.studentName}</td>
+          <td class="p-3 text-gray-400 font-mono">${rec.className}</td>
+          <td class="p-3 text-center text-green-400 font-bold font-pixel">${rec.score}/10</td>
+          <td class="p-3 text-center text-cyan-400 font-pixel">${rec.extinguishedPct}%</td>
+          <td class="p-3 text-center text-gray-300 font-mono">${rec.formattedTime}</td>
+          <td class="p-3 text-center">
+            <button onclick="openReplayModal('${rec.id}')" class="px-2.5 py-1 bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-500 hover:to-orange-500 text-white rounded font-pixel text-[10px] shadow transition flex items-center justify-center gap-1 mx-auto">
+              <span>▶</span> PLAY
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    /* =====================================================================
+       10. CIRI TAYANGAN SEMULA (REPLAY THEATER PEMADAMAN MURID)
+       ===================================================================== */
+    let activeReplayData = null;
+    let replayCurrentStep = 0;
+    let replayInterval = null;
+    let isReplayPlaying = false;
+
+    function openReplayModal(recordId) {
+      const record = leaderboardRecords.find(r => r.id === recordId);
+      if (!record || !record.replayData || record.replayData.length === 0) {
+        alert("Tiada rekod rakaman terperinci untuk sesi ini.");
+        return;
+      }
+
+      activeReplayData = record;
+      replayCurrentStep = 0;
+      isReplayPlaying = true;
+
+      document.getElementById("replay-header-info").textContent = 
+        `Rakaman: ${record.studentName} (${record.className}) | Skor: ${record.score}/10 | Masa: ${record.formattedTime}`;
+      document.getElementById("replay-modal").classList.remove("hidden");
+
+      renderReplayStep(0);
+      startReplayLoop();
+    }
+
+    function closeReplayModal() {
+      if (replayInterval) clearInterval(replayInterval);
+      isReplayPlaying = false;
+      document.getElementById("replay-modal").classList.add("hidden");
+    }
+
+    function renderReplayStep(stepIndex) {
+      if (!activeReplayData || !activeReplayData.replayData[stepIndex]) return;
+      const step = activeReplayData.replayData[stepIndex];
+
+      document.getElementById("replay-counter-text").textContent = `${stepIndex + 1} / ${activeReplayData.replayData.length}`;
+      document.getElementById("replay-step-tag").textContent = `SOALAN ${step.step} (${step.bab})`;
+      document.getElementById("replay-question-text").textContent = step.questionText;
+      document.getElementById("replay-chosen-text").textContent = `Pilihan Murid: ${step.chosenOptionText}`;
+      
+      const statusBadge = document.getElementById("replay-status-badge");
+      const actionLog = document.getElementById("replay-action-log");
+
+      if (step.isCorrect) {
+        statusBadge.textContent = "TEPAT";
+        statusBadge.className = "px-2 py-0.5 rounded text-[10px] bg-green-900 border border-green-500 text-green-300 font-pixel";
+        actionLog.textContent = "💦 Pancutan siraman air bomba diaktifkan!";
+        actionLog.className = "text-cyan-400 font-pixel text-[11px]";
+        triggerWaterSpray(50 + (stepIndex * 4));
+      } else {
+        statusBadge.textContent = "SALAH";
+        statusBadge.className = "px-2 py-0.5 rounded text-[10px] bg-red-900 border border-red-500 text-red-300 font-pixel";
+        actionLog.textContent = "⚠️ Api marak berterusan!";
+        actionLog.className = "text-red-400 font-pixel text-[11px]";
+      }
+
+      document.getElementById("replay-fire-rem").textContent = `Baki Api Sesi: ${step.remainingSessionFirePct}%`;
+      adjustFireVisualIntensity(step.remainingSessionFirePct);
+    }
+
+    function startReplayLoop() {
+      if (replayInterval) clearInterval(replayInterval);
+      document.getElementById("btn-replay-play").innerHTML = `<span>⏸</span> JEDA`;
+      replayInterval = setInterval(() => {
+        if (replayCurrentStep < activeReplayData.replayData.length - 1) {
+          replayCurrentStep++;
+          renderReplayStep(replayCurrentStep);
+        } else {
+          clearInterval(replayInterval);
+          isReplayPlaying = false;
+          document.getElementById("btn-replay-play").innerHTML = `<span>▶</span> MAIN`;
+        }
+      }, 2600);
+    }
+
+    function toggleReplayPlay() {
+      if (isReplayPlaying) {
+        clearInterval(replayInterval);
+        isReplayPlaying = false;
+        document.getElementById("btn-replay-play").innerHTML = `<span>▶</span> MAIN`;
+      } else {
+        if (replayCurrentStep >= activeReplayData.replayData.length - 1) {
+          replayCurrentStep = 0;
+        }
+        isReplayPlaying = true;
+        renderReplayStep(replayCurrentStep);
+        startReplayLoop();
+      }
+    }
+
+    function stepReplayNext() {
+      if (replayInterval) clearInterval(replayInterval);
+      isReplayPlaying = false;
+      document.getElementById("btn-replay-play").innerHTML = `<span>▶</span> MAIN`;
+      if (activeReplayData && replayCurrentStep < activeReplayData.replayData.length - 1) {
+        replayCurrentStep++;
+        renderReplayStep(replayCurrentStep);
+      }
+    }
+
+    function restartReplay() {
+      replayCurrentStep = 0;
+      renderReplayStep(0);
+      if (isReplayPlaying) startReplayLoop();
+    }
+
+    /* =====================================================================
+       11. INITIALIZATION ON LOAD
+       ===================================================================== */
+    window.addEventListener("DOMContentLoaded", () => {
+      // Inisialisasi Kanvas Api & Zarah Air
+      initFireMatrix();
+      requestAnimationFrame(fireAnimationLoop);
+      resizeWaterCanvas();
+      requestAnimationFrame(updateWaterParticles);
+
+      // Muatkan data tetapan URL
+      if (gasWebAppUrl) {
+        document.getElementById("gas-url-input").value = gasWebAppUrl;
+      }
+
+      // Muatkan kemajuan soalan global & rekod leaderboard
+      loadGlobalQuestionsProgress();
+      loadLocalLeaderboard();
+      if (gasWebAppUrl) {
+        fetchLeaderboardData();
+      }
+    });
+  </script>
+</body>
+</html>
