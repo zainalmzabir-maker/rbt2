@@ -65,7 +65,7 @@
       animation: question-appear 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
-    /* Kecerunan biasa: Puncak 60vh & sempadan kiri sifar api mutlak */
+    /* Kecerunan biasa: Puncak 60vh & sempadan kiri sifar api */
     .raging-inferno-normal {
       mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 6%, rgba(0,0,0,1) 14%),
                   linear-gradient(to top, rgba(0,0,0,1) 52%, rgba(0,0,0,0.7) 78%, transparent 100%);
@@ -75,7 +75,7 @@
       -webkit-mask-composite: source-in;
     }
 
-    /* Kecerunan bencana kegagalan: 80vh & 100vw menyala penuh seluruh skrin */
+    /* Kecerunan bencana kegagalan: 80vh & 100vw menyala penuh tanpa sempadan kiri */
     .raging-inferno-disaster {
       mask-image: linear-gradient(to top, rgba(0,0,0,1) 60%, rgba(0,0,0,0.8) 85%, transparent 100%);
       -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 60%, rgba(0,0,0,0.8) 85%, transparent 100%);
@@ -139,7 +139,7 @@
     </div>
   </section>
 
-  <!-- PAPARAN AMARAN BENCANA (JIKA GAGAL SELEPAS 5.00 PETANG ESOK) -->
+  <!-- PAPARAN AMARAN BENCANA (JIKA GAGAL SELEPAS 5.00 PETANG HARI INI) -->
   <div id="disaster-banner-container" class="hidden max-w-4xl mx-auto p-4 relative z-30 mt-6">
     <div class="bg-red-950/95 border-4 border-red-600 rounded-3xl p-6 sm:p-8 text-center shadow-[0_0_50px_rgba(255,0,0,0.8)] backdrop-blur-md animate-pulse">
       <div class="text-5xl sm:text-6xl mb-3">🔥 ⚠️ 🔥</div>
@@ -147,7 +147,7 @@
         OPERASI GAGAL! BENGKEL RBT TERBAKAR SEPENUHNYA!
       </h2>
       <p class="text-xs sm:text-sm text-gray-200 font-mono mb-4 leading-relaxed">
-        Tempoh pemadaman kebakaran telah <strong>TAMAT pada jam 5.00 Petang</strong>. Syarat pemadaman minimum 15 anggota dan 110 soalan gagal dipenuhi sebelum tempoh tamat.
+        Tempoh pemadaman kebakaran telah <strong>TAMAT pada jam 5.00 Petang</strong>. Syarat pemadaman minimum 15 anggota dan 110 soalan gagal dipenuhi sebelum wisel penamat dibunyikan.
       </p>
       <div class="inline-block bg-black/80 border-2 border-yellow-500 rounded-2xl p-4 mb-4">
         <p class="text-xs font-pixel text-yellow-400 mb-1">AKSES SISTEM DIKUNCI KEPADA GURU SAHAJA</p>
@@ -167,50 +167,68 @@
     <!-- VIEW 1: HOME -->
     <section id="view-home" class="view-panel space-y-6">
 
+      <!-- KAD PANDUAN OPERASI BOMBA SEMEKAR (DIKEMASKINI) -->
       <div class="bg-gradient-to-r from-gray-900 via-red-950/40 to-gray-900 border-2 border-orange-600/70 rounded-2xl p-5 sm:p-6 shadow-2xl backdrop-blur-md">
         <div class="flex items-center gap-3 mb-3">
           <span class="text-2xl sm:text-3xl">📜</span>
           <div>
             <h2 class="text-sm sm:text-base font-pixel text-yellow-400">PANDUAN OPERASI BOMBA SEMEKAR</h2>
             <p class="text-xs text-orange-300 font-mono">
-              Tempoh Akhir Misi: <strong>Jam 5.00 Petang Esok (12 Oktober 2026)</strong>
+              Tempoh Akhir Misi: <strong class="text-yellow-300 underline">Jam 5.00 Petang Hari Ini (12 Oktober 2026)</strong>
             </p>
           </div>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 my-3 text-xs">
-          <div class="bg-black/60 p-3 rounded-xl border border-orange-500/30">
-            <div class="font-pixel text-orange-400 mb-1 text-[11px]">1. KUMPUL MARKAH /40</div>
-            <p class="text-gray-300 text-[11px] leading-relaxed">
-              Setiap murid diberi <strong>4 kali peluang percubaan</strong> (10 soalan/sesi). Markah setiap sesi dijumlahkan sehingga mencapai <strong>40 markah penuh</strong>.
-            </p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 my-3 text-xs">
+          <!-- 1. SYARAT API 0% -->
+          <div class="bg-black/60 p-4 rounded-xl border border-yellow-500/40 flex flex-col justify-between">
+            <div>
+              <div class="font-pixel text-yellow-400 mb-1.5 text-[11px] flex items-center gap-1.5">
+                <span>🔥</span> 1. SYARAT API 0%
+              </div>
+              <p class="text-gray-300 text-[11px] leading-relaxed">
+                Terdapat 110 soalan keseluruhan di mana setiap murid diberi 10 soalan rawak pada setiap sesi (4 sesi = 40 peluang soalan). Kebakaran padam 100% apabila <strong>kesemua 110 soalan dijawab tepat</strong> hasil gabungan mana-mana percubaan murid <strong>DAN minimum 15 anggota berbeza</strong> menyertai operasi sebelum jam 5.00 petang hari ini.
+              </p>
+            </div>
+            <div class="mt-2.5 pt-2 border-t border-gray-800 text-[10px] text-cyan-300 font-mono">
+              Target: 110 Soalan &amp; 15 Murid Unik
+            </div>
           </div>
 
-          <div class="bg-black/60 p-3 rounded-xl border border-yellow-500/30">
-            <div class="font-pixel text-yellow-400 mb-1 text-[11px]">2. SYARAT API 0%</div>
-            <p class="text-gray-300 text-[11px] leading-relaxed">
-              Kebakaran padam 100% apabila <strong>kesemua 110 soalan</strong> dijawab tepat DAN minimum <strong>15 anggota berbeza</strong> menyertai operasi sebelum jam 5.00 petang esok.
-            </p>
+          <!-- 2. KUMPUL MARKAH /40 -->
+          <div class="bg-black/60 p-4 rounded-xl border border-green-500/40 flex flex-col justify-between">
+            <div>
+              <div class="font-pixel text-green-400 mb-1.5 text-[11px] flex items-center gap-1.5">
+                <span>🎯</span> 2. KUMPUL MARKAH /40
+              </div>
+              <p class="text-gray-300 text-[11px] leading-relaxed">
+                Setiap murid diberi <strong>4 kali peluang percubaan</strong> (10 soalan/sesi). Markah setiap sesi dijumlahkan secara kumulatif sehingga mencapai <strong>40 markah penuh</strong>.
+              </p>
+            </div>
+            <div class="mt-2.5 pt-2 border-t border-gray-800 text-[10px] text-green-300 font-mono">
+              Format: 4 Sesi × 10 Soalan = Max 40 Markah
+            </div>
           </div>
 
-          <div class="bg-black/60 p-3 rounded-xl border border-green-500/30">
-            <div class="font-pixel text-green-400 mb-1 text-[11px]">3. INTENSITI KEKAL TURUN</div>
-            <p class="text-gray-300 text-[11px] leading-relaxed">
-              Setiap jawapan tepat memadamkan api secara kekal. Intensiti api yang telah menyusut <strong>kekal tidak naik semula</strong>.
-            </p>
-          </div>
-
-          <div class="bg-black/60 p-3 rounded-xl border border-red-500/30">
-            <div class="font-pixel text-red-400 mb-1 text-[11px]">4. AWAS: KESAN GAGAL</div>
-            <p class="text-gray-300 text-[11px] leading-relaxed">
-              Jika syarat tidak dipenuhi menjelang jam 5.00 petang esok, bengkel musnah dan api akan membakar <strong>100% lebar & 80% tinggi skrin</strong>!
-            </p>
+          <!-- 3. AWAS: KESAN GAGAL -->
+          <div class="bg-black/60 p-4 rounded-xl border border-red-500/50 flex flex-col justify-between">
+            <div>
+              <div class="font-pixel text-red-400 mb-1.5 text-[11px] flex items-center gap-1.5">
+                <span class="animate-pulse">⚠️</span> 3. AWAS: KESAN GAGAL
+              </div>
+              <p class="text-gray-300 text-[11px] leading-relaxed">
+                Jika syarat tidak dipenuhi menjelang <strong class="text-red-400">jam 5.00 petang</strong>, api akan membakar <strong>100% keseluruhan web portal</strong>! Adakah murid-murid Tingkatan 2 SEMEKAR mampu bersatu dan sepakat bantu-membantu sebagai satu kelompok?
+              </p>
+            </div>
+            <div class="mt-2.5 pt-2 border-t border-gray-800 text-[10px] text-yellow-300 font-mono">
+              Amaran: Portal musnah jika syarat gagal
+            </div>
           </div>
         </div>
 
-        <div class="mt-3 p-3 rounded-xl bg-red-950/30 border border-red-600/50 flex items-center justify-between text-xs">
-          <div class="text-gray-300 font-mono">
-            ⏳ Masa Baki Sehingga Misi Ditutup (5.00 Ptg Esok):
+        <div class="mt-3 p-3 rounded-xl bg-red-950/30 border border-red-600/50 flex flex-wrap items-center justify-between gap-2 text-xs">
+          <div class="text-gray-300 font-mono flex items-center gap-1.5">
+            <span>⏳</span> Masa Baki Misi Hari Ini (Sehingga 5.00 Petang):
           </div>
           <div id="inline-mission-timer" class="font-pixel text-yellow-400 font-bold text-xs sm:text-sm">
             -- Jam -- Minit -- Saat
@@ -423,7 +441,9 @@
 
   </main>
 
-  <!-- MODAL ADMIN -->
+  <!-- ========================================================================= -->
+  <!-- MODAL ADMIN (LENGKAP DENGAN STATISTIK, RANKING & SIMULASI GURU)           -->
+  <!-- ========================================================================= -->
   <div id="admin-modal" class="hidden fixed inset-0 bg-black/95 z-[10000] p-2 sm:p-4 backdrop-blur-md overflow-y-auto" style="display: none;">
     <div class="bg-gray-900 border-2 border-red-500 rounded-2xl max-w-4xl w-full p-4 sm:p-6 shadow-2xl relative mx-auto my-auto flex flex-col max-h-[92vh]">
       
@@ -482,22 +502,7 @@
           <div class="bg-black/70 p-3 rounded-xl border border-gray-800">
             <div class="font-pixel text-[9px] text-gray-400 mb-1">STATUS MISI</div>
             <div class="text-xs font-pixel text-yellow-300 truncate pt-1" id="admin-mission-status">BERJALAN</div>
-            <div class="text-[10px] text-gray-400 font-mono mt-1">Tamat 5.00 Ptg Esok</div>
-          </div>
-        </div>
-
-        <!-- BUTANG UJIAN SIMULASI KHAS UNTUK GURU -->
-        <div class="p-3 bg-gray-800/80 rounded-xl border border-yellow-500/50">
-          <div class="font-pixel text-[10px] text-yellow-400 mb-1.5 flex items-center gap-1.5">
-            <span>⚙️</span> SIMULASI UJIAN BENCANA (UNTUK GURU MENGUJI PAPARAN):
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-            <button type="button" onclick="triggerDisasterMode(); closeAdminModal();" class="py-2.5 px-3 bg-red-900/90 hover:bg-red-800 border border-red-500 text-red-200 rounded-lg font-pixel text-[10px] transition flex items-center justify-center gap-1.5">
-              <span>🔥</span> PAKSA MOD BENCANA (100% LEBAR / 80% TINGGI)
-            </button>
-            <button type="button" onclick="revertDisasterMode(); closeAdminModal();" class="py-2.5 px-3 bg-green-900/90 hover:bg-green-800 border border-green-500 text-green-200 rounded-lg font-pixel text-[10px] transition flex items-center justify-center gap-1.5">
-              <span>🔄</span> KEMBALI NORMAL (70% KANAN / 60% TINGGI)
-            </button>
+            <div class="text-[10px] text-gray-400 font-mono mt-1">Tamat 5.00 Ptg Hari Ini</div>
           </div>
         </div>
 
@@ -543,15 +548,32 @@
           </div>
         </div>
 
-        <!-- TETAPAN ADMIN & RESET -->
-        <div class="p-3 bg-red-950/30 rounded-xl border border-red-800/60">
-          <div class="font-pixel text-[10px] text-red-400 mb-1">ZON BAHAYA: RESET DATA PERMAINAN</div>
-          <p class="text-[11px] text-gray-300 font-mono mb-2">
-            Mengosongkan semua rekod murid di storan tempatan dan Google Sheet untuk memulakan semula operasi.
-          </p>
-          <button type="button" onclick="promptResetConfirmation()" class="w-full py-2.5 bg-red-900 border-2 border-red-600 hover:bg-red-800 text-red-200 font-pixel text-xs rounded-xl shadow transition">
-            ⚠️ RESET KESELURUHAN PERMAINAN
-          </button>
+        <!-- SIMULASI GURU & RESET -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="p-3 bg-gray-800/80 rounded-xl border border-yellow-600/50">
+            <div class="font-pixel text-[10px] text-yellow-400 mb-1">SIMULASI SISTEM (GURU)</div>
+            <p class="text-[11px] text-gray-300 font-mono mb-2">
+              Uji paparan bencana 100% skrin atau pulihkan ke mod operasi biasa.
+            </p>
+            <div class="grid grid-cols-2 gap-2">
+              <button type="button" onclick="triggerDisasterMode(); closeAdminModal();" class="py-2 bg-red-800 hover:bg-red-700 font-pixel text-[9px] text-white rounded-lg">
+                🔥 PAKSA MOD BENCANA
+              </button>
+              <button type="button" onclick="revertDisasterMode(); closeAdminModal();" class="py-2 bg-gray-700 hover:bg-gray-600 font-pixel text-[9px] text-green-300 rounded-lg">
+                🔄 KEMBALI NORMAL
+              </button>
+            </div>
+          </div>
+
+          <div class="p-3 bg-red-950/30 rounded-xl border border-red-800/60">
+            <div class="font-pixel text-[10px] text-red-400 mb-1">ZON BAHAYA: RESET DATA PERMAINAN</div>
+            <p class="text-[11px] text-gray-300 font-mono mb-2">
+              Kosongkan semua rekod storan tempatan dan Google Sheet untuk memulakan sesi baharu.
+            </p>
+            <button type="button" onclick="confirmResetGame()" class="w-full py-2 bg-red-900 border-2 border-red-600 hover:bg-red-800 text-red-200 font-pixel text-[10px] rounded-lg shadow transition">
+              ⚠️ RESET KESELURUHAN PERMAINAN
+            </button>
+          </div>
         </div>
 
       </div>
@@ -559,35 +581,9 @@
     </div>
   </div>
 
-  <!-- MODAL DIALOG MESEJ BEBAS ALERT/CONFIRM -->
-  <div id="custom-modal-alert" class="hidden fixed inset-0 bg-black/90 z-[20000] p-4 flex items-center justify-center backdrop-blur-sm">
-    <div class="bg-gray-900 border-2 border-yellow-500 rounded-2xl max-w-sm w-full p-5 text-center shadow-2xl">
-      <div id="modal-alert-icon" class="text-3xl mb-2">🔔</div>
-      <h4 id="modal-alert-title" class="font-pixel text-xs text-yellow-400 mb-2">PEMBERITAHUAN</h4>
-      <p id="modal-alert-message" class="text-xs text-gray-200 font-mono mb-4 leading-relaxed"></p>
-      <button type="button" onclick="closeCustomAlert()" class="px-5 py-2 bg-orange-600 hover:bg-orange-500 text-white font-pixel text-xs rounded-xl border border-yellow-400 transition shadow">
-        FAHAM ➔
-      </button>
-    </div>
-  </div>
-
-  <div id="custom-modal-confirm" class="hidden fixed inset-0 bg-black/90 z-[20000] p-4 flex items-center justify-center backdrop-blur-sm">
-    <div class="bg-gray-900 border-2 border-red-500 rounded-2xl max-w-sm w-full p-5 text-center shadow-2xl">
-      <div class="text-3xl mb-2">⚠️</div>
-      <h4 id="modal-confirm-title" class="font-pixel text-xs text-red-400 mb-2">PENGESAHAN TINDAKAN</h4>
-      <p id="modal-confirm-message" class="text-xs text-gray-200 font-mono mb-5 leading-relaxed"></p>
-      <div class="flex justify-center gap-3">
-        <button type="button" onclick="resolveCustomConfirm(false)" class="px-4 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 font-pixel text-xs rounded-xl border border-gray-600 transition">
-          BATAL
-        </button>
-        <button type="button" onclick="resolveCustomConfirm(true)" class="px-4 py-2 bg-red-600 hover:bg-red-500 text-white font-pixel text-xs rounded-xl border border-yellow-400 transition shadow">
-          YA, TERUSKAN
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- KAWASAN API INFERNO (DINAMIK: 70vw/60vh BIASA VS 100vw/80vh BENCANA) -->
+  <!-- ========================================================================= -->
+  <!-- KAWASAN API INFERNO (DINAMIK: 70vw/60vh BIASA VS 100vw/80vh BENCANA)       -->
+  <!-- ========================================================================= -->
   <div id="fire-overlay-wrapper" class="fixed bottom-9 right-0 w-[70vw] h-[60vh] pointer-events-none z-[9990] overflow-hidden select-none raging-inferno-normal">
     <canvas id="fireCanvas" class="w-full h-full block filter drop-shadow-[0_-12px_24px_rgba(255,69,0,0.7)]"></canvas>
   </div>
@@ -595,8 +591,11 @@
   <!-- KANVAS PANCUTAN AIR -->
   <canvas id="waterCanvas" class="fixed bottom-9 left-0 w-full h-[60vh] pointer-events-none z-[9992]"></canvas>
 
-  <!-- BOMBA SEMEKAR (JENTERA & ANGGOTA) -->
+  <!-- ========================================================================= -->
+  <!-- BOMBA SEMEKAR (JENTERA & ANGGOTA)                                         -->
+  <!-- ========================================================================= -->
   <div id="firefighter-unit" class="fixed bottom-10 left-2 sm:left-4 z-[9995] pointer-events-auto flex items-end gap-1.5 sm:gap-2.5 select-none drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)]">
+    
     <div class="relative">
       <div class="absolute -top-2 left-6 w-2.5 h-2 bg-red-500 rounded-sm siren-active"></div>
       <div class="absolute -top-2 left-10 w-2.5 h-2 bg-cyan-400 rounded-sm siren-active" style="animation-delay: 0.25s;"></div>
@@ -664,7 +663,7 @@
     const GAS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbyq6LEfXj-_A9RT00jEOlQMooDkT0eHkjhGQn7BnoVE66NRDvqZtwW9Ul_J5ms-PJhz/exec";
     const MAX_ALLOWED_ATTEMPTS = 4;
 
-    // Tarikh & Masa Tamat Operasi: Jam 5.00 Petang (17:00), 12 Oktober 2026
+    // Tarikh & Masa Tamat Operasi: Jam 5.00 Petang Hari Ini (12 Oktober 2026)
     const MISSION_DEADLINE_TIMESTAMP = new Date("2026-10-12T17:00:00+08:00").getTime();
 
     const STUDENTS_DATA = {
@@ -699,133 +698,133 @@
     const QUESTION_BANK = [];
     (function generate110Questions() {
       const rawBank = [
-        // --- BAB 2.2 REKA BENTUK MEKANIKAL (KEBAKARAN & KECEMASAN) ---
-        { id: 1, bab: "BAB 2.2 REKA BENTUK MEKANIKAL", q: "Tangga penyelamat jentera bomba tersangkut. Pergerakan perlu menukar putaran motor kepada pergerakan linear (lurus) untuk memanjangkan tangga ke tingkat atas bengkel. Apakah gear yang paling sesuai?", options: ["Gear taji", "Gear rak dan pinan", "Gear serong", "Gear heliks"], ans: 1, exp: "Gear rak dan pinan menukarkan pergerakan putaran kepada pergerakan linear untuk memanjangkan tangga bomba." },
-        { id: 2, bab: "BAB 2.2 REKA BENTUK MEKANIKAL", q: "Pam utama jentera bomba memerlukan pemindahan kuasa putaran pada sudut 90 darjah antara aci enjin dengan aci pam air bertekanan tinggi. Gear apakah yang digunakan?", options: ["Gear cacing", "Gear taji", "Gear serong", "Tali sawat"], ans: 2, exp: "Gear serong memindahkan kuasa putaran antara dua aci bersudut 90 darjah." },
-        { id: 3, bab: "BAB 2.2 REKA BENTUK MEKANIKAL", q: "Semasa operasi menyelamatkan mangsa kebakaran dari cerun curam di belakang bengkel, anggota bomba menggunakan tali dan sistem takal. Apakah faedah utama takal?", options: ["Menambah kelajuan beban", "Mengurangkan daya yang diperlukan untuk mengangkat mangsa", "Mengunci tali secara kekal", "Menjana arus elektrik"], ans: 1, exp: "Sistem takal meringankan daya usaha untuk mengangkat beban dan mangsa berat." },
-        { id: 4, bab: "BAB 2.2 REKA BENTUK MEKANIKAL", q: "Alat pemotong hidraulik bomba ('Jaws of Life') untuk membuka pintu bengkel yang terperangkap menggunakan komponen mekanikal yang menghubungkan dua tuas pemotong. Komponen ini ialah?", options: ["Gelongsor", "Bindu", "Pautan (Linkage)", "Rantai"], ans: 2, exp: "Pautan (linkage) menghubungkan komponen mekanikal untuk memindahkan daya membuka dan memotong." },
-        { id: 5, bab: "BAB 2.2 REKA BENTUK MEKANIKAL", q: "Kren pengangkat jentera bomba memerlukan mekanisma penahan yang tidak boleh berpusing secara songsang (self-locking) semasa menahan beban tinggi di tapak kebakaran. Gear manakah yang sesuai?", options: ["Gear cacing dan roda cacing", "Gear dalaman", "Gear taji", "Gear heliks"], ans: 0, exp: "Gear cacing mempunyai ciri keselamatan penguncian kendiri secara semula jadi." },
-        { id: 6, bab: "BAB 2.2 REKA BENTUK MEKANIKAL", q: "Kipas pengalih udara asap bomba dipacu oleh enjin pada jarak tertentu yang selari untuk menyedut keluar asap tebal bengkel. Komponen mekanikal fleksibel yang digunakan ialah?", options: ["Aci sesondol", "Tali sawat dan takal", "Bindu", "Gear serong"], ans: 1, exp: "Tali sawat dan takal memindahkan putaran antara dua aci berjarak secara senyap dan lancar." },
-        { id: 7, bab: "BAB 2.2 REKA BENTUK MEKANIKAL", q: "Tuas pengapit digunakan oleh anggota bomba untuk mengepit hos air bertekanan tinggi agar aliran terhenti semasa menukar nozel. Tiga elemen asas sistem tuas ialah?", options: ["Beban, Fulkrum, dan Daya", "Gear, Takal, dan Tali", "Voltan, Arus, dan Kuasa", "Input, Proses, dan Output"], ans: 0, exp: "Sistem tuas terdiri daripada fulkrum, beban, dan daya." },
-        { id: 8, bab: "BAB 2.2 REKA BENTUK MEKANIKAL", q: "Injap pemati nozel bomba dibuka dan ditutup dengan menggelongsorkan pemegang secara lurus ke hadapan dan belakang tanpa putaran. Komponen mekanikal ini ialah?", options: ["Gelongsor (Slider)", "Sesondol", "Aci engkol", "Takal"], ans: 0, exp: "Gelongsor mengurangkan geseran untuk menghasilkan pergerakan linear secara salingan." },
-        { id: 9, bab: "BAB 2.2 REKA BENTUK MEKANIKAL", q: "Anggota penyelamat perlu menebuk dinding bengkel yang terbakar menggunakan mesin gerudi impak. Bahagian mekanikal yang berfungsi mencengkam mata gerudi secara kukuh ialah?", options: ["Bindu (Chuck)", "Gandar", "Engsel", "Penyambung T"], ans: 0, exp: "Bindu (chuck) berfungsi mencengkam dan memegang mata gerudi dengan kukuh." },
-        { id: 10, bab: "BAB 2.2 REKA BENTUK MEKANIKAL", q: "Pam pemadam api jenis omboh menukarkan putaran enjin kepada gerakan salingan naik turun omboh untuk menghasilkan tekanan pancutan air tinggi menggunakan?", options: ["Aci engkol (Crankshaft)", "Gear taji", "Rantai", "Tali sawat"], ans: 0, exp: "Aci engkol menukarkan pergerakan putaran kepada pergerakan salingan omboh." },
+        // --- BAB 2.2 REKA BENTUK MEKANIKAL ---
+        { id: 1, bab: "BAB 2.2 REKA BENTUK MEKANIKAL", q: "Mekanisme tangga bertingkat memerlukan penukaran gerakan putaran motor kepada pergerakan linear (lurus) untuk memanjangkan tangga. Apakah gear yang paling sesuai?", options: ["Gear taji", "Gear rak dan pinan", "Gear serong", "Gear heliks"], ans: 1, exp: "Gear rak dan pinan menukarkan pergerakan putaran kepada pergerakan linear." },
+        { id: 2, bab: "BAB 2.2 REKA BENTUK MEKANIKAL", q: "Pam empar memerlukan pemindahan kuasa putaran pada sudut 90 darjah antara dua aci yang bersilang. Gear apakah yang digunakan?", options: ["Gear cacing", "Gear taji", "Gear serong", "Tali sawat"], ans: 2, exp: "Gear serong memindahkan kuasa putaran antara dua aci bersudut 90 darjah." },
+        { id: 3, bab: "BAB 2.2 REKA BENTUK MEKANIKAL", q: "Semasa operasi mengangkat beban berat, sistem takal digunakan. Apakah fungsi utama takal?", options: ["Menambah kelajuan beban", "Mengurangkan daya yang diperlukan untuk mengangkat beban", "Mengunci beban kekal", "Menjana arus elektrik"], ans: 1, exp: "Sistem takal meringankan daya usaha untuk mengangkat beban berat." },
+        { id: 4, bab: "BAB 2.2 REKA BENTUK MEKANIKAL", q: "Alat pemotong hidraulik menggunakan komponen yang menghubungkan dua tuas untuk menghasilkan gerakan membuka dan menutup. Komponen mekanikal ini ialah?", options: ["Gelongsor", "Bindu", "Pautan (Linkage)", "Rantai"], ans: 2, exp: "Pautan (linkage) menghubungkan komponen mekanikal untuk memindahkan daya dan pergerakan." },
+        { id: 5, bab: "BAB 2.2 REKA BENTUK MEKANIKAL", q: "Sistem takal penarik kargo memerlukan mekanisma keselamatan yang tidak boleh berpusing secara songsang (self-locking) apabila menahan beban. Gear manakah yang paling sesuai?", options: ["Gear cacing dan roda cacing", "Gear dalaman", "Gear taji", "Gear heliks"], ans: 0, exp: "Gear cacing mempunyai ciri keselamatan penguncian kendiri secara semula jadi." },
+        { id: 6, bab: "BAB 2.2 REKA BENTUK MEKANIKAL", q: "Kipas pengalih udara dipacu oleh motor pada jarak tertentu yang selari. Komponen mekanikal fleksibel yang digunakan ialah?", options: ["Aci sesondol", "Tali sawat dan takal", "Bindu", "Gear serong"], ans: 1, exp: "Tali sawat dan takal memindahkan putaran antara dua aci berjarak secara senyap dan lancar." },
+        { id: 7, bab: "BAB 2.2 REKA BENTUK MEKANIKAL", q: "Tuas pengapit hos menggunakan prinsip sistem tuas. Tiga elemen asas dalam sistem tuas ialah?", options: ["Beban, Fulkrum, dan Daya", "Gear, Takal, dan Tali", "Voltan, Arus, dan Kuasa", "Input, Proses, dan Output"], ans: 0, exp: "Sistem tuas terdiri daripada fulkrum, beban, dan daya." },
+        { id: 8, bab: "BAB 2.2 REKA BENTUK MEKANIKAL", q: "Injap nozel dibuka dan ditutup dengan menggerakkan pemegang secara lurus ke hadapan dan ke belakang tanpa putaran. Komponen mekanikal ini ialah?", options: ["Gelongsor (Slider)", "Sesondol", "Aci engkol", "Takal"], ans: 0, exp: "Gelongsor mengurangkan geseran untuk menghasilkan pergerakan linear secara salingan." },
+        { id: 9, bab: "BAB 2.2 REKA BENTUK MEKANIKAL", q: "Pada mesin gerudi mudah alih, bahagian mekanikal yang berfungsi mencengkam dan memegang mata gerudi dengan kemas ialah?", options: ["Bindu (Chuck)", "Gandar", "Engsel", "Penyambung T"], ans: 0, exp: "Bindu (chuck) berfungsi mencengkam dan mengetatkan mata gerudi." },
+        { id: 10, bab: "BAB 2.2 REKA BENTUK MEKANIKAL", q: "Pam jenis omboh menukarkan pergerakan putaran enjin kepada gerakan salingan naik turun omboh menggunakan?", options: ["Aci engkol (Crankshaft)", "Gear taji", "Rantai", "Tali sawat"], ans: 0, exp: "Aci engkol berfungsi menukarkan pergerakan putaran kepada pergerakan salingan." },
 
-        // --- BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF (KEBAKARAN & KECEMASAN) ---
-        { id: 11, bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF", q: "Tangga penyelamat bomba perlu panjang untuk mencapai tingkat atas bengkel tetapi perlu padat apabila disimpan ke dalam satu sama lain dalam jentera. Apakah prinsip inventif ini?", options: ["Penyarangan (Nested doll)", "Pembedilan", "Kualiti setempat", "Tindakan berkala"], ans: 0, exp: "Prinsip penyarangan memasukkan satu bahagian ke dalam bahagian lain untuk menjimatkan ruang penyimpanan." },
-        { id: 12, bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF", q: "Baju perlindungan bomba mestilah tebal menahan bahang api bengkel tetapi perlu nipis agar anggota bebas bergerak tangkas. Apakah percanggahan fizikal yang wujud?", options: ["Panas lawan sejuk", "Tebal lawan nipis", "Berat lawan ringan", "Tinggi lawan rendah"], ans: 1, exp: "Percanggahan fizikal parameter pakaian keselamatan ini ialah tebal lawan nipis." },
-        { id: 13, bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF", q: "Air tidak boleh disiram terus ke atas kebakaran minyak petrol bengkel. Bomba menggunakan lapisan buih kimia untuk memisahkan oksigen daripada bahan api. Apakah prinsip inventif ini?", options: ["Perantara (Intermediary)", "Pemisahan ruang", "Pengembangan terma", "Pembuangan bahan"], ans: 0, exp: "Prinsip perantara menggunakan bahan ketiga (buih pemadam) untuk memisahkan oksigen daripada cecair bahan api." },
-        { id: 14, bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF", q: "Dalam analisis fungsi semburan pemadaman: 'Nozel memegang dan mengawal halaju -> Air'. Komponen manakah yang bertindak sebagai 'Objek'?", options: ["Nozel", "Air", "Enjin pam", "Tangan bomba"], ans: 1, exp: "Objek menerima kesan langsung daripada tindakan kawalan fungsi nozel." },
-        { id: 15, bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF", q: "Visor topi keledar bomba lut sinar di bahagian dalam untuk penglihatan tetapi memantulkan sinaran inframerah bahang api di permukaan luar. Apakah prinsip pemisahan ruang ini?", options: ["Kualiti setempat (Local quality)", "Tindakan berlebihan", "Tidak simetri", "Pengembangan"], ans: 0, exp: "Kualiti setempat memberikan ciri berlainan pada bahagian struktur yang berbeza." },
-        { id: 16, bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF", q: "Silinder oksigen anggota bomba perlu menampung tekanan gas tinggi tetapi mestilah ringan dibawa. Menukar keluli kepada gentian karbon menyelesaikan percanggahan ini secara?", options: ["Bukan inventif", "Masalah inventif", "Cuba jaya biasa", "Kajian pasaran"], ans: 1, exp: "Penyelesaian inventif menghapuskan percanggahan tanpa menimbulkan kesan sampingan buruk." },
-        { id: 17, bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF", q: "Pin keselamatan pemadam api mengunci picu semasa disimpan dan dicabut hanya semasa hendak menyembur punca kebakaran. Apakah kaedah pemisahan yang digunakan?", options: ["Pemisahan masa", "Pemisahan ruang", "Pemisahan graviti", "Pemisahan bahan"], ans: 0, exp: "Keadaan pin dipasang dan dicabut pada dua waktu berbeza (masa simpanan vs masa kecemasan)." },
-        { id: 18, bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF", q: "Injap pelepas dipasang untuk menstabilkan tekanan hos sebelum pam air bertekanan tinggi dihidupkan sepenuhnya semasa operasi memadam api. Apakah prinsip inventif ini?", options: ["Tindakan awal (Pre-action)", "Penyarangan", "Tekanan songsang", "Peralihan dimensi"], ans: 0, exp: "Tindakan awal menyediakan langkah keselamatan sebelum proses bertekanan tinggi berlaku." },
-        { id: 19, bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF", q: "Lampu suluh dilekatkan terus pada topi keledar bomba agar tangan bebas memegang hos pemadam api. Apakah prinsip inventif ini?", options: ["Penggabungan (Merging)", "Pengembangan terma", "Pemisahan haba", "Beban berpusat"], ans: 0, exp: "Penggabungan menyatukan dua peralatan berasingan menjadi satu unit bersepadu." },
-        { id: 20, bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF", q: "Pintu rintangan api bengkel sentiasa terbuka untuk laluan dan hanya tertutup secara automatik apabila siren kebakaran berbunyi. Ini adalah kaedah pemisahan?", options: ["Pemisahan masa", "Pemisahan ruang", "Pemisahan suhu", "Pemisahan rintangan"], ans: 0, exp: "Keadaan buka dan tutup pintu berlaku pada dua masa berlainan mengikut situasi kecemasan." },
+        // --- BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF ---
+        { id: 11, bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF", q: "Tangga penyelamat perlu panjang semasa digunakan tetapi perlu padat semasa disimpan ke dalam satu sama lain. Apakah prinsip inventif yang digunakan?", options: ["Penyarangan (Nested doll)", "Pembedilan", "Kualiti setempat", "Tindakan berkala"], ans: 0, exp: "Prinsip penyarangan memasukkan satu objek ke dalam objek lain yang sama bentuk untuk penjimatan ruang." },
+        { id: 12, bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF", q: "Baju perlindungan mestilah tebal untuk menahan haba tetapi perlu nipis agar pemakai bebas bergerak. Apakah percanggahan fizikal yang wujud?", options: ["Panas lawan sejuk", "Tebal lawan nipis", "Berat lawan ringan", "Tinggi lawan rendah"], ans: 1, exp: "Percanggahan fizikal bagi parameter ketebalan pakaian ini ialah tebal lawan nipis." },
+        { id: 13, bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF", q: "Lapisan buih digunakan untuk memisahkan oksigen daripada bersentuh dengan cecair petrol yang membara. Apakah prinsip inventif pemisahan ruang ini?", options: ["Perantara (Intermediary)", "Pemisahan ruang", "Pengembangan terma", "Pembuangan bahan"], ans: 0, exp: "Prinsip perantara menggunakan bahan ketiga untuk memisahkan atau menyatukan dua elemen." },
+        { id: 14, bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF", q: "Dalam analisis fungsi semburan: 'Nozel memegang dan mengawal halaju -> Air'. Apakah komponen yang bertindak sebagai 'Objek'?", options: ["Nozel", "Air", "Pam", "Tangan"], ans: 1, exp: "Objek ialah bahan atau elemen yang menerima kesan langsung daripada sesuatu fungsi." },
+        { id: 15, bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF", q: "Visor helmet lut sinar di bahagian dalam tetapi disalut lapisan pemantul inframerah di bahagian luar. Apakah prinsip inventif ini?", options: ["Kualiti setempat (Local quality)", "Tindakan berlebihan", "Tidak simetri", "Pengembangan"], ans: 0, exp: "Kualiti setempat memberikan ciri atau fungsi berbeza pada struktur bahagian berlainan." },
+        { id: 16, bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF", q: "Silinder gas perlu menampung tekanan tinggi tanpa pecah tetapi mestilah ringan dibawa. Menukar bahan keluli kepada komposit gentian karbon adalah penyelesaian masalah?", options: ["Bukan inventif", "Masalah inventif", "Cuba jaya biasa", "Kajian pasaran"], ans: 1, exp: "Masalah inventif menyelesaikan percanggahan parameter tanpa menghasilkan kesan sampingan buruk." },
+        { id: 17, bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF", q: "Pin keselamatan pemadam api mengunci picu semasa disimpan dan dicabut hanya semasa hendak digunakan. Apakah kaedah pemisahan yang terlibat?", options: ["Pemisahan masa", "Pemisahan ruang", "Pemisahan graviti", "Pemisahan bahan"], ans: 0, exp: "Kunci dipasang dan dicabut pada dua waktu berbeza (pemisahan masa simpanan vs masa kecemasan)." },
+        { id: 18, bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF", q: "Injap pelepas dipasang untuk melepaskan tekanan berlebihan sebelum paip utama menerima aliran penuh. Apakah prinsip inventif ini?", options: ["Tindakan awal (Pre-action)", "Penyarangan", "Tekanan songsang", "Peralihan dimensi"], ans: 0, exp: "Tindakan awal menyediakan langkah keselamatan sebelum proses bertekanan bermula." },
+        { id: 19, bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF", q: "Lampu suluh dipasang terus bersatu pada topi keselamatan agar tangan bebas bekerja. Apakah prinsip inventif ini?", options: ["Penggabungan (Merging)", "Pengembangan terma", "Pemisahan haba", "Beban berpusat"], ans: 0, exp: "Prinsip penggabungan menyatukan beberapa objek atau fungsi menjadi satu struktur bersepadu." },
+        { id: 20, bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF", q: "Pintu rintangan api sentiasa terbuka untuk laluan biasa dan tertutup secara automatik hanya apabila siren penggera aktif. Ini ialah kaedah pemisahan?", options: ["Pemisahan masa", "Pemisahan ruang", "Pemisahan suhu", "Pemisahan saiz"], ans: 0, exp: "Keadaan buka dan tutup berlaku pada dua waktu yang berlainan mengikut situasi kecemasan." },
 
-        // --- BAB 2.3 REKA BENTUK ELEKTRIK (BAHAYA KEBAKARAN & PENCEGAHAN) ---
-        { id: 21, bab: "BAB 2.3 REKA BENTUK ELEKTRIK", q: "Punca kebakaran elektrik bengkel lazimnya berpunca daripada haba kuasa beban lampau. Formula mengira nilai Kuasa Elektrik (P) jika voltan (V) dan arus (I) diketahui ialah?", options: ["P = V × I", "P = V / I", "P = I / V", "P = V + I"], ans: 0, exp: "Kuasa elektrik dihitung menggunakan rumus P = V × I." },
-        { id: 22, bab: "BAB 2.3 REKA BENTUK ELEKTRIK", q: "Peranti keselamatan di kotak fius agihan bengkel yang memutuskan bekalan serta-merta sekiranya berlaku kebocoran arus ke bumi untuk mencegah renjatan dan kebakaran ialah?", options: ["Pemutus Litar Arus Baki (RCCB)", "Suis dua hala", "Palam 3 pin", "Diod"], ans: 0, exp: "RCCB memutuskan litar secara automatik apabila berlaku kebocoran arus ke bumi." },
-        { id: 23, bab: "BAB 2.3 REKA BENTUK ELEKTRIK", q: "Lampu limpah kecemasan jentera bomba mempunyai rintangan 6 Ohm pada punca bekalan 24V. Mengikut Hukum Ohm (V=IR), berapakah arus yang ditarik oleh lampu ini?", options: ["4 Ampere", "144 Ampere", "18 Ampere", "0.25 Ampere"], ans: 0, exp: "Arus (I) = V / R = 24V / 6 Ohm = 4 Ampere." },
-        { id: 24, bab: "BAB 2.3 REKA BENTUK ELEKTRIK", q: "Pam elektrik mini penyembur bomba beroperasi pada 240V dan menarik arus 4.2A. Nilai kadaran fius palam manakah yang paling sesuai dipasang untuk mencegah litar terbakar?", options: ["Fius 3A", "Fius 5A (atau 13A)", "Fius 30A", "Fius 1A"], ans: 1, exp: "Kadaran fius dipilih sedikit lebih tinggi daripada arus operasi selamat peralatan (4.2A memerlukan fius 5A atau 13A)." },
-        { id: 25, bab: "BAB 2.3 REKA BENTUK ELEKTRIK", q: "Lampu laluan kecemasan kebakaran bengkel disambung secara litar selari. Mengapakah litar selari dipilih?", options: ["Jika satu lampu rosak, lampu lain tetap terus menyala", "Arus elektrik menjadi sifar", "Hanya memerlukan seutas wayar", "Voltan lampu menurun"], ans: 0, exp: "Litar selari membolehkan setiap lampu berfungsi secara bebas tanpa dipengaruhi kerosakan lampu lain." },
-        { id: 26, bab: "BAB 2.3 REKA BENTUK ELEKTRIK", q: "Kabel pendawaian kuprum tahan haba menyalurkan arus dari punca bekalan ke sistem siren amaran kebakaran. Dalam sistem elektrik, kabel berperanan sebagai?", options: ["Medium", "Sumber", "Beban", "Kawalan"], ans: 0, exp: "Medium bertindak sebagai pengalir yang menyalurkan arus elektrik." },
-        { id: 27, bab: "BAB 2.3 REKA BENTUK ELEKTRIK", q: "Dalam litar penggera kebakaran, siren yang menukarkan tenaga elektrik kepada gelombang bunyi amaran kecemasan dikategorikan sebagai?", options: ["Beban", "Sumber", "Medium", "Kawalan"], ans: 0, exp: "Beban menukarkan tenaga elektrik kepada bentuk tenaga bunyi amaran." },
-        { id: 28, bab: "BAB 2.3 REKA BENTUK ELEKTRIK", q: "Suis keselamatan pemutus kecemasan bengkel mestilah dipasang pada wayar apakah bagi mengelakkan renjatan dan kebakaran?", options: ["Wayar Hidup (Live wire)", "Wayar Bumi (Earth wire)", "Penebat Plastik", "Wayar Neutral"], ans: 0, exp: "Suis keselamatan mesti sentiasa memutuskan sambungan pada wayar hidup." },
-        { id: 29, bab: "BAB 2.3 REKA BENTUK ELEKTRIK", q: "Sebuah litar alat pemanas bengkel beroperasi pada voltan 12V dan menarik arus 2A. Berapakah nilai rintangan litar tersebut?", options: ["6 Ohm", "24 Ohm", "10 Ohm", "0.16 Ohm"], ans: 0, exp: "Rintangan (R) = V / I = 12V / 2A = 6 Ohm." },
-        { id: 30, bab: "BAB 2.3 REKA BENTUK ELEKTRIK", q: "Mengapakah penggunaan beban lampau pada satu soket penyesuai di bengkel boleh mencetuskan kebakaran elektrik?", options: ["Arus elektrik berlebihan menghasilkan haba lampau yang mencairkan penebat kabel", "Voltan bertukar menjadi sifar", "Beban menjadi sejuk", "Rintangan wayar lenyap"], ans: 0, exp: "Arus melebihi had menghasilkan haba lampau yang mencairkan penebat dan memicu percikan api." },
+        // --- BAB 2.3 REKA BENTUK ELEKTRIK ---
+        { id: 21, bab: "BAB 2.3 REKA BENTUK ELEKTRIK", q: "Formula asas mengira nilai Kuasa Elektrik (P) jika nilai Voltan (V) dan Arus (I) diketahui ialah?", options: ["P = V × I", "P = V / I", "P = I / V", "P = V + I"], ans: 0, exp: "Kuasa elektrik dihitung menggunakan rumus P = V × I." },
+        { id: 22, bab: "BAB 2.3 REKA BENTUK ELEKTRIK", q: "Peranti keselamatan di papan agihan elektrik yang memutuskan litar serta-merta apabila berlaku kebocoran arus ke bumi ialah?", options: ["Pemutus Litar Arus Baki (RCCB)", "Suis dua hala", "Palam 3 pin", "Diod"], ans: 0, exp: "RCCB (Residual Current Circuit Breaker) memutuskan litar jika arus bocor ke bumi dikesan." },
+        { id: 23, bab: "BAB 2.3 REKA BENTUK ELEKTRIK", q: "Sebuah lampu limpah beroperasi pada voltan 24V dan mempunyai rintangan 6 Ohm. Mengikut Hukum Ohm (V=IR), berapakah arus yang mengalir?", options: ["4 Ampere", "144 Ampere", "18 Ampere", "0.25 Ampere"], ans: 0, exp: "Arus (I) = V / R = 24V / 6 Ohm = 4 Ampere." },
+        { id: 24, bab: "BAB 2.3 REKA BENTUK ELEKTRIK", q: "Sebuah perkakasan elektrik beroperasi pada 240V dan menarik arus 4.2A. Apakah nilai kadaran fius yang paling sesuai dipasang pada palam 3 pin?", options: ["Fius 3A", "Fius 5A (atau 13A)", "Fius 30A", "Fius 1A"], ans: 1, exp: "Kadaran fius dipilih sedikit lebih tinggi daripada arus operasi perkakasan (4.2A memerlukan fius 5A atau 13A)." },
+        { id: 25, bab: "BAB 2.3 REKA BENTUK ELEKTRIK", q: "Lampu laluan kecemasan bangunan disambung secara litar selari. Apakah kelebihan utama sambungan litar selari?", options: ["Jika satu lampu terbakar, lampu lain tetap menyala", "Arus elektrik menjadi sifar", "Hanya memerlukan satu wayar tunggal", "Voltan setiap lampu berkurangan"], ans: 0, exp: "Dalam litar selari, kerosakan pada satu cabang beban tidak menjejaskan cabang beban lain." },
+        { id: 26, bab: "BAB 2.3 REKA BENTUK ELEKTRIK", q: "Kabel pendawaian kuprum menyalurkan arus elektrik dari punca bekalan ke peralatan beban. Dalam sistem elektrik, kabel bertindak sebagai?", options: ["Medium", "Sumber", "Beban", "Kawalan"], ans: 0, exp: "Medium bertindak sebagai pengalir yang menyalurkan arus elektrik antara sumber dan beban." },
+        { id: 27, bab: "BAB 2.3 REKA BENTUK ELEKTRIK", q: "Dalam litar penggera kebakaran, siren elektrik yang menukarkan tenaga elektrik kepada tenaga bunyi dikategorikan sebagai?", options: ["Beban", "Sumber", "Medium", "Kawalan"], ans: 0, exp: "Beban bertindak menukarkan tenaga elektrik kepada tenaga bunyi, kinetik atau cahaya." },
+        { id: 28, bab: "BAB 2.3 REKA BENTUK ELEKTRIK", q: "Suis keselamatan pemutus litar mestilah sentiasa dipasang pada laluan wayar jenis apakah untuk keselamatan pengguna?", options: ["Wayar Hidup (Live wire)", "Wayar Bumi (Earth wire)", "Penebat Plastik", "Wayar Neutral"], ans: 0, exp: "Suis mesti sentiasa memutuskan wayar hidup untuk mengelakkan voltan tinggi kekal pada beban semasa dimatikan." },
+        { id: 29, bab: "BAB 2.3 REKA BENTUK ELEKTRIK", q: "Sebuah litar pemanas beroperasi pada voltan 12V dan menarik arus 2A. Berapakah nilai rintangan litar tersebut?", options: ["6 Ohm", "24 Ohm", "10 Ohm", "0.16 Ohm"], ans: 0, exp: "Rintangan (R) = V / I = 12V / 2A = 6 Ohm." },
+        { id: 30, bab: "BAB 2.3 REKA BENTUK ELEKTRIK", q: "Mengapakah sambungan beban lampau pada satu soket penyesuai boleh mencetuskan bahaya kebakaran?", options: ["Arus elektrik berlebihan menghasilkan haba lampau yang mencairkan penebat wayar", "Voltan bekalan terus bertukar sifar", "Rintangan wayar menjadi terlalu tinggi", "Semua peralatan menjadi beku"], ans: 0, exp: "Beban lampau menarik arus tinggi yang melepasi keupayaan kabel lalu menghasilkan haba berbahaya." },
 
-        // --- BAB 2.4 REKA BENTUK ELEKTRONIK (PENGESAN & PENCEGAH API) ---
-        { id: 31, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Sistem pengesan kebakaran pintar menggunakan penderia yang peka terhadap pancaran gelombang cahaya inframerah dari lidah api. Apakah peranti penderia ini?", options: ["Penderia Nyalaan (Flame Sensor)", "Penderia Ultrasonik", "Penderia Hujan", "Penderia Sentuh"], ans: 0, exp: "Flame sensor mengesan pancaran spektrum cahaya inframerah daripada nyalaan api." },
-        { id: 32, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Penderia asap menghantar isyarat elektrik ke mikropengawal apabila mengesan zarah asap kebakaran bengkel. Penderia asap berfungsi sebagai?", options: ["Peranti Input", "Peranti Output", "Peranti Kawalan", "Paparan"], ans: 0, exp: "Penderia asap bertindak sebagai peranti input yang mengesan parameter fizikal persekitaran." },
-        { id: 33, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Mikropengawal sistem pencegah kebakaran 5V mengaktifkan pam penyembur air 240V AC. Apakah suis pengasing elektronik yang digunakan?", options: ["Geganti (Relay)", "Kapasitor", "Perintang", "LED"], ans: 0, exp: "Geganti (relay) membolehkan litar voltan rendah mikropengawal mengawal litar voltan tinggi pam air." },
-        { id: 34, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Papan litar kawalan robot bomba yang mengandungi CPU terbenam, RAM, ROM dan port I/O untuk mengawal pemadaman api ialah?", options: ["Mikropengawal (Microcontroller)", "Mikropemproses", "Transistor", "Bateri"], ans: 0, exp: "Mikropengawal mengandungi keseluruhan sistem komputer asas pada satu cip tunggal." },
-        { id: 35, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Dalam atur cara robot bomba: 'JIKA Sensor_Api == 1, MAKA Sembur_Air'. Apakah struktur kawalan pengaturcaraan ini?", options: ["Struktur kawalan pilihan (IF-THEN)", "Struktur jujukan", "Struktur henti", "Pemalar"], ans: 0, exp: "Struktur pilihan membuat keputusan tindakan berasaskan syarat yang dipenuhi." },
-        { id: 36, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Penderia manakah yang dipasang untuk mengesan kenaikan suhu haba mendadak di bilik suis elektrik bengkel sebelum api tercetus?", options: ["Penderia Suhu (Thermistor / LM35)", "LDR", "Penderia Sentuh", "Buzzer"], ans: 0, exp: "Penderia suhu mengukur perubahan haba dan darjah kepanasan bilik." },
-        { id: 37, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Komponen output elektronik yang menghasilkan bunyi amaran kecemasan nyaring untuk evakuasi mangsa kebakaran ialah?", options: ["Buzzer Piezoelektrik", "LDR", "Motor Servo", "Diod"], ans: 0, exp: "Buzzer menukar denyutan elektrik kepada gelombang bunyi penggera kecemasan." },
-        { id: 38, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Lampu penunjuk zon kebakaran pada panel kawalan bomba menggunakan LED. Apakah kelebihan utama lampu LED?", options: ["Jimat tenaga, tahan lama, dan tahan gegaran", "Menghasilkan haba tinggi", "Perlu voltan 1000V", "Mudah terbakar"], ans: 0, exp: "LED tahan gegaran, cekap tenaga, dan mempunyai jangka hayat yang lama." },
-        { id: 39, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Penderia inframerah pasif (PIR) digunakan oleh pasukan penyelamat untuk mengesan keberadaan mangsa kebakaran di dalam bilik berasap. PIR mengesan perubahan apa?", options: ["Pancaran haba inframerah tubuh manusia", "Gelombang radio", "Kandungan oksigen", "Tahap kelembapan"], ans: 0, exp: "PIR bertindak balas terhadap perubahan radiasi haba inframerah badan manusia." },
-        { id: 40, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Lampu laluan kecemasan kebakaran menyala secara automatik apabila bekalan terputus dan keadaan gelap. Komponen pengesan kegelapan ialah?", options: ["Perintang Peka Cahaya (LDR)", "Geganti", "Penderia Hujan", "Transistor"], ans: 0, exp: "LDR mengubah nilai rintangannya berdasarkan keamatan cahaya di persekitaran." },
+        // --- BAB 2.4 REKA BENTUK ELEKTRONIK ---
+        { id: 31, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Penderia yang peka terhadap gelombang cahaya inframerah yang dipancarkan oleh lidah api ialah?", options: ["Penderia Nyalaan (Flame Sensor)", "Penderia Ultrasonik", "Penderia Hujan", "Penderia Sentuh"], ans: 0, exp: "Flame sensor direka khas untuk mengesan spektrum gelombang inframerah api." },
+        { id: 32, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Penderia asap mengesan zarah asap dan menghantar isyarat elektrik ke mikropengawal. Sensor asap bertindak sebagai?", options: ["Peranti Input", "Peranti Output", "Peranti Kawalan", "Paparan"], ans: 0, exp: "Penderia menukar perubahan fizikal persekitaran kepada isyarat input untuk mikropengawal." },
+        { id: 33, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Mikropengawal 5V mengaktifkan suis elektronik untuk menghidupkan pam 240V AC. Apakah komponen suis pengasing ini?", options: ["Geganti (Relay)", "Kapasitor", "Perintang", "LED"], ans: 0, exp: "Geganti membolehkan litar voltan rendah mikropengawal mengawal beban voltan tinggi secara selamat." },
+        { id: 34, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Papan litar bersepadu yang mengandungi CPU, RAM, ROM dan port I/O pada cip tunggal dikenali sebagai?", options: ["Mikropengawal (Microcontroller)", "Mikropemproses", "Transistor", "Bateri"], ans: 0, exp: "Mikropengawal mengandungi keseluruhan sistem komputer asas pada satu cip tunggal." },
+        { id: 35, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Dalam carta alir: 'JIKA Sensor_Api == 1, MAKA Bunyikan_Siren'. Struktur kawalan pengaturcaraan ini dinamakan?", options: ["Struktur kawalan pilihan (IF-THEN)", "Struktur jujukan", "Struktur henti", "Struktur berulang tanpa henti"], ans: 0, exp: "Struktur pilihan membuat keputusan berdasarkan syarat yang dipenuhi." },
+        { id: 36, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Penderia elektronik yang digunakan untuk mengesan kenaikan suhu bilik atau peralatan ialah?", options: ["Penderia Suhu (Thermistor / LM35)", "LDR", "Penderia Sentuh", "Buzzer"], ans: 0, exp: "Penderia suhu mengukur perubahan haba dan darjah kepanasan." },
+        { id: 37, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Komponen output elektronik yang menghasilkan bunyi amaran nyaring menggunakan getaran piezoelektrik ialah?", options: ["Buzzer", "LDR", "Motor Servo", "Diod"], ans: 0, exp: "Buzzer menukarkan isyarat elektrik kepada getaran gelombang bunyi amaran." },
+        { id: 38, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Lampu penunjuk keselamatan pada panel litar elektronik menggunakan LED. Apakah kelebihan utama LED?", options: ["Jimat tenaga, tahan lama, dan tahan gegaran", "Menghasilkan haba tinggi", "Memerlukan voltan 1000V", "Mudah terbakar"], ans: 0, exp: "LED cekap tenaga, tahan getaran, dan mempunyai jangka hayat yang panjang." },
+        { id: 39, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Penderia inframerah pasif (PIR) digunakan dalam sistem keselamatan untuk mengesan?", options: ["Pancaran inframerah haba pergerakan badan manusia", "Gelombang radio", "Kandungan oksigen", "Aras bunyi"], ans: 0, exp: "PIR bertindak balas terhadap perubahan sinaran inframerah yang dipancarkan oleh tubuh manusia." },
+        { id: 40, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Lampu kecemasan menyala secara automatik apabila persekitaran menjadi gelap. Komponen input pengesan cahaya ini ialah?", options: ["Perintang Peka Cahaya (LDR)", "Geganti", "Penderia Hujan", "Transistor"], ans: 0, exp: "LDR mengubah nilai rintangannya berdasarkan keamatan cahaya di persekitaran." },
 
-        // --- BAB 2.1 TEKNOLOGI PEMBUATAN (PERALATAN KESELAMATAN & FABRIKASI) ---
-        { id: 41, bab: "BAB 2.1 TEKNOLOGI PEMBUATAN", q: "Muncung nozel pemadam api dibuat daripada aloi tembaga melalui menuang logam cecair lebur ke dalam acuan. Kaedah pembuatan ini ialah?", options: ["Kaedah Tuangan (Casting)", "Kaedah Sambungan Gam", "Kaedah Pembungkusan", "Penyaduran"], ans: 0, exp: "Tuangan menghasilkan komponen berongga kukuh daripada cecair logam di dalam acuan." },
-        { id: 42, bab: "BAB 2.1 TEKNOLOGI PEMBUATAN", q: "Topi keledar anggota bomba dibuat daripada gabungan gentian kaca (fiberglass) dan resin epoksi. Apakah sifat istimewa bahan komposit ini?", options: ["Kukuh, ringan dan mempunyai ketahanan haba tinggi", "Lembut dan mudah cair", "Mudah hancur", "Menyerap air"], ans: 0, exp: "Gentian kaca bersama resin membentuk bahan komposit yang kuat, kalis haba, dan ringan." },
-        { id: 43, bab: "BAB 2.1 TEKNOLOGI PEMBUATAN", q: "Prototaip perumah alat pengesan asap kebakaran dicetak lapis demi lapis menggunakan pencetak 3D. Kaedah moden ini tergolong sebagai?", options: ["Pembuatan aditif (Additive manufacturing)", "Pembuatan tolakkan", "Penyepuhlindapan", "Tuangan pasir"], ans: 0, exp: "Pencetak 3D membina objek secara penambahan bahan lapis demi lapis (aditif)." },
-        { id: 44, bab: "BAB 2.1 TEKNOLOGI PEMBUATAN", q: "Bahan acuan yang elastik, mudah dilentur dan memudahkan proses mengeluarkan replika tuangan resin alat keselamatan tanpa pecah ialah?", options: ["Acuan getah silikon", "Acuan bata", "Acuan kaca", "Acuan kertas"], ans: 0, exp: "Getah silikon anjal dan sangat sesuai untuk menghasilkan acuan tuangan resin." },
-        { id: 45, bab: "BAB 2.1 TEKNOLOGI PEMBUATAN", q: "Kemasan salutan serbuk (powder coating) pada pintu rintangan api keluli dan badan jentera bomba berfungsi untuk?", options: ["Mencegah pengaratan dan kakisan akibat air pemadam api", "Menambah berat kenderaan", "Menjadikan besi lut sinar", "Menghasilkan siren"], ans: 0, exp: "Kemasan serbuk melindungi permukaan logam daripada terhakis dan berkarat." },
-        { id: 46, bab: "BAB 2.1 TEKNOLOGI PEMBUATAN", q: "Dalam pembuatan industri jentera bomba, pemotongan plat keluli struktur menggunakan mesin laser CNC dipilih kerana?", options: ["Hasil potongan sangat jitu, pantas dan kemas", "Mesin manual tidak guna elektrik", "Besi bertukar menjadi cecair kekal", "Tidak memerlukan lukisan teknikal"], ans: 0, exp: "Mesin CNC laser memberikan kejituan tinggi, kemas, dan memotong plat logam dengan pantas." },
-        { id: 47, bab: "BAB 2.1 TEKNOLOGI PEMBUATAN", q: "Perekat dua komponen (resin + pengeras/hardener) yang digunakan untuk menampal tangki air jentera bomba yang bocor secara kedap air ialah?", options: ["Gam Epoksi", "Pita pelekat kertas", "Kanji", "Dawai kokot"], ans: 0, exp: "Gam epoksi mengeras secara tindak balas kimia dan menghasilkan cantuman kalis air yang kuat." },
-        { id: 48, bab: "BAB 2.1 TEKNOLOGI PEMBUATAN", q: "Menebuk dan memotong keluar bahagian tidak diperlukan daripada seketul blok aluminium untuk membentuk injap pam bomba ialah kaedah?", options: ["Pembuatan tolakkan (Subtractive)", "Pembuatan aditif", "Tuangan tuang", "Penyemburan"], ans: 0, exp: "Pembuatan tolakkan membuang lebihan bahan daripada blok asal untuk menghasilkan bentuk." },
+        // --- BAB 2.1 TEKNOLOGI PEMBUATAN ---
+        { id: 41, bab: "BAB 2.1 TEKNOLOGI PEMBUATAN", q: "Muncung nozel logam tembaga dihasilkan dengan menuang logam cecair lebur ke dalam rongga acuan. Kaedah ini dinamakan?", options: ["Kaedah Tuangan (Casting)", "Kaedah Sambungan Gam", "Kaedah Pembungkusan", "Penyaduran"], ans: 0, exp: "Kaedah tuangan membentuk produk daripada leburan bahan cecair di dalam acuan." },
+        { id: 42, bab: "BAB 2.1 TEKNOLOGI PEMBUATAN", q: "Topi keledar keselamatan dihasilkan menggunakan bahan komposit resin epoksi dan gentian kaca kerana?", options: ["Kukuh, ringan dan mempunyai ketahanan haba tinggi", "Lembut dan mudah cair", "Murah dan menyerap air", "Boleh larut dalam minyak"], ans: 0, exp: "Gentian kaca dan resin menghasilkan bahan komposit yang kuat, kalis haba, dan ringan." },
+        { id: 43, bab: "BAB 2.1 TEKNOLOGI PEMBUATAN", q: "Prototaip perumah alat keselamatan dibina secara lapis demi lapis menggunakan pencetak 3D. Proses ini tergolong dalam kaedah pembuatan?", options: ["Pembuatan aditif (Additive)", "Pembuatan tolakkan", "Penyepuhlindapan", "Tuangan pasir"], ans: 0, exp: "Pencetak 3D membina objek lapis demi lapis secara aditif (penambahan bahan)." },
+        { id: 44, bab: "BAB 2.1 TEKNOLOGI PEMBUATAN", q: "Bahan acuan yang elastik, mudah dilentur, dan memudahkan penanggalan replika resin tanpa merosakkannya ialah?", options: ["Acuan getah silikon", "Acuan batu bata", "Acuan kaca", "Acuan kertas"], ans: 0, exp: "Getah silikon anjal dan sangat sesuai untuk membuat acuan tuangan resin." },
+        { id: 45, bab: "BAB 2.1 TEKNOLOGI PEMBUATAN", q: "Kemasan salutan serbuk (powder coating) atau cat sembur pada kepingan keluli bertujuan untuk?", options: ["Mencegah pengaratan dan melindungi permukaan logam", "Menjadikan logam lebih berat", "Menjadikan keluli mudah terbakar", "Menghasilkan medan magnet"], ans: 0, exp: "Kemasan cat dan salutan menghalang logam daripada berkarat akibat kelembapan dan oksigen." },
+        { id: 46, bab: "BAB 2.1 TEKNOLOGI PEMBUATAN", q: "Dalam pembuatan moden, mengapakah mesin pemotong laser CNC lebih dipilih berbanding pemotongan manual semasa memotong kepingan bahan projek?", options: ["Hasil potongan sangat jitu, pantas dan kemas", "Mesin manual tidak memerlukan kemahiran", "Laser CNC tidak menggunakan tenaga elektrik", "Bahan kerja menjadi lembut kekal"], ans: 0, exp: "Mesin kawalan komputer (CNC) laser memberikan kejituan tinggi, kemas, dan pantas." },
+        { id: 47, bab: "BAB 2.1 TEKNOLOGI PEMBUATAN", q: "Perekat dua komponen yang mengandungi resin dan pengeras (hardener) untuk mencantumkan bahan keras dan kedap air ialah?", options: ["Gam Epoksi", "Pita selofan", "Gam kanji", "Dawai kokot"], ans: 0, exp: "Epoksi mengeras melalui tindak balas kimia antara resin dan pengeras." },
+        { id: 48, bab: "BAB 2.1 TEKNOLOGI PEMBUATAN", q: "Menebuk, mengikir, dan memotong keluar bahagian yang tidak diperlukan daripada seketul blok logam tergolong dalam kaedah?", options: ["Pembuatan tolakkan (Subtractive)", "Pembuatan aditif", "Tuangan panas", "Penyaduran"], ans: 0, exp: "Pembuatan tolakkan membuang bahan yang berlebihan untuk membentuk objek." },
 
-        // --- BAB 2.5 REKA BENTUK AKUAPONIK (SISTEM PERPAIPAN & HIDRAULIK AIR) ---
-        { id: 49, bab: "BAB 2.5 REKA BENTUK AKUAPONIK", q: "Pam air tenggelam (submersible pump) dalam takungan air bantuan kecemasan kebakaran berfungsi untuk?", options: ["Menyalurkan dan memindahkan air bertekanan", "Menyejukkan udara", "Menapis udara", "Menghasilkan baja"], ans: 0, exp: "Pam air membekalkan daya hidraulik untuk memindahkan cecair bertekanan." },
-        { id: 50, bab: "BAB 2.5 REKA BENTUK AKUAPONIK", q: "Penyambungan paip PVC pada sistem pemercik air bomba menggunakan glu pelarut PVC pada setiap penyambung siku untuk tujuan?", options: ["Mengelakkan kebocoran pada sambungan paip bertekanan", "Supaya paip mudah tercabut", "Menambah berat bangunan", "Membekukan cecair"], ans: 0, exp: "Pelekat pelarut PVC memastikan sambungan kedap daripada kebocoran tekanan air." },
-        { id: 51, bab: "BAB 2.5 REKA BENTUK AKUAPONIK", q: "Paip limpahan yang dipasang pada tangki simpanan air bantuan bomba berfungsi untuk?", options: ["Menyalurkan lebihan air keluar bagi mencegah tangki pecah", "Menyerap udara luar", "Menyimpan serbuk pemadam", "Memanaskan cecair"], ans: 0, exp: "Paip limpahan mengawal paras ketinggian maksimum dan melepaskan lebihan air." },
+        // --- BAB 2.5 REKA BENTUK AKUAPONIK ---
+        { id: 49, bab: "BAB 2.5 REKA BENTUK AKUAPONIK", q: "Komponen mekanikal dalam sistem akuaponik yang berfungsi memindahkan dan menaikkan air dari tangki ikan ke palung tanaman ialah?", options: ["Pam air (Water pump)", "Penapis udara", "Termostat", "Injap solenoid"], ans: 0, exp: "Pam air membekalkan daya hidraulik untuk memindahkan cecair dalam kitaran akuaponik." },
+        { id: 50, bab: "BAB 2.5 REKA BENTUK AKUAPONIK", q: "Penyambungan paip PVC sistem akuaponik menggunakan glu pelarut PVC pada setiap penyambung siku untuk tujuan?", options: ["Mengelakkan kebocoran pada sambungan paip bertekanan", "Memudahkan paip tercabut", "Mengubah warna paip", "Menjadikan paip lebih lembut"], ans: 0, exp: "Glu pelarut PVC mencairkan sedikit permukaan plastik untuk membentuk sambungan kedap air." },
+        { id: 51, bab: "BAB 2.5 REKA BENTUK AKUAPONIK", q: "Paip limpahan yang dipasang pada palung tanaman sistem akuaponik berfungsi untuk?", options: ["Mengawal aras ketinggian air maksimum dan mengalirkan lebihan air", "Menyerap sisa buangan pepejal", "Memanaskan air tangki", "Mengepam udara ke akar"], ans: 0, exp: "Paip limpahan memastikan air tidak melimpah keluar dari palung tanaman." },
 
-        // --- BAB 2.6 REKA BENTUK MAKANAN (RANSUM OPERASI KECEMASAN BOMBA) ---
-        { id: 52, bab: "BAB 2.6 REKA BENTUK MAKANAN", q: "Pek makanan kecemasan untuk anggota operasi kebakaran hutan dimasak dan disterilkan dalam bungkusan tahan haba kalis udara iaitu?", options: ["Kantung Retort (Retort pouch)", "Mangkuk polistirena", "Daun pisang", "Kotak kertas"], ans: 0, exp: "Kantung retort menahan suhu tinggi pensterilan, kedap udara, dan tahan lasak dalam zon bencana." },
-        { id: 53, bab: "BAB 2.6 REKA BENTUK MAKANAN", q: "Lapisan kerajang aluminium (foil) pada pek ransum kecemasan bomba berfungsi sebagai?", options: ["Penghalang cahaya, kelembapan, udara dan bakteria", "Penghasil cahaya gelap", "Perisa tambahan makanan", "Pemanas segera"], ans: 0, exp: "Kerajang aluminium menghalang pendedahan oksigen, cahaya, dan kelembapan luaran." },
+        // --- BAB 2.6 REKA BENTUK MAKANAN ---
+        { id: 52, bab: "BAB 2.6 REKA BENTUK MAKANAN", q: "Pek makanan kecemasan dimasak dan disterilkan pada suhu tinggi di dalam bungkusan fleksibel tahan haba yang dikenali sebagai?", options: ["Kantung Retort (Retort pouch)", "Mangkuk polistirena", "Daun pisang", "Kotak kadbod"], ans: 0, exp: "Kantung retort kedap udara, tahan haba pensterilan, dan memastikan makanan tahan lama." },
+        { id: 53, bab: "BAB 2.6 REKA BENTUK MAKANAN", q: "Lapisan kerajang aluminium (foil) pada pembungkusan makanan berfungsi utama sebagai?", options: ["Penghalang cahaya, oksigen, dan kelembapan", "Bahan perisa makanan", "Pemanas kendiri", "Pewarna bungkusan"], ans: 0, exp: "Kerajang aluminium menghalang pendedahan terhadap cahaya, udara, dan kelembapan luaran." },
 
-        // --- APLIKASI MEKANIKAL & ELEKTRONIK PENCEGAHAN KEBAKARAN ---
-        { id: 54, bab: "BAB 2.2 REKA BENTUK MEKANIKAL", q: "Sistem brek cakera hidraulik jentera bomba berfungsi memperlahankan kenderaan berat berasaskan prinsip?", options: ["Daya geseran menukar tenaga gerakan kepada haba", "Tali sawat getah", "Takal tunggal", "Tuas kelas tiga"], ans: 0, exp: "Geseran antara pad brek dan cakera menukarkan tenaga gerakan roda kepada tenaga haba." },
-        { id: 55, bab: "BAB 2.2 REKA BENTUK MEKANIKAL", q: "Penggulung gelung hos air bomba memanfaatkan sistem mekanikal asas apakah untuk memudahkan putaran gulungan hos?", options: ["Roda dan gandar", "Tuas kelas 3", "Baji", "Pancang"], ans: 0, exp: "Roda dan gandar menggandakan daya kilas untuk memudahkan anggota menggulung hos berat." },
-        { id: 56, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Lukisan litar yang menggunakan simbol piawai komponen untuk mendiagnosis sambungan pendawaian siren bomba ialah?", options: ["Lukisan skematik", "Lukisan piktorial", "Lukisan perspektif", "Lukisan isometrik"], ans: 0, exp: "Lukisan skematik memaparkan susunan litar elektronik menggunakan simbol komponen piawai." },
-        { id: 57, bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF", q: "Rantai anti-gelincir pada tayar jentera bomba hanya dipasang semasa melalui laluan becak kebakaran hutan. Ini menggunakan prinsip?", options: ["Pemisahan ruang dan keadaan", "Pemisahan graviti", "Pemisahan halaju", "Pemisahan daya"], ans: 0, exp: "Pemisahan mengikut keadaan zon operasi memudahkan adaptasi fungsi kenderaan." },
-        { id: 58, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Komponen elektronik yang menyimpan cas elektrik dan menstabilkan lonjakan voltan dalam litar siren kecemasan bomba ialah?", options: ["Kapasitor", "Perintang", "Suis togel", "Fius"], ans: 0, exp: "Kapasitor menyimpan dan meratakan turun-naik voltan litar elektronik." },
-        { id: 59, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Suis mikro dipasang pada pintu petak peralatan jentera bomba untuk menghidupkan lampu apabila pintu dibuka. Suis ini digerakkan oleh?", options: ["Sentuhan mekanikal fizikal", "Penderia suhu", "Penderia cahaya", "Magnet jauh"], ans: 0, exp: "Suis mikro beroperasi secara sentuhan mekanikal fizikal pada tuas kecilnya." },
-        { id: 60, bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF", q: "Kaedah berstruktur mencari punca utama litar pintas sehingga mencetuskan kebakaran bengkel dalam teori inventif ialah?", options: ["Analisis berantai punca dan kesan (CECA)", "Percambahan fikiran", "Analisis warna", "Ujian berat"], ans: 0, exp: "CECA menjejak punca masalah secara rantaian logik sehingga punca akar kebakaran ditemui." },
+        // --- SAMBUNGAN ULANG KAJI DSKP RBT TINGKATAN 2 ---
+        { id: 54, bab: "BAB 2.2 REKA BENTUK MEKANIKAL", q: "Sistem brek cakera berfungsi memperlahankan putaran roda berasaskan prinsip?", options: ["Daya geseran menukar tenaga kinetik kepada haba", "Pemindahan cecair tali sawat", "Takal berganda", "Pautan gear serong"], ans: 0, exp: "Geseran antara pad brek dan cakera menukarkan tenaga gerakan kepada tenaga haba." },
+        { id: 55, bab: "BAB 2.2 REKA BENTUK MEKANIKAL", q: "Pemegang engkol pada penggulung hos memanfaatkan sistem mekanikal asas apakah untuk memudahkan putaran?", options: ["Roda dan gandar", "Tuas kelas ketiga", "Baji", "Penyambung T"], ans: 0, exp: "Roda dan gandar menggandakan daya kilas untuk memudahkan putaran gelung." },
+        { id: 56, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Lukisan yang menggunakan simbol piawai komponen elektronik untuk menggambarkan sambungan litar dinamakan?", options: ["Lukisan skematik", "Lukisan piktorial", "Lukisan perspektif", "Lukisan isometrik"], ans: 0, exp: "Lukisan skematik menunjukkan susunan sambungan litar menggunakan simbol piawai." },
+        { id: 57, bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF", q: "Rantai anti-gelincir pada tayar hanya dipasang semasa kenderaan melalui laluan berselut tebal. Ini menepati konsep?", options: ["Pemisahan keadaan / masa", "Pemisahan graviti", "Pemisahan halaju", "Pemisahan daya"], ans: 0, exp: "Peralatan digunakan hanya apabila keadaan tertentu memerlukan fungsinya." },
+        { id: 58, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Komponen elektronik yang berfungsi menyimpan cas elektrik dan meratakan voltan dalam litar ialah?", options: ["Kapasitor", "Perintang", "Suis togel", "Fius"], ans: 0, exp: "Kapasitor menyimpan dan melepaskan cas elektrik untuk menstabilkan voltan." },
+        { id: 59, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Suis mikro yang dipasang pada pintu panel bertindak balas secara?", options: ["Sentuhan mekanikal fizikal", "Penderiaan suhu", "Keamatan cahaya", "Gelombang radio"], ans: 0, exp: "Suis mikro diaktifkan melalui sentuhan mekanikal pada tuas kecilnya." },
+        { id: 60, bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF", q: "Kaedah berstruktur mencari punca akar kepada masalah kegagalan produk dalam teori inventif dikenali sebagai?", options: ["Analisis berantai punca dan kesan (CECA)", "Percambahan fikiran", "Analisis warna produk", "Ujian makmal"], ans: 0, exp: "CECA menjejak rantaian hubungan punca dan kesan sehingga punca akar ditemui." },
 
-        { id: 61, bab: "BAB 2.2 REKA BENTUK MEKANIKAL", q: "Apakah jenis minyak pelincir yang digunakan pada engsel mekanikal jentera bomba untuk mengurangkan geseran dan kehausan bahan?", options: ["Gris pelincir tahan haba", "Air garam", "Minyak masak", "Asid bateri"], ans: 0, exp: "Gris pelincir tahan haba mengurangkan geseran pada komponen logam mekanikal jentera." },
-        { id: 62, bab: "BAB 2.3 REKA BENTUK ELEKTRIK", q: "Apakah kod warna piawai bagi penebat Wayar Hidup (Live wire) mengikut piawaian elektrik Malaysia untuk mengelakkan salah pasang punca kebakaran?", options: ["Perang (Brown)", "Biru (Blue)", "Hijau-Kuning", "Hitam"], ans: 0, exp: "Wayar hidup berkod warna perang mengikut piawaian antarabangsa IEC." },
-        { id: 63, bab: "BAB 2.3 REKA BENTUK ELEKTRIK", q: "Wayar Bumi (Earth wire) berkod warna hijau berbelang kuning pada perkakasan elektrik bengkel berfungsi untuk?", options: ["Mengalirkan arus bocor terus ke bumi bagi mencegah kejutan dan kebakaran", "Membekalkan voltan 240V", "Memanaskan litar", "Menyambung siren"], ans: 0, exp: "Wayar bumi menyalurkan arus bocor ke bumi demi keselamatan pengguna." },
-        { id: 64, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Perintang tetap dipasang secara bersiri dengan lampu LED panel bomba untuk?", options: ["Mengehadkan pengaliran arus agar LED tidak rosak terbakar", "Meningkatkan voltan bateri", "Menghasilkan bunyi amaran", "Menyejukkan litar"], ans: 0, exp: "Perintang menghadkan arus mengalir ke LED bagi mencegah kepanasan lampau." },
-        { id: 65, bab: "BAB 2.1 TEKNOLOGI PEMBUATAN", q: "Bahan logam tuangan panas manakah yang paling kerap digunakan untuk membuat badan pili bomba jalanan kerana tahan tekanan dan lasak?", options: ["Besi tuang (Cast iron)", "Kayu lembut", "Plastik getah", "Kaca nipis"], ans: 0, exp: "Besi tuang kuat, tahan tekanan air tinggi, dan tahan cuaca ekstrem." },
-        { id: 66, bab: "BAB 2.2 REKA BENTUK MEKANIKAL", q: "Sistem hidraulik tangga penyelamat bomba beroperasi dengan memanfaatkan cecair minyak tak boleh mampat berdasarkan prinsip?", options: ["Prinsip Pascal", "Prinsip Archimedes", "Hukum Ohm", "Hukum Pantulan"], ans: 0, exp: "Prinsip Pascal membolehkan pemindahan tekanan cecair seragam dalam sistem tertutup." },
-        { id: 67, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Transistor dalam litar pengesan kebakaran automatik bengkel bertindak sebagai?", options: ["Suis elektronik atau penguat isyarat arus", "Penebat haba", "Beban bunyi", "Penyimpan cas magnet"], ans: 0, exp: "Transistor berfungsi sebagai suis kawalan tanpa sentuhan mekanikal." },
-        { id: 68, bab: "BAB 2.5 REKA BENTUK AKUAPONIK", q: "Injap sehala (non-return valve) pada sistem hos pam air bomba berfungsi untuk?", options: ["Memastikan aliran air hanya bergerak satu hala dan tidak berundur balik", "Memusingkan arah pusaran air", "Menutup air secara kekal", "Menapis kelodak pasir"], ans: 0, exp: "Injap sehala menghalang aliran songsang kembali ke dalam pam." },
-        { id: 69, bab: "BAB 2.6 REKA BENTUK MAKANAN", q: "Mengapakah air minuman kecemasan anggota bomba dibungkus dalam tin aluminium atau pek kerajang kedap?", options: ["Mengelakkan pencemaran daripada zarah asap bertoksik dan abu panas", "Supaya air menjadi manis", "Menambah warna air", "Supaya botol tidak pecah"], ans: 0, exp: "Pembungkusan kedap melindungi minuman daripada tercemar oleh zarah asap beracun." },
-        { id: 70, bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF", q: "Nozel bomba yang menipiskan aliran air menjadi titisan kabus halus (water mist) untuk menyerap haba dengan lebih pantas menggunakan prinsip?", options: ["Pemisahan bahan / Peralihan dimensi", "Pembuangan sisa", "Pemanasan", "Penolakan"], ans: 0, exp: "Penukaran pancutan kepada semburan kabus memperluaskan luas permukaan serapan haba." },
-        { id: 71, bab: "BAB 2.3 REKA BENTUK ELEKTRIK", q: "Alat pengukur yang digunakan oleh juruteknik untuk menguji kesinambungan litar pendawaian siren penggera kebakaran bengkel ialah?", options: ["Multimeter digital", "Termometer", "Tolok pita", "Jarum pembaris"], ans: 0, exp: "Multimeter menguji rintangan, voltan, arus, dan kesinambungan wayar." },
-        { id: 72, bab: "BAB 2.2 REKA BENTUK MEKANIKAL", q: "Galas bebola (ball bearing) pada roda jentera bomba berfungsi untuk?", options: ["Mengurangkan geseran dan melancarkan putaran roda jentera", "Menambah rintangan roda", "Menghentikan jentera serta-merta", "Menyerap haba enjin"], ans: 0, exp: "Galas bebola mengurangkan rintangan geseran pada bahagian roda berputar." },
-        { id: 73, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Peranti output elektronik yang memaparkan bacaan suhu bilik enjin jentera bomba dalam bentuk angka berdigit ialah?", options: ["Paparan LCD / OLED", "Buzzer", "LDR", "Motor servo"], ans: 0, exp: "Skrin LCD/OLED memaparkan data berdigit untuk pemantauan anggota operasi." },
-        { id: 74, bab: "BAB 2.1 TEKNOLOGI PEMBUATAN", q: "Kertas pasir gred halus digunakan dalam proses kemasan kotak suis pemutus litar kecemasan bengkel untuk?", options: ["Melicinkan permukaan bahan kerja sebelum disapu cat", "Menebuk lubang wayar", "Mengikir besi tebal", "Melekat komponen"], ans: 0, exp: "Kertas pasir melicinkan permukaan bagi memastikan cat kemasan melekat sempurna." },
-        { id: 75, bab: "BAB 2.2 REKA BENTUK MEKANIKAL", q: "Spring mampatan pada injap pelepas keselamatan tangki air bomba berfungsi untuk?", options: ["Menolak injap menutup semula secara automatik selepas tekanan turun", "Menghasilkan arus elektrik", "Memanaskan hos", "Menyerap minyak"], ans: 0, exp: "Tenaga keanjalan spring menolak injap kembali ke kedudukan tutup asal." },
-        { id: 76, bab: "BAB 2.3 REKA BENTUK ELEKTRIK", q: "Apakah punca utama wayar penyambung peralatan bengkel menjadi panas dan berisiko terbakar semasa digunakan serentak?", options: ["Arus elektrik mengalir melebihi had kadaran keupayaan wayar", "Voltan bertukar menjadi sifar", "Bateri kehabisan asid", "Suis rosak"], ans: 0, exp: "Beban lebihan menyebabkan arus melampau menghasilkan haba pada konduktor wayar." },
-        { id: 77, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Diod pemancar inframerah dan fotodiod dalam penderia pengesan asap kebakaran optik berfungsi berasaskan prinsip?", options: ["Zarah asap menghalang atau membiaskan pancaran inframerah", "Asap menghasilkan bunyi getaran", "Asap membekalkan cas elektrik", "Asap membakar diod"], ans: 0, exp: "Pengesanan optik mengesan serakan cahaya inframerah oleh kehadiran zarah asap." },
-        { id: 78, bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF", q: "Kusyen udara penyelamat (inflatable air cushion) yang boleh dilipat kecil dan dikembangkan segera menggunakan gas termampat memanfaatkan prinsip?", options: ["Pneumatik dan hidraulik (Pneumatics & hydraulics)", "Pemejalan", "Penyejukan", "Pemisahan graviti"], ans: 0, exp: "Prinsip pneumatik memanfaatkan gas termampat untuk mengembang struktur fleksibel." },
-        { id: 79, bab: "BAB 2.2 REKA BENTUK MEKANIKAL", q: "Rantai dan gegancu (sprocket) lebih sesuai digunakan berbanding tali sawat pada mekanisme penarik tangga berat jentera bomba kerana?", options: ["Tidak mengalami gelinciran dan mampu menahan tork tinggi", "Boleh diregang seperti getah", "Lebih senyap daripada benang", "Tidak perlukan pelincir"], ans: 0, exp: "Gegancu dan rantai memindahkan kuasa tork tinggi secara positif tanpa slip." },
-        { id: 80, bab: "BAB 2.5 REKA BENTUK AKUAPONIK", q: "Peranti mekanikal sifon (seperti Bell Siphon) dalam palung takungan kecemasan beroperasi secara automatik untuk?", options: ["Mengalirkan keluar air secara pasang surut tanpa motor elektrik", "Mengepam air dari dasar kolam", "Menapis najis pepejal", "Menyejukkan air tangki"], ans: 0, exp: "Bell siphon berfungsi mengalirkan air keluar secara automatik berasaskan graviti." },
-        { id: 81, bab: "BAB 2.6 REKA BENTUK MAKANAN", q: "Bahan pembungkus manakah yang paling mesra alam dan selamat digunakan untuk membungkus makanan ransum kecemasan bomba?", options: ["Plastik terbiodegradasi gred makanan", "Polistirena rapuh", "Plastik PVC kitar semula", "Kertas bertoksik"], ans: 0, exp: "Bahan biodegradasi gred makanan selamat untuk kesihatan dan mesra alam sekitar." },
-        { id: 82, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Papan mikropengawal sistem amaran kebakaran diprogramkan menggunakan perisian berasaskan blok atau teks iaitu?", options: ["Arduino IDE / mBlock", "Microsoft Paint", "Adobe Premiere", "VLC Player"], ans: 0, exp: "Arduino IDE dan mBlock digunakan untuk memprogram arahan mikropengawal." },
-        { id: 83, bab: "BAB 2.3 REKA BENTUK ELEKTRIK", q: "Bateri simpanan jentera bomba membekalkan sumber elektrik jenis apakah?", options: ["Arus Terus (DC)", "Arus Ulang-alik (AC)", "Arus Statik", "Gelombang Radio"], ans: 0, exp: "Bateri membekalkan arus terus (DC) dengan kutub positif dan negatif yang tetap." },
-        { id: 84, bab: "BAB 2.1 TEKNOLOGI PEMBUATAN", q: "Bahan pelepas acuan (mold release agent) disapu pada acuan silikon komponen keselamatan bertujuan untuk?", options: ["Memudahkan produk dikeluarkan tanpa melekat pada acuan", "Mencairkan resin", "Mewarnakan produk", "Mempercepatkan pembakaran"], ans: 0, exp: "Pelepas acuan menghalang lekatan bahan tuangan pada permukaan acuan." },
-        { id: 85, bab: "BAB 2.2 REKA BENTUK MEKANIKAL", q: "Injap bebola (ball valve) pada nozel bomba dibuka penuh dengan putaran suku pusingan iaitu bersudut?", options: ["90 darjah", "180 darjah", "360 darjah", "45 darjah"], ans: 0, exp: "Injap suku pusingan (quarter-turn) dibuka atau ditutup pantas pada sudut 90 darjah." },
-        { id: 86, bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF", q: "Perisai rintangan api yang mempunyai lapisan ruang udara berliang di tengahnya untuk menyekat haba menggunakan prinsip?", options: ["Bahan berliang (Porous materials)", "Penyatuan kekal", "Pemotongan", "Pengimbangan"], ans: 0, exp: "Bahan berliang memasukkan ruang udara mikro yang bertindak sebagai penebat haba." },
-        { id: 87, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Kapasitor elektrolit dalam litar siren penggera bomba mempunyai kekutuban. Kaki terminal yang lebih panjang mewakili terminal?", options: ["Positif (+)", "Negatif (-)", "Bumi (Ground)", "Sifar"], ans: 0, exp: "Kaki terminal komponen yang lebih panjang mewakili kutub positif." },
-        { id: 88, bab: "BAB 2.3 REKA BENTUK ELEKTRIK", q: "Litar pintas berlaku apabila wayar hidup bersentuh terus dengan wayar neutral tanpa beban di bengkel. Apakah kesan berbahayanya?", options: ["Rintangan menjadi hampir sifar lalu arus melonjak tinggi dan memicu percikan api", "Voltan meningkat dua kali", "Mentol menyala malap", "Arus terhenti serta-merta"], ans: 0, exp: "Litar pintas menyebabkan lonjakan arus mendadak yang menghasilkan percikan api kebakaran." },
-        { id: 89, bab: "BAB 2.2 REKA BENTUK MEKANIKAL", q: "Aci sesondol (Camshaft) pada sistem enjin pam air bomba menukarkan gerakan putaran kepada gerakan apa?", options: ["Gerakan salingan linear menolak injap", "Gerakan bulatan kekal", "Gerakan pegun", "Gerakan gelombang"], ans: 0, exp: "Aci sesondol menukarkan pergerakan putaran kepada gerakan tolak salingan." },
-        { id: 90, bab: "BAB 2.1 TEKNOLOGI PEMBUATAN", q: "Plastik termoset digunakan untuk perumah suis elektrik bengkel kerana ia tidak cair apabila terkena haba tinggi disebabkan?", options: ["Ikatan rantai polimer berkait silang secara kekal", "Ia mudah larut dalam air", "Ia sangat nipis", "Ia diperbuat daripada kertas"], ans: 0, exp: "Termoset mempunyai ikatan silang polimer kekal yang tahan haba tinggi dan tidak boleh diacu semula." },
-
-        { id: 91, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Penderia gas (seperti MQ-2) boleh mengesan kebocoran gas LPG dan asap tebal kebakaran di bengkel. Penderia ini beroperasi sebagai?", options: ["Peranti input analog atau digital", "Peranti output bunyi", "Peranti pemanas", "Peranti pemutus mekanikal"], ans: 0, exp: "Penderia gas menghantar isyarat kepekatan gas ke pin input mikropengawal." },
-        { id: 92, bab: "BAB 2.5 REKA BENTUK AKUAPONIK", q: "Penapis jejaring (strainer) dipasang di hujung hos sedutan air bomba untuk menghalang?", options: ["Pasir dan kelikir daripada masuk merosakkan pendesak pam air", "Air daripada mengalir keluar", "Udara daripada masuk", "Oksigen"], ans: 0, exp: "Penapis menghalang serpihan pepejal kasar daripada merosakkan bilah pam." },
-        { id: 93, bab: "BAB 2.6 REKA BENTUK MAKANAN", q: "Salah satu faktor reka bentuk bungkusan makanan anggota penyelamat mengikut DSKP RBT ialah?", options: ["Ergonomik, maklumat label jelas, dan perlindungan daripada kerosakan", "Menggunakan bekas paling berat", "Menyembunyikan tarikh luput", "Memilih bahan mudah bocor"], ans: 0, exp: "Reka bentuk pembungkusan makanan perlu melindungi kandungan, ergonomik, dan menyampaikan maklumat jelas." },
-        { id: 94, bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF", q: "Mata kapak pemecah pintu bomba dibuat daripada keluli karbon tinggi manakala pemegangnya daripada gentian kaca penebat elektrik. Ini menggunakan prinsip?", options: ["Kualiti setempat (Local quality)", "Peniruan", "Pengurangan", "Penyebaran"], ans: 0, exp: "Kualiti setempat memberikan ciri bahan berbeza mengikut keperluan fungsi bahagian." },
-        { id: 95, bab: "BAB 2.3 REKA BENTUK ELEKTRIK", q: "Perintang boleh laras (Potentiometer) pada panel kawalan lampu limpah bomba digunakan untuk?", options: ["Melaraskan kecerahan lampu amaran atau kelajuan kipas ekzos", "Mematikan litar serta-merta", "Menghasilkan voltan bateri", "Mengecas bateri"], ans: 0, exp: "Potentiometer membolehkan nilai rintangan dilaras secara manual mengikut keperluan." },
-        { id: 96, bab: "BAB 2.2 REKA BENTUK MEKANIKAL", q: "Gear heliks mempunyai gigi condong berbanding gear taji lurus. Kelebihan gear heliks pada transmisi jentera bomba ialah?", options: ["Operasi pemindahan kuasa lebih senyap dan lancar menahan beban tinggi", "Gigi gear mudah haus", "Lebih murah dan rapuh", "Hanya boleh pusing satu arah"], ans: 0, exp: "Gigi condong gear heliks bercantum secara beransur-ansur menjadikannya senyap dan kuat menanggung beban." },
-        { id: 97, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Dalam litar mikropengawal robot bomba, pin PWM (Pulse Width Modulation) membolehkan kawalan apa?", options: ["Kawalan kelajuan motor pam dan kecerahan lampu penunjuk secara simulasi analog", "Pemutus fius automatik", "Pengesanan bunyi amaran", "Penukaran voltan AC ke DC"], ans: 0, exp: "PWM mengawal voltan purata untuk melaraskan kelajuan motor atau kecerahan lampu." },
-        { id: 98, bab: "BAB 2.1 TEKNOLOGI PEMBUATAN", q: "Proses mengikis bucu tajam pada plat logam pemotong bomba menggunakan kikir rata dinamakan proses?", options: ["Mengikir (Filing)", "Mengecat", "Memateri", "Mencetak 3D"], ans: 0, exp: "Mengikir menanggalkan lebihan gerigis dan melicinkan bucu logam." },
-        { id: 99, bab: "BAB 2.2 REKA BENTUK MEKANIKAL", q: "Klac (clutch) pada jentera bomba berfungsi untuk?", options: ["Menyambung dan memutuskan pemindahan kuasa putaran enjin ke sistem gear transmisi", "Menghentikan roda secara mengejut", "Menyiram air", "Menghidupkan siren"], ans: 0, exp: "Klac mengawal penyambungan dan pemutusan daya enjin ke transmisi gear." },
-        { id: 100, bab: "BAB 2.3 REKA BENTUK ELEKTRIK", q: "Apakah fungsi dawai fius di dalam palam elektrik 3 pin peralatan bengkel?", options: ["Melebur dan memutuskan litar sekiranya arus berlebihan mengalir bagi mencegah kebakaran", "Menyimpan elektrik", "Menghasilkan bunyi amaran", "Mengawal kelajuan"], ans: 0, exp: "Dawai fius melebur secara automatik untuk melindungi litar daripada arus lampau punca kebakaran." },
-        { id: 101, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Diod semikonduktor dalam litar panel amaran kebakaran membenarkan arus elektrik mengalir dalam?", options: ["Satu arah sahaja (dari anod ke katod)", "Dua arah serentak", "Arah songsang sahaja", "Tanpa wayar"], ans: 0, exp: "Diod ialah komponen satu hala yang menghalang aliran arus songsang." },
-        { id: 102, bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF", q: "Selimut pemadam api (fire blanket) daripada gentian kaca direka untuk menyekat bekalan gas apakah daripada sampai ke punca api?", options: ["Oksigen", "Karbon dioksida", "Nitrogen", "Argon"], ans: 0, exp: "Api terpadam apabila bekalan gas oksigen disekat sepenuhnya." },
-        { id: 103, bab: "BAB 2.2 REKA BENTUK MEKANIKAL", q: "Sistem kemudi stereng jentera bomba lazimnya menggunakan kombinasi gear?", options: ["Gear rak dan pinan", "Gear cacing sahaja", "Gear dalaman", "Gear taji sahaja"], ans: 0, exp: "Sistem rak dan pinan menukar putaran stereng kepada gerakan linear untuk membelokkan roda." },
-        { id: 104, bab: "BAB 2.5 REKA BENTUK AKUAPONIK", q: "Tolok paras air (water level gauge) tiub lut sinar pada tangki bomba memanfaatkan prinsip?", options: ["Prinsip tiub berhubungan / cecair mencari aras sama", "Prinsip haba", "Prinsip magnet", "Prinsip geseran"], ans: 0, exp: "Cecair di dalam tiub berhubungan mengekalkan ketinggian aras yang sama dengan tangki." },
-        { id: 105, bab: "BAB 2.6 REKA BENTUK MAKANAN", q: "Mengapakah ransum makanan tin pasukan penyelamat tidak boleh dimakan jika tin didapati kemek teruk atau menggelembung?", options: ["Menandakan kehadiran gas akibat pembiakan bakteria anaerobik berbahaya di dalamnya", "Makanan menjadi terlalu beku", "Berat makanan bertambah", "Tin hilang rasa"], ans: 0, exp: "Tin menggelembung menandakan pembiakan bakteria toksik berbahaya (seperti Clostridium botulinum)." },
-        { id: 106, bab: "BAB 2.3 REKA BENTUK ELEKTRIK", q: "Alat pemutus litar jenis MCB (Miniature Circuit Breaker) di bengkel berfungsi untuk melindungi litar daripada?", options: ["Beban lampau dan litar pintas pencegah kebakaran", "Air hujan", "Karat", "Bunyi bising"], ans: 0, exp: "MCB melantuk memutuskan arus secara automatik jika berlaku beban lampau atau litar pintas." },
-        { id: 107, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Penderia ultrasonik dipasang pada bahagian belakang jentera bomba untuk mengukur?", options: ["Jarak halangan semasa mengundur di zon kebakaran menggunakan pantulan gelombang bunyi", "Suhu api", "Warna asap", "Tekanan air"], ans: 0, exp: "Penderia ultrasonik mengira masa pantulan gelombang bunyi untuk mengukur jarak halangan." },
-        { id: 108, bab: "BAB 2.1 TEKNOLOGI PEMBUATAN", q: "Proses mencantumkan kepingan logam nipis kotak suis elektrik bomba menggunakan haba dan dawai timah dikenali sebagai?", options: ["Memateri (Soldering)", "Mengimpal arka", "Mengepam", "Menggerudi"], ans: 0, exp: "Memateri menggunakan leburan timah pateri untuk menyambung komponen elektrik dan kepingan logam nipis." },
-        { id: 109, bab: "BAB 2.2 REKA BENTUK MEKANIKAL", q: "Tali dawai keluli (steel wire rope) pada takal pengangkat mangsa bomba dipilih berbanding tali gentian kapas kerana?", options: ["Mempunyai kekuatan tegangan yang sangat tinggi dan tahan haba geseran", "Mudah putus", "Boleh terapung", "Sangat lembut"], ans: 0, exp: "Dawai keluli menampung daya tegangan bebanan berat semasa operasi mengangkat." },
-        { id: 110, bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF", q: "Bahan buih pemadam kebakaran (firefighting foam) mengandungi gelembung buih yang ringan dan terapung di atas minyak. Sifat ini mengurangkan parameter apa?", options: ["Ketumpatan bahan pemadam berbanding cecair minyak", "Suhu bilik", "Daya geseran", "Graviti"], ans: 0, exp: "Ketumpatan buih yang lebih rendah membolehkannya terapung dan menutup lapisan minyak daripada oksigen." }
+        // --- SOALAN 61 HINGGA 110 ---
+        { id: 61, bab: "BAB 2.2 REKA BENTUK MEKANIKAL", q: "Bahan pelincir yang disapu pada permukaan gear dan engsel mekanikal bertujuan untuk?", options: ["Mengurangkan geseran dan kehausan bahan", "Menambah berat mesin", "Mengalirkan elektrik", "Mencegah aliran haba"], ans: 0, exp: "Gris atau minyak pelincir mengurangkan geseran pada komponen yang bergerak." },
+        { id: 62, bab: "BAB 2.3 REKA BENTUK ELEKTRIK", q: "Warna piawai bagi penebat Wayar Hidup (Live wire) mengikut standard pendawaian Malaysia (MS IEC) ialah?", options: ["Perang (Brown)", "Biru (Blue)", "Hijau-Kuning", "Hitam"], ans: 0, exp: "Wayar hidup berkod warna perang mengikut piawaian antarabangsa IEC." },
+        { id: 63, bab: "BAB 2.3 REKA BENTUK ELEKTRIK", q: "Wayar Bumi (Earth wire) yang berkod warna hijau berbelang kuning berfungsi untuk?", options: ["Mengalirkan arus bocor terus ke bumi demi keselamatan pengguna", "Membekalkan voltan 240V", "Memanaskan litar", "Menyambung siren"], ans: 0, exp: "Wayar bumi menyalurkan arus bocor ke bumi bagi mengelakkan kejutan elektrik." },
+        { id: 64, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Perintang tetap dipasang secara siri bersama lampu LED dalam litar elektronik bertujuan untuk?", options: ["Mengehadkan arus elektrik agar LED tidak rosak terbakar", "Meningkatkan voltan litar", "Menghasilkan bunyi amaran", "Menyejukkan papan litar"], ans: 0, exp: "Perintang menghadkan arus mengalir ke LED bagi mencegah kepanasan lampau." },
+        { id: 65, bab: "BAB 2.1 TEKNOLOGI PEMBUATAN", q: "Logam yang mempunyai sifat tahan tekanan tinggi dan sesuai dibuat melalui kaedah tuangan ialah?", options: ["Besi tuang (Cast iron)", "Kayu lembut", "Plastik kitar semula", "Kaca nipis"], ans: 0, exp: "Besi tuang kuat, tahan tekanan, dan mudah dibentuk melalui tuangan acuan pasir." },
+        { id: 66, bab: "BAB 2.2 REKA BENTUK MEKANIKAL", q: "Sistem hidraulik beroperasi memanfaatkan cecair yang tidak boleh dimampatkan berdasarkan prinsip?", options: ["Prinsip Pascal", "Prinsip Archimedes", "Hukum Ohm", "Hukum Pantulan"], ans: 0, exp: "Prinsip Pascal menyatakan tekanan cecair dalam sistem tertutup diagihkan sama rata ke semua arah." },
+        { id: 67, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Transistor dalam sesuatu litar elektronik automatik berfungsi utama sebagai?", options: ["Suis elektronik tanpa sentuhan mekanikal", "Penebat haba", "Beban elektrik", "Penyimpan medan magnet"], ans: 0, exp: "Transistor bertindak sebagai suis elektronik kawalan arus." },
+        { id: 68, bab: "BAB 2.5 REKA BENTUK AKUAPONIK", q: "Injap sehala (non-return valve) pada sistem paip air berfungsi untuk?", options: ["Memastikan aliran air bergerak satu arah dan tidak berpatah balik", "Memusingkan aliran air", "Menutup pengaliran air secara kekal", "Menapis kelodak pasir"], ans: 0, exp: "Injap sehala menghalang aliran songsang bendalir kembali ke pam." },
+        { id: 69, bab: "BAB 2.6 REKA BENTUK MAKANAN", q: "Mengapakah botol air minuman kecemasan dibungkus dalam bungkusan yang bertutup rapat dan kedap udara?", options: ["Mengelakkan pencemaran daripada habuk, asap dan bakteria", "Supaya air bertukar manis", "Menambahkan berat bungkusan", "Supaya botol tidak pecah"], ans: 0, exp: "Pembungkusan kedap menghalang makanan dan minuman daripada dicemari unsur luar." },
+        { id: 70, bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF", q: "Nozel yang menukar aliran air padat kepada titisan kabus halus untuk memperluaskan permukaan serapan haba menggunakan prinsip?", options: ["Pemisahan bahan / Peralihan dimensi", "Pembuangan bahan", "Pemanasan", "Penolakan"], ans: 0, exp: "Penukaran bentuk pancutan kepada semburan kabus mengubah dimensi permukaan serapan." },
+        { id: 71, bab: "BAB 2.3 REKA BENTUK ELEKTRIK", q: "Alat pengukur yang digunakan untuk menguji kesinambungan (continuity) wayar litar elektrik ialah?", options: ["Multimeter digital", "Termometer", "Tolok pita", "Jarum pembaris"], ans: 0, exp: "Multimeter digunakan untuk menguji rintangan, voltan, arus, dan kesinambungan litar." },
+        { id: 72, bab: "BAB 2.2 REKA BENTUK MEKANIKAL", q: "Galas bebola (ball bearing) pada roda berfungsi untuk?", options: ["Mengurangkan geseran dan melancarkan putaran roda", "Menambah geseran roda", "Mengunci pergerakan roda", "Menyerap haba litar"], ans: 0, exp: "Galas bebola mengurangkan rintangan geseran pada bahagian berputar." },
+        { id: 73, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Peranti output yang memaparkan teks atau bacaan berdigit daripada mikropengawal ialah?", options: ["Paparan LCD / OLED", "Buzzer", "LDR", "Motor servo"], ans: 0, exp: "Skrin LCD atau OLED memaparkan data visual dalam bentuk teks atau angka." },
+        { id: 74, bab: "BAB 2.1 TEKNOLOGI PEMBUATAN", q: "Kertas pasir gred halus digunakan dalam proses kemasan kayu atau logam sebelum disapu cat untuk?", options: ["Melicinkan permukaan bahan kerja", "Menebuk lubang sambungan", "Mengikir bentuk gerigi", "Melekatkan komponen"], ans: 0, exp: "Kertas pasir melicinkan permukaan agar cat kemasan dapat melekat sempurna." },
+        { id: 75, bab: "BAB 2.2 REKA BENTUK MEKANIKAL", q: "Komponen mekanikal yang menyimpan tenaga keanjalan dan menolak semula injap ke kedudukan asal ialah?", options: ["Spring mampatan", "Tali sawat", "Takal", "Gelongsor"], ans: 0, exp: "Spring mampatan memanfaatkan sifat keanjalan untuk mengembalikan posisi mekanikal asal." },
+        { id: 76, bab: "BAB 2.3 REKA BENTUK ELEKTRIK", q: "Apakah punca utama kabel sambungan elektrik menjadi panas apabila pelbagai peralatan disambung serentak?", options: ["Arus elektrik yang mengalir melepasi kadaran had kabel", "Voltan bertukar menjadi sifar", "Bateri kehabisan cas", "Suis elektrik rosak"], ans: 0, exp: "Aliran arus yang terlalu tinggi menghasilkan haba pada konduktor kuprum." },
+        { id: 77, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Penderia asap jenis optik mengesan kehadiran asap berasaskan prinsip?", options: ["Zarah asap menghalang atau menyerakkan pancaran cahaya optik", "Zarah asap menghasilkan bunyi nyaring", "Zarah asap membekalkan voltan", "Zarah asap menyerap magnet"], ans: 0, exp: "Penderia optik mengesan serakan atau halangan cahaya oleh zarah asap." },
+        { id: 78, bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF", q: "Kusyen penyelamat yang boleh dilipat nipis dan dikembangkan pantas dengan udara termampat menepati prinsip?", options: ["Pneumatik dan hidraulik (Pneumatics & hydraulics)", "Pemejalan", "Penyejukan", "Pemisahan graviti"], ans: 0, exp: "Prinsip pneumatik memanfaatkan gas termampat untuk mengembang struktur fleksibel." },
+        { id: 79, bab: "BAB 2.2 REKA BENTUK MEKANIKAL", q: "Rantai dan gegancu (sprocket) lebih sesuai digunakan berbanding tali sawat pada beban berat kerana?", options: ["Tidak mengalami gelinciran dan mampu menahan tork tinggi", "Boleh diregangkan seperti getah", "Lebih senyap daripada tali", "Tidak memerlukan pelincir"], ans: 0, exp: "Gegancu dan rantai memindahkan kuasa secara positif tanpa gelinciran." },
+        { id: 80, bab: "BAB 2.5 REKA BENTUK AKUAPONIK", q: "Peranti mekanikal sifon (contohnya Bell Siphon) dalam sistem akuaponik berfungsi secara automatik untuk?", options: ["Mengalirkan keluar air palung tanaman secara pasang surut", "Mengepam air dari dasar kolam", "Menapis pepejal najis ikan", "Menyejukkan air tangki"], ans: 0, exp: "Bell siphon berfungsi mengalirkan air keluar secara automatik dalam sistem pasang surut (Ebb & Flow)." },
+        { id: 81, bab: "BAB 2.6 REKA BENTUK MAKANAN", q: "Bahan pembungkus makanan moden yang selamat dan mesra alam sekitar ialah?", options: ["Plastik terbiodegradasi gred makanan", "Polistirena rapuh", "Plastik PVC kitar semula", "Kertas bersalut plumbum"], ans: 0, exp: "Plastik biodegradasi gred makanan selamat untuk kesihatan dan mudah terurai." },
+        { id: 82, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Perisian pengaturcaraan berasaskan blok visual yang kerap digunakan dalam pembelajaran RBT ialah?", options: ["mBlock / Arduino IDE", "Microsoft Paint", "Adobe Photoshop", "VLC Player"], ans: 0, exp: "mBlock membolehkan murid memprogram papan mikropengawal menggunakan blok visual." },
+        { id: 83, bab: "BAB 2.3 REKA BENTUK ELEKTRIK", q: "Bateri sel kering atau bateri kereta membekalkan sumber arus elektrik jenis?", options: ["Arus Terus (DC)", "Arus Ulang-alik (AC)", "Arus Elektromagnet", "Gelombang Radio"], ans: 0, exp: "Bateri membekalkan arus terus (DC) yang mengalir pada satu arah sahaja." },
+        { id: 84, bab: "BAB 2.1 TEKNOLOGI PEMBUATAN", q: "Bahan pelepas acuan (mold release agent) disapu pada permukaan acuan bertujuan untuk?", options: ["Memudahkan hasil tuangan dikeluarkan tanpa melekat", "Mencairkan resin tuangan", "Mewarnakan bahan tuangan", "Mempercepatkan pembakaran"], ans: 0, exp: "Pelepas acuan menghalang bahan tuangan daripada melekat pada dinding acuan." },
+        { id: 85, bab: "BAB 2.2 REKA BENTUK MEKANIKAL", q: "Injap bebola jenis suku pusingan (quarter-turn) dibuka penuh dengan putaran sudut?", options: ["90 darjah", "180 darjah", "360 darjah", "45 darjah"], ans: 0, exp: "Injap suku pusingan bertindak pantas dengan putaran tuas bersudut 90 darjah." },
+        { id: 86, bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF", q: "Dinding penebat yang mempunyai ruang udara atau bahan berliang di dalamnya menepati prinsip inventif?", options: ["Bahan berliang (Porous materials)", "Penyatuan kekal", "Pemotongan", "Pengimbangan"], ans: 0, exp: "Prinsip bahan berliang memasukkan liang udara untuk bertindak sebagai penebat haba." },
+        { id: 87, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Kapasitor elektrolit mempunyai kekutuban. Kaki terminal yang lebih panjang mewakili terminal?", options: ["Positif (+)", "Negatif (-)", "Bumi (Ground)", "Neutral"], ans: 0, exp: "Pada komponen berkutub seperti LED dan kapasitor elektrolit, kaki panjang mewakili terminal positif." },
+        { id: 88, bab: "BAB 2.3 REKA BENTUK ELEKTRIK", q: "Litar pintas berlaku apabila wayar hidup bersentuh terus dengan wayar neutral. Keadaan ini menyebabkan?", options: ["Rintangan menjadi hampir sifar lalu arus melonjak mendadak", "Voltan bekalan bertambah dua kali", "Mentol menyala lebih malap", "Arus elektrik terhenti serta-merta"], ans: 0, exp: "Litar pintas merendahkan rintangan sehingga hampir sifar dan menghasilkan lonjakan arus tinggi." },
+        { id: 89, bab: "BAB 2.2 REKA BENTUK MEKANIKAL", q: "Aci sesondol (Camshaft) menukarkan pergerakan putaran kepada gerakan jenis apakah?", options: ["Gerakan salingan menolak pengikut (follower)", "Gerakan putaran kekal", "Gerakan pegun", "Gerakan gelombang"], ans: 0, exp: "Sesondol menukarkan pergerakan putaran kepada gerakan salingan menolak komponen pengikut." },
+        { id: 90, bab: "BAB 2.1 TEKNOLOGI PEMBUATAN", q: "Plastik termoset tidak boleh diacu semula selepas mengeras kerana?", options: ["Ikatan rantai polimernya berkait silang secara kekal", "Ia mudah larut dalam air", "Ia sangat nipis", "Ia diperbuat daripada serbuk kayu"], ans: 0, exp: "Plastik termoset mempunyai ikatan silang kekal yang tidak cair apabila dipanaskan semula." },
+        { id: 91, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Modul penderia gas (contohnya MQ-2) beroperasi dalam litar mikropengawal sebagai?", options: ["Peranti input analog atau digital", "Peranti output bunyi", "Peranti pemanas", "Peranti pemutus fius"], ans: 0, exp: "Penderia gas menghantar isyarat paras kepekatan gas ke pin input mikropengawal." },
+        { id: 92, bab: "BAB 2.5 REKA BENTUK AKUAPONIK", q: "Penapis mekanikal jejaring (filter sponge/strainer) dalam sistem akuaponik berfungsi untuk?", options: ["Menapis serpihan sisa pepejal daripada masuk ke dalam pam", "Menambah garam dalam air", "Mengurangkan oksigen", "Mematikan bakteria baik"], ans: 0, exp: "Penapis mekanikal mengasingkan sisa kotoran pepejal daripada merosakkan pam." },
+        { id: 93, bab: "BAB 2.6 REKA BENTUK MAKANAN", q: "Salah satu faktor penting dalam mereka bentuk pembungkusan makanan mengikut DSKP RBT ialah?", options: ["Ergonomik, maklumat label jelas, dan perlindungan makanan", "Menggunakan bekas paling berat", "Menyembunyikan tarikh luput", "Memilih bahan mudah bocor"], ans: 0, exp: "Reka bentuk pembungkusan makanan perlu melindungi makanan, ergonomik, dan menyampaikan maklumat jelas." },
+        { id: 94, bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF", q: "Mata alat pemotong dibuat daripada keluli karbon tinggi manakala pemegangnya daripada bahan penebat. Ini menepati prinsip?", options: ["Kualiti setempat (Local quality)", "Peniruan", "Pengurangan", "Penyebaran"], ans: 0, exp: "Kualiti setempat memberikan ciri berlainan pada bahagian berbeza mengikut kesesuaian tugas." },
+        { id: 95, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Perintang boleh laras (Potentiometer) dalam litar elektronik digunakan untuk?", options: ["Melaraskan rintangan bagi mengawal kecerahan lampu atau kelajuan motor", "Mematikan litar fius", "Menjana voltan bateri", "Menyerap cas magnet"], ans: 0, exp: "Potentiometer membolehkan nilai rintangan dilaras secara manual mengikut kehendak pengguna." },
+        { id: 96, bab: "BAB 2.2 REKA BENTUK MEKANIKAL", q: "Gear heliks mempunyai gigi condong berbanding gear taji lurus. Kelebihan gear heliks ialah?", options: ["Operasi pemindahan kuasa lebih senyap dan lancar", "Gigi gear mudah haus", "Lebih rapuh dan murah", "Hanya boleh berputar satu hala"], ans: 0, exp: "Gigi condong gear heliks bercantum secara beransur-ansur, menjadikannya senyap dan kuat menanggung beban." },
+        { id: 97, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Pin PWM (Pulse Width Modulation) pada mikropengawal membolehkan fungsi?", options: ["Kawalan kelajuan motor dan kelarasan kecerahan LED", "Pemutus bekalan serta merta", "Pengesanan bunyi analog", "Penukaran voltan AC ke DC"], ans: 0, exp: "PWM mengawal voltan purata melalui denyutan digital untuk melaraskan kelajuan motor atau kecerahan LED." },
+        { id: 98, bab: "BAB 2.1 TEKNOLOGI PEMBUATAN", q: "Proses meratakan permukaan dan membuang gerigis tajam pada kepingan logam menggunakan kikir dinamakan?", options: ["Mengikir (Filing)", "Mengecat", "Memateri", "Mencetak 3D"], ans: 0, exp: "Mengikir digunakan untuk melicinkan bucu dan meratakan permukaan bahan logam." },
+        { id: 99, bab: "BAB 2.2 REKA BENTUK MEKANIKAL", q: "Komponen klac (clutch) pada enjin kenderaan berfungsi untuk?", options: ["Menyambung dan memutuskan pemindahan kuasa dari enjin ke transmisi", "Menghentikan roda secara mengejut", "Menyembur cecair penyejuk", "Menghidupkan litar elektrik"], ans: 0, exp: "Klac menghubungkan atau memutuskan penghantaran kuasa putaran enjin ke sistem transmisi gear." },
+        { id: 100, bab: "BAB 2.3 REKA BENTUK ELEKTRIK", q: "Dawai fius di dalam palam 3 pin berfungsi sebagai pelindung keselamatan kerana?", options: ["Akan melebur dan memutuskan litar sekiranya arus berlebihan mengalir", "Menyimpan tenaga elektrik", "Menghasilkan bunyi amaran", "Menstabilkan rintangan"], ans: 0, exp: "Dawai fius melebur secara automatik apabila arus melampaui kadarannya." },
+        { id: 101, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Komponen diod semikonduktor membenarkan arus elektrik mengalir dalam?", options: ["Satu arah sahaja", "Dua arah serentak", "Arah songsang sahaja", "Tanpa melalui litar"], ans: 0, exp: "Diod ialah komponen satu hala yang membenarkan arus mengalir dari anod ke katod sahaja." },
+        { id: 102, bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF", q: "Selimut rintangan api gentian kaca memadamkan kebakaran kecil dengan menghalang bekalan gas apakah daripada sampai ke punca api?", options: ["Oksigen", "Karbon dioksida", "Nitrogen", "Argon"], ans: 0, exp: "Api terpadam apabila bekalan gas oksigen disekat sepenuhnya." },
+        { id: 103, bab: "BAB 2.2 REKA BENTUK MEKANIKAL", q: "Sistem stereng kenderaan menukarkan putaran roda stereng kepada gerakan lurus ke kiri dan kanan menggunakan kombinasi?", options: ["Gear rak dan pinan", "Gear cacing sahaja", "Gear dalaman", "Gear taji sahaja"], ans: 0, exp: "Gear rak dan pinan menukarkan putaran stereng kepada gerakan linear untuk membelokkan roda." },
+        { id: 104, bab: "BAB 2.5 REKA BENTUK AKUAPONIK", q: "Tolok aras air tiub lut sinar pada tangki menggunakan konsep?", options: ["Prinsip tiub berhubungan / cecair mencari aras sama", "Prinsip haba", "Prinsip elektromagnet", "Prinsip geseran"], ans: 0, exp: "Cecair di dalam tiub berhubungan sentiasa mempunyai ketinggian aras yang sama dengan tangki." },
+        { id: 105, bab: "BAB 2.6 REKA BENTUK MAKANAN", q: "Mengapakah makanan dalam tin yang menggelembung atau kemek teruk tidak boleh dimakan?", options: ["Menandakan kehadiran gas akibat pembiakan bakteria anaerobik berbahaya", "Makanan telah menjadi beku", "Berat makanan bertambah", "Rasa makanan menjadi tawar"], ans: 0, exp: "Tin yang menggelembung menandakan pembiakan bakteria toksik berbahaya (seperti Clostridium botulinum)." },
+        { id: 106, bab: "BAB 2.3 REKA BENTUK ELEKTRIK", q: "Alat pemutus litar jenis MCB (Miniature Circuit Breaker) berfungsi melindungi litar elektrik daripada?", options: ["Beban lampau dan litar pintas", "Air dan karat", "Bunyi bising", "Kelembapan udara"], ans: 0, exp: "MCB melantuk memutuskan arus sekiranya berlaku lebihan beban atau litar pintas." },
+        { id: 107, bab: "BAB 2.4 REKA BENTUK ELEKTRONIK", q: "Penderia ultrasonik mengukur jarak halangan sesuatu objek dengan memanfaatkan?", options: ["Pantulan gelombang bunyi berfrekuensi tinggi", "Suhu sinaran cahaya", "Warna permukaan", "Tekanan atmosfera"], ans: 0, exp: "Penderia ultrasonik mengira masa pantulan gelombang bunyi untuk menentukan jarak halangan." },
+        { id: 108, bab: "BAB 2.1 TEKNOLOGI PEMBUATAN", q: "Proses mencantumkan kaki komponen elektronik pada papan litar menggunakan haba dan dawai timah dinamakan?", options: ["Memateri (Soldering)", "Mengimpal arka", "Mengepam", "Menggerudi"], ans: 0, exp: "Memateri menggunakan leburan pateri timah untuk menyambung komponen elektrik dan elektronik." },
+        { id: 109, bab: "BAB 2.2 REKA BENTUK MEKANIKAL", q: "Tali dawai keluli (steel wire rope) digunakan pada mekanisme pengangkat berat kerana?", options: ["Mempunyai kekuatan tegangan yang sangat tinggi", "Mudah putus", "Boleh terapung", "Sangat lembut dan kenyal"], ans: 0, exp: "Dawai keluli menampung daya tegangan bebanan yang sangat tinggi." },
+        { id: 110, bab: "BAB 1 PENYELESAIAN MASALAH SECARA INVENTIF", q: "Bahan buih pemadam api cecair hidrokarbon direka agar terapung di atas permukaan minyak. Ini memanfaatkan parameter fizikal?", options: ["Ketumpatan bahan buih yang lebih rendah daripada minyak", "Suhu bilik", "Daya geseran", "Graviti"], ans: 0, exp: "Ketumpatan buih yang lebih rendah membolehkannya terapung dan menutup lapisan minyak daripada oksigen." }
       ];
 
       const balancedPattern = [1, 3, 0, 2, 2, 0, 3, 1, 3, 2, 0, 1, 0, 3, 1, 2, 2, 1, 0, 3];
@@ -861,37 +860,6 @@
     let audioCtx = null;
     let audioEnabled = true;
     let isDisasterTriggered = false;
-
-    // Pengendali Dialog Khas (Menggantikan alert() dan confirm())
-    let customConfirmResolver = null;
-
-    function showCustomAlert(title, message, icon="🔔") {
-      document.getElementById("modal-alert-title").textContent = title;
-      document.getElementById("modal-alert-message").textContent = message;
-      document.getElementById("modal-alert-icon").textContent = icon;
-      document.getElementById("custom-modal-alert").classList.remove("hidden");
-    }
-
-    function closeCustomAlert() {
-      document.getElementById("custom-modal-alert").classList.add("hidden");
-    }
-
-    function showCustomConfirm(title, message) {
-      document.getElementById("modal-confirm-title").textContent = title;
-      document.getElementById("modal-confirm-message").textContent = message;
-      document.getElementById("custom-modal-confirm").classList.remove("hidden");
-      return new Promise((resolve) => {
-        customConfirmResolver = resolve;
-      });
-    }
-
-    function resolveCustomConfirm(result) {
-      document.getElementById("custom-modal-confirm").classList.add("hidden");
-      if (customConfirmResolver) {
-        customConfirmResolver(result);
-        customConfirmResolver = null;
-      }
-    }
 
     function initAudio() {
       if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -957,6 +925,7 @@
       });
     }
 
+    /* PENGURUSAN MASA DEADLINE & PENYELARASAN BENCANA */
     function updateCountdownDisplay() {
       const now = Date.now();
       const diff = MISSION_DEADLINE_TIMESTAMP - now;
@@ -1003,32 +972,26 @@
     function triggerDisasterMode() {
       isDisasterTriggered = true;
 
-      // 1. Laraskan kanvas api ke 100% lebar (100vw) dan 80% tinggi skrin (80vh)
       const fireWrapper = document.getElementById("fire-overlay-wrapper");
       fireWrapper.className = "fixed bottom-0 left-0 w-full h-[80vh] pointer-events-none z-[9990] overflow-hidden select-none raging-inferno-disaster";
 
-      // 2. Sembunyikan elemen operasi biasa
       document.getElementById("main-content-wrapper").classList.add("hidden");
       document.getElementById("top-heroes-section").classList.add("hidden");
       document.getElementById("firefighter-unit").classList.add("hidden");
       document.getElementById("waterCanvas").classList.add("hidden");
       document.getElementById("bottom-status-bar").classList.add("hidden");
 
-      // 3. Matikan butang selain ADMIN
       document.getElementById("nav-btn-home").classList.add("hidden");
       document.getElementById("nav-btn-ranking").classList.add("hidden");
 
-      // 4. Paparkan Banner Kegagalan
       document.getElementById("disaster-banner-container").classList.remove("hidden");
 
-      // 5. Kemas kini status admin
       const statusEl = document.getElementById("admin-mission-status");
       if (statusEl) {
         statusEl.textContent = "GAGAL (BENGKEL MUSNAH)";
         statusEl.className = "text-red-500 font-bold";
       }
 
-      // 6. Konfigurasi semula kanvas api untuk mod bencana penuh
       fireCanvas.width = 280;
       fireCanvas.height = 130;
       firePixels = new Array(280 * 130).fill(0);
@@ -1152,6 +1115,7 @@
       container.innerHTML = html;
     }
 
+    /* ENJIN API MARAK & DINAMIK */
     const fireCanvas = document.getElementById("fireCanvas");
     const fireCtx = fireCanvas.getContext("2d");
 
@@ -1327,6 +1291,7 @@
       fireIntervalTime = spd === "slow" ? 60 : 38;
     }
 
+    /* PENGURUSAN INTENSITI BERKURANG TETAP (MONOTONIK) */
     function adjustFireVisualIntensity(remainingPercent) {
       if (isDisasterTriggered) {
         fireBaseIntensity = 36;
@@ -1403,6 +1368,7 @@
       requestAnimationFrame(updateWaterParticles);
     }
 
+    /* NAVIGASI VIEW */
     function navigateView(viewName) {
       if (isDisasterTriggered) return;
       try {
@@ -1510,7 +1476,7 @@
     function startQuizSession() {
       const currentAttempts = getStudentAttemptCount(currentStudent);
       if (currentAttempts >= MAX_ALLOWED_ATTEMPTS) {
-        showCustomAlert("HAD MAKSIMUM", "Harap maaf, anda telah menyempurnakan kesemua 4 percubaan!", "🛑");
+        alert("Harap maaf, anda telah mencapai had maksimum 4 percubaan!");
         return;
       }
 
@@ -1538,7 +1504,7 @@
     function continueNextSession(studentName, className) {
       const attempts = getStudentAttemptCount(studentName);
       if (attempts >= MAX_ALLOWED_ATTEMPTS) {
-        showCustomAlert("PERCUBAAN SELESAI", "Murid ini telah menyempurnakan kesemua 4 sesi percubaan!", "✅");
+        alert("Murid ini telah menyempurnakan kesemua 4 sesi percubaan!");
         return;
       }
       currentClass = className;
@@ -1635,12 +1601,12 @@
         expBox.classList.add("bg-green-950/40", "border-green-500");
         title.textContent = "✅ JAWAPAN TEPAT! SIRAMAN AIR BERJAYA!";
         title.className = "font-pixel text-xs text-green-400 mb-1";
-        desc.textContent = qData.exp || "Usaha anda bersama BOMBA SEMEKAR berjaya menyejukkan kebakaran bengkel RBT!";
+        desc.textContent = "Usaha anda bersama BOMBA SEMEKAR berjaya menyejukkan kebakaran bengkel RBT!";
       } else {
         expBox.classList.add("bg-red-950/40", "border-red-500");
         title.textContent = "❌ JAWAPAN KURANG TEPAT";
         title.className = "font-pixel text-xs text-red-400 mb-1";
-        desc.textContent = `Jawapan tepat: ${qData.options[qData.ans]}. ${qData.exp}`;
+        desc.textContent = "Jawapan yang dipilih tidak tepat. Teruskan fokus untuk soalan seterusnya!";
       }
 
       document.getElementById("btn-next-question").disabled = false;
@@ -1757,6 +1723,7 @@
       updateGlobalFireUI();
     }
 
+    /* KEMAS KINI UI & MENGEKALKAN INTENSITI TERENDAH TANPA NAIK SEMULA */
     function updateGlobalFireUI() {
       const totalQuestionsCount = 110;
       const solvedCount = answeredGlobalQuestions.size;
@@ -1990,6 +1957,7 @@
       }
     }
 
+    /* PENGURUSAN JADUAL RANKING DALAM MODAL ADMIN (KALIS BENCANA) */
     function renderAdminLeaderboard() {
       try {
         const filterSelect = document.getElementById("admin-filter-class");
@@ -2048,9 +2016,10 @@
       }
     }
 
+    /* FUNGSI EKSPORT CSV UNTUK GURU / ADMIN */
     function exportAdminTableToCSV() {
       if (!leaderboardRecords || leaderboardRecords.length === 0) {
-        showCustomAlert("EKSPORT CSV", "Tiada rekod data murid untuk dieksport.", "ℹ️");
+        alert("Tiada rekod data murid untuk dieksport.");
         return;
       }
 
@@ -2085,6 +2054,7 @@
       document.body.removeChild(link);
     }
 
+    /* PENGURUSAN MODAL ADMIN */
     function openAdminModal() {
       const m = document.getElementById("admin-modal");
       if (m) {
@@ -2130,21 +2100,13 @@
 
         renderAdminLeaderboard();
       } else {
-        showCustomAlert("AKSES DITOLAK", "Kata laluan admin salah! Sila hubungi guru RBT.", "❌");
+        alert("Kata laluan salah! Sila hubungi guru RBT.");
       }
     }
 
-    async function promptResetConfirmation() {
-      const confirmed = await showCustomConfirm(
-        "PENGESAHAN RESET",
-        "ADAKAH ANDA PASTI? Semua data murid, markah, ranking dan status soalan akan dikosongkan sepenuhnya!"
-      );
-      if (confirmed) {
-        executeResetGame();
-      }
-    }
+    async function confirmResetGame() {
+      if (!confirm("ADAKAH ANDA PASTI? Semua data murid, ranking dan status soalan akan dikosongkan!")) return;
 
-    async function executeResetGame() {
       localStorage.removeItem("RBT_SOLVED_110_QUESTIONS");
       localStorage.removeItem("RBT_UNIQUE_STUDENTS");
       localStorage.removeItem("RBT_LEADERBOARD_DATA");
@@ -2180,8 +2142,8 @@
         updateStudentAttemptStatusDisplay(currentStudent);
       }
 
+      alert("Permainan dan rekod kebakaran berjaya di-reset!");
       closeAdminModal();
-      showCustomAlert("BERJAYA DI-RESET", "Permainan dan rekod kebakaran telah dikosongkan ke keadaan asal!", "🧹");
     }
 
     window.addEventListener("DOMContentLoaded", () => {
